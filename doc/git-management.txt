@@ -1,0 +1,4 @@
+http://nvie.com/posts/a-successful-git-branching-model/
+
+21/06/2016
+created master->develop branch
