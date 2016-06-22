@@ -1,5 +1,8 @@
 # Nanoob
 [![Build Status](https://travis-ci.org/gcrofils/nanoob.svg?branch=master)](https://travis-ci.org/gcrofils/nanoob)
+[![Code Climate](https://codeclimate.com/github/gcrofils/nanoob/badges/gpa.svg)](https://codeclimate.com/github/gcrofils/nanoob)
+[![Test Coverage](https://codeclimate.com/github/gcrofils/nanoob/badges/coverage.svg)](https://codeclimate.com/github/gcrofils/nanoob/coverage)
+[![Issue Count](https://codeclimate.com/github/gcrofils/nanoob/badges/issue_count.svg)](https://codeclimate.com/github/gcrofils/nanoob)
 
 Nanoob is company management system for
 
