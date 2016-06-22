@@ -1,8 +1,18 @@
 language: ruby
 rvm:
-  - 2.3.0
-bundler_args: --without production:heroku
+- 2.3.0
+bundler_args: "--without production:heroku"
 services:
-  - postgresql
+- postgresql
 before_script:
-  - psql -c 'create database nanoob_test;' -U postgres
+- psql -c 'create database nanoob_test;' -U postgres
+addons:
+  code_climate:
+    repo_token: ab666feb941eed422ae52f2c62ae0c85d95094d5dfcdc12861038ac6bfac6ba3
+deploy:
+  provider: heroku
+  api_key:
+    secure: lRcGinjkMeTCKfCQU5vuZqVzSvsNJ9x91JiRXov5uGBmbvsxfOrGLuKGkTKc+71vgPPGJpjTnIU+trWsWDxcWmX3U9RAbePjBnwPzyDCMGBKYn5cjrGPvwpdWOff9q6tu7IEkJ643su7U9pajlRRQ9knBiv6nbXSviC0Tc4gXZDsDjjRUiTNlpPlzv5u5GZomaDNKQ8SZEmrUQ0xPNYTz4kiDtUzt/PQBB1jMVDxLz6lI0SpBGFxcYD2ygGNLBH+LXY09kS+Iqcwk9KmLURjPVSXcEzpE3rPbm4zgs1GrnvZmhNV7iVrY8lJEBKsMLZOXDu+9qo5WwZDv+xeqlllbHbKBQsIiSTneJ6sfjqdSd5RgsxXOZcs7I+mEQKkmrP0002gU5Fc0rcu2lPAHY/iiQL8pMTYiUe3OGUKLbpbE9QU4BNeEnqzuXV7X0dM/Q2PK3OG2rt0ABjR1DoZgZMRSDrpRJISSkTXX7zKqttqXB4+KfS3q+VJVDj2gw6RGDmw1Nh8WLgeL+jCixddFtc3uvNt+5Kr+jxAupShn5XzhH6yLrgR4pMGmPJbOLkrhLtxm6DH3Y4of/0UcQ0hxiraj4viq2vbsYD09ghfnFE1O2//Be1XwiB7mroRKWnChKAeSnhBFBMopi6r04rQZrVYWXHCDTi67SuiQWpsubWnz4M=
+  app: nanoob-staging
+  on:
+    repo: gcrofils/nanoob
