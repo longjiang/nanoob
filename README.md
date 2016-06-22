@@ -1,4 +1,5 @@
 # Nanoob
+[![Build Status](https://travis-ci.org/gcrofils/nanoob.svg?branch=master)](https://travis-ci.org/gcrofils/nanoob)
 
 Nanoob is company management system for
 
