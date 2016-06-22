@@ -1,0 +1,8 @@
+language: ruby
+rvm:
+  - 2.3.0
+bundler_args: --without production:heroku
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database nanoob_test;' -U postgres
