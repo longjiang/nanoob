@@ -54,6 +54,10 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
+group :test do
+  gem "codeclimate-test-reporter", require: nil
+end
+
 group :heroku do
   gem 'rails_12factor' # enable features such as static asset serving and logging on Heroku
 end
