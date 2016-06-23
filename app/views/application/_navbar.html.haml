@@ -1,1 +1,17 @@
 / Navigation
+
+%nav.navbar.navbar-dark.navbar-fixed-top.bg-inverse
+  %button.navbar-toggler.hidden-sm-up{type: 'button', data: {toggle: 'collapse', target:'#navbar'}, aria: {expanded: 'false', controls: 'navbar'}}
+    %span.sr-only Toggle navigation
+    - 3.times do
+      %span.icon-bar
+  = link_to 'Nanoob', root_path, class: 'navbar-brand'
+  #navbar
+    %nav.nav.navbar-nav.pull-xs-left
+      = link_to 'Dashboard', '#', class: "nav-item nav-link"
+      - if user_signed_in?
+        = link_to current_user.username, '#', class: "nav-item nav-link"
+        = link_to "Logout", destroy_user_session_path, :method => :delete, class: "nav-item nav-link"
+    %form.pull-xs-right
+      %input.form-control{type: 'text', placeholder: 'Search....'}
+    
