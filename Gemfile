@@ -35,6 +35,9 @@ gem 'jbuilder', '~> 2.0'
 # views
 gem 'haml'
 
+# Authentication
+gem 'devise'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
@@ -60,6 +63,9 @@ end
 group :test do
   gem "codeclimate-test-reporter", require: nil
   gem 'simplecov', :require => false
+  gem 'factory_girl_rails'
+  gem 'faker', :require => false
+  
 end
 
 group :heroku do
