@@ -36,6 +36,12 @@ gem 'jbuilder', '~> 2.0'
 gem 'haml'
 gem 'bootstrap', '~> 4.0.0.alpha3'
 
+# Authentication
+gem 'devise'
+
+# activerecord
+gem "validate_url"
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
 end
@@ -60,11 +66,14 @@ group :development do
   gem 'rspec-mocks', '= 3.5.0.beta3'
   gem 'rspec-support', '= 3.5.0.beta3'
   gem 'guard-rspec', '~> 4.7'
+  gem 'growl'
 end
 
 group :test do
   gem "codeclimate-test-reporter", require: nil
   gem 'simplecov', :require => false
+  gem 'factory_girl_rails'
+  gem 'faker', :require => false
 end
 
 group :heroku do

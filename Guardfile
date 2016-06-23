@@ -25,6 +25,9 @@
 #  * 'just' rspec: 'rspec'
 
 guard :rspec, cmd: "bundle exec rspec" do
+  
+  notification :growl
+  
   require "guard/rspec/dsl"
   dsl = Guard::RSpec::Dsl.new(self)
 

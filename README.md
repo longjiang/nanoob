@@ -1,8 +1,5 @@
 # Nanoob
-[![Build Status](https://travis-ci.org/gcrofils/nanoob.svg?branch=master)](https://travis-ci.org/gcrofils/nanoob)
-[![Code Climate](https://codeclimate.com/github/gcrofils/nanoob/badges/gpa.svg)](https://codeclimate.com/github/gcrofils/nanoob)
-[![Test Coverage](https://codeclimate.com/github/gcrofils/nanoob/badges/coverage.svg)](https://codeclimate.com/github/gcrofils/nanoob/coverage)
-[![Issue Count](https://codeclimate.com/github/gcrofils/nanoob/badges/issue_count.svg)](https://codeclimate.com/github/gcrofils/nanoob)
+[![Build Status](https://travis-ci.org/gcrofils/nanoob.svg?branch=master)](https://travis-ci.org/gcrofils/nanoob) [![Code Climate](https://codeclimate.com/github/gcrofils/nanoob/badges/gpa.svg)](https://codeclimate.com/github/gcrofils/nanoob) [![Test Coverage](https://codeclimate.com/github/gcrofils/nanoob/badges/coverage.svg)](https://codeclimate.com/github/gcrofils/nanoob/coverage) [![Issue Count](https://codeclimate.com/github/gcrofils/nanoob/badges/issue_count.svg)](https://codeclimate.com/github/gcrofils/nanoob)
 
 Nanoob is company management system for
 
@@ -18,42 +15,45 @@ User
 ````
 username
 email
+password
 ````
 
 
 # Businesses
 ````
 Business
-website
+Business::website
 ````
 ## Business
 ````
-Product
+Name
+product_line
 Language
 ````
 
-* `Product` : Rideaux, Poignées
+* `Name`: Le marché du Rideau
+* `Product_line` : Rideaux, Poignées
 * `Language` : Fr, En, It
 
-## Website
+## Business::Website
 ````
 business_id
 platform
 url
 ````
 
-# Backlinks
+# Partner
 
 ## Model
 
 ````
-Backlinks::Partner
-Backlinks::Request
-Backlinks::Link
+Partner
+Partner::Request
+Partner::Backlink
 
 ````
 
-### Backlinks::Partner
+### Partner
 
 ````
 Title
@@ -72,7 +72,7 @@ url
 * `url`: Url of web contact form if any
 
 
-### Backlinks::Request
+### Partner::Request
 ````
 partner_id
 business_id
@@ -81,7 +81,7 @@ body
 mode 
 sent_at
 status
-user_id
+owner_id
 created_at
 updated_by
 updated_at
@@ -109,7 +109,7 @@ updated_at
 * `Updated_at`: datetime of Last updated of the status
 * `Updated_by`: User who updated the status
 
-### Backlinks::Link
+### Partner::Backlink
 
 ````
 partner_id
