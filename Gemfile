@@ -34,9 +34,19 @@ gem 'jbuilder', '~> 2.0'
 
 # views
 gem 'haml'
+gem 'bootstrap', '~> 4.0.0.alpha3'
+gem "font-awesome-rails"
+gem 'bootstrap_form', :git => 'https://github.com/bootstrap-ruby/rails-bootstrap-forms'
 
 # Authentication
 gem 'devise'
+
+# activerecord
+gem "validate_url"
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-tether', '>= 1.1.0'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -58,6 +68,8 @@ group :development do
   gem 'rspec-mocks', '= 3.5.0.beta3'
   gem 'rspec-support', '= 3.5.0.beta3'
   gem 'guard-rspec', '~> 4.7'
+  gem 'growl'
+  gem 'rdoc', '~> 4.2', '>= 4.2.2'
 end
 
 group :test do
@@ -65,7 +77,6 @@ group :test do
   gem 'simplecov', :require => false
   gem 'factory_girl_rails'
   gem 'faker', :require => false
-  
 end
 
 group :heroku do

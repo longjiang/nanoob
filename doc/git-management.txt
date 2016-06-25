@@ -3,5 +3,12 @@ http://nvie.com/posts/a-successful-git-branching-model/
 21/06/2016
 created master->develop branch
 
+21/06/2016
+created develop->backlinks feature branch
+
 23/06/2016
 created develop->devise branch
+
+24/06/2016
+delete devise branch
+

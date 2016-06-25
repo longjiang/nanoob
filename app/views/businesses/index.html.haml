@@ -1,0 +1,34 @@
+/ views/businesses/index.html.haml
+
+= link_to new_business_path, 
+  class: 'btn btn-primary btn-lg pull-right', 
+  role: 'button', 
+  title: th('activerecord.actions.new') do
+  = i 'plus', '2x'
+          
+%h1 Businesses
+
+%table.table.table-striped.table-bordered.table-sm
+  %thead
+    %tr
+      %th #
+      %th Name
+      %th Product Line
+      %th Language
+      %th Websites
+      %th 
+  %tbody
+    - @businesses.each do |business|
+      %tr
+        %th{scope: "row"}= business.id
+        %td= business.name
+        %td= business.product_line
+        %td= business.language
+        %td
+          = link_to business.websites.count, business_websites_path(business_id: business)
+          = link_to 'new', new_business_website_path(business_id: business)
+        %td
+          = link_to 'destroy', business, method: :delete, data: { confirm: 'Are you sure?' }
+          = link_to 'view', business
+          = link_to 'edit', edit_business_path(business)
+        

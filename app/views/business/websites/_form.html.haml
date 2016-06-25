@@ -1,0 +1,12 @@
+/ views/business/websites/_form.html.haml
+
+= bootstrap_form_for(@website) do |f|
+  = f.select :platform, Business::Website.platforms.keys.map{|p| [p.humanize, p]}
+  = f.text_field :url
+  - if @business
+    = f.hidden_field :business_id, value: @business.id
+    = f.static_control label: tm(:business) do
+      = @business.name
+  - else
+    = f.select :business_id, Business.all.map{|b| [b.name, b.id]}
+  = f.primary

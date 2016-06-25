@@ -1,0 +1,3 @@
+# generate rdoc
+bundle exec rdoc --main README.md --title 'Nanoob' --op rdoc README.md app/**/*.rb app/**/**/*.rb
+(rdoc is excluded from git)
