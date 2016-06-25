@@ -1,0 +1,14 @@
+%h1= @business.name
+
+%ul
+  %li
+    %b Product Line
+    = @business.product_line
+  %li
+    %b Language
+    = @business.language
+    
+%p= link_to "edit", edit_business_path(@business)
+
+%p= link_to "Businesses", businesses_path
+    
