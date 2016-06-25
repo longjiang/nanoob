@@ -20,3 +20,5 @@
 .ruby-gemset
 
 coverage
+
+rdoc

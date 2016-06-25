@@ -1,0 +1,33 @@
+/ views/business/websites/index.html.haml
+
+= link_to new_business_website_path(business_id: @business), 
+  class: 'btn btn-primary btn-lg pull-right', 
+  role: 'button', 
+  title: th('activerecord.actions.new') do
+  = i 'plus', '2x'
+
+%h1 
+  = "#{@business.name} " unless @business.nil?
+  Websites
+
+%table.table.table-striped.table-bordered.table-sm
+  %thead
+    %tr
+      %th #
+      - if @business.nil?
+        %th Business
+      %th Platform
+      %th Url
+      %th 
+  %tbody
+    - @websites.each do |website|
+      %tr
+        %th{scope: "row"}= website.id
+        - if @business.nil?
+          %td= link_to website.business_name, business_path(website.business) 
+        %td= website.platform
+        %td= website.url
+        %td
+          = link_to 'destroy', business_website_path(website), method: :delete, data: { confirm: 'Are you sure?' }
+          = link_to 'edit', edit_business_website_path(website)
+          = link_to 'view', business_website_path(website)

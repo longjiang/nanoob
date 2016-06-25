@@ -1,0 +1,8 @@
+/ views/business/websites/_new.html.haml
+
+%h1 
+  New
+  = "#{@business.name} " unless @business.nil?
+  Website
+
+= render 'form'

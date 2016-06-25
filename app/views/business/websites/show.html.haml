@@ -1,0 +1,16 @@
+%h1= @website.business_name
+%h2
+  Website
+  = @website.id 
+
+%ul
+  %li
+    %b platform
+    = @website.platform
+  %li
+    %b url
+    = @website.url
+    
+%p= link_to "edit", edit_business_website_path(@website)
+
+%p= link_to "Websites", business_websites_path

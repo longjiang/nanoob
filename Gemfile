@@ -35,6 +35,8 @@ gem 'jbuilder', '~> 2.0'
 # views
 gem 'haml'
 gem 'bootstrap', '~> 4.0.0.alpha3'
+gem "font-awesome-rails"
+gem 'bootstrap_form', :git => 'https://github.com/bootstrap-ruby/rails-bootstrap-forms'
 
 # Authentication
 gem 'devise'
@@ -67,6 +69,7 @@ group :development do
   gem 'rspec-support', '= 3.5.0.beta3'
   gem 'guard-rspec', '~> 4.7'
   gem 'growl'
+  gem 'rdoc', '~> 4.2', '>= 4.2.2'
 end
 
 group :test do

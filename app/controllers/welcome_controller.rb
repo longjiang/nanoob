@@ -5,7 +5,6 @@ class WelcomeController < ApplicationController
   private
   
   def add_menu_items
-    #@menu.update "item3", "item4", root_path
   end
   
 end

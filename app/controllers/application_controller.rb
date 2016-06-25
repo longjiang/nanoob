@@ -16,15 +16,9 @@ class ApplicationController < ActionController::Base
     
     def init_menu
       @menu = Menu.new do |menu|
-        menu.add "item1", "item1", root_path do |submenu|
-          submenu.add "item11", "item11", root_path
-          submenu.add "item12", "item12", root_path
+        menu.add "Businesses", businesses_path do |submenu|
+          submenu.add "Websites", business_websites_path
         end
-        menu.add "item2", "item2", root_path, {active: true} do |submenu|
-          submenu.add "item13", "item13", root_path
-          submenu.add "item14", "item14", root_path
-        end
-        menu.add "item3", "item3", root_path
       end
     end
 end

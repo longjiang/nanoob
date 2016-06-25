@@ -8,4 +8,5 @@ class Business::Website < ApplicationRecord
   validates :url,          url: true
   
   belongs_to :business
+  delegate :name, to: :business, prefix: true
 end
