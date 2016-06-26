@@ -1,4 +1,4 @@
-require_relative './nanoob/generic_model'
+require_relative './nanoob2/generic_model'
 
 class CrudController < ApplicationController
   
