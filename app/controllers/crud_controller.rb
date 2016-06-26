@@ -1,3 +1,5 @@
+require_relative './nanoob/generic_model'
+
 class CrudController < ApplicationController
   
   include Nanoob::GenericModel

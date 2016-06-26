@@ -17,6 +17,5 @@ class Partner < ApplicationRecord
   def nilify_attributes
     %w(contact_email webform_url)
   end
-  
 
 end

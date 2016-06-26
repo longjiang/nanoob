@@ -6,7 +6,7 @@ class ApplicationRecord < ActiveRecord::Base
   private
   
   def nilify_attributes
-    
+    []
   end
   
   def nilify_blanks
