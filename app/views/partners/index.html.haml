@@ -1,0 +1,40 @@
+/ views/partners/index.html.haml
+
+= link_to new_partner_path, 
+  class: 'btn btn-primary btn-lg pull-right', 
+  role: 'button', 
+  title: th('activerecord.actions.new') do
+  = i 'plus', '2x'
+          
+%h1 Partners
+
+%table.table.table-striped.table-bordered.table-sm
+  %thead
+    %tr
+      %th #
+      %th Title
+      %th Category
+      %th Contact
+      %th 
+  %tbody
+    - @partners.each do |partner|
+      %tr
+        %th{scope: "row"}= partner.id
+        %td
+          = partner.title
+          = link_to partner.url do 
+            = i 'external-link'
+        %td= partner.category.humanize
+        %td
+          = partner.contact_name
+          - if partner.contact_email.present?
+            = mail_to partner.contact_email do
+              = i 'envelope'
+          - if partner.webform_url.present?
+            = link_to partner.webform_url do
+              = i 'wpforms'
+        %td
+          = link_to 'destroy', partner, method: :delete, data: { confirm: 'Are you sure?' }
+          = link_to 'view', partner
+          = link_to 'edit', edit_partner_path(partner)
+        

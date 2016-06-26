@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623051604) do
+ActiveRecord::Schema.define(version: 20160625085223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,56 @@ ActiveRecord::Schema.define(version: 20160623051604) do
     t.string   "name",         default: "", null: false
     t.string   "product_line", default: "", null: false
     t.integer  "language",     default: 0,  null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
+
+  create_table "partner_backlinks", force: :cascade do |t|
+    t.integer  "partner_id"
+    t.integer  "business_id"
+    t.integer  "business_website_id"
+    t.integer  "partner_request_id"
+    t.integer  "user_id"
+    t.string   "referrer"
+    t.string   "anchor"
+    t.string   "link"
+    t.integer  "status"
+    t.datetime "activated_at"
+    t.datetime "deactivated_at"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["business_id"], name: "index_partner_backlinks_on_business_id", using: :btree
+    t.index ["business_website_id"], name: "index_partner_backlinks_on_business_website_id", using: :btree
+    t.index ["partner_id"], name: "index_partner_backlinks_on_partner_id", using: :btree
+    t.index ["partner_request_id"], name: "index_partner_backlinks_on_partner_request_id", using: :btree
+    t.index ["user_id"], name: "index_partner_backlinks_on_user_id", using: :btree
+  end
+
+  create_table "partner_requests", force: :cascade do |t|
+    t.integer  "partner_id"
+    t.integer  "business_id"
+    t.integer  "user_id"
+    t.string   "subject"
+    t.text     "body"
+    t.integer  "channel"
+    t.datetime "sent_at"
+    t.string   "state",            default: "draft", null: false
+    t.datetime "state_updated_at"
+    t.integer  "state_updated_by"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.index ["business_id"], name: "index_partner_requests_on_business_id", using: :btree
+    t.index ["partner_id"], name: "index_partner_requests_on_partner_id", using: :btree
+    t.index ["user_id"], name: "index_partner_requests_on_user_id", using: :btree
+  end
+
+  create_table "partners", force: :cascade do |t|
+    t.string   "title"
+    t.integer  "category",      default: 0, null: false
+    t.string   "url"
+    t.string   "contact_name"
+    t.string   "contact_email"
+    t.string   "webform_url"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end
@@ -51,4 +101,13 @@ ActiveRecord::Schema.define(version: 20160623051604) do
   end
 
   add_foreign_key "business_websites", "businesses"
+  add_foreign_key "partner_backlinks", "business_websites"
+  add_foreign_key "partner_backlinks", "businesses"
+  add_foreign_key "partner_backlinks", "partner_requests"
+  add_foreign_key "partner_backlinks", "partners"
+  add_foreign_key "partner_backlinks", "users"
+  add_foreign_key "partner_requests", "businesses"
+  add_foreign_key "partner_requests", "partners"
+  add_foreign_key "partner_requests", "users"
+  add_foreign_key "partner_requests", "users", column: "state_updated_by"
 end

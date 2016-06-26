@@ -1,0 +1,36 @@
+/ views/partner/requests/index.html.haml
+
+= link_to new_partner_request_path, 
+  class: 'btn btn-primary btn-lg pull-right', 
+  role: 'button', 
+  title: th('activerecord.actions.new') do
+  = i 'plus', '2x'
+          
+%h1 Requests
+
+%table.table.table-striped.table-bordered.table-sm
+  %thead
+    %tr
+      %th #
+      %th Partner
+      %th Business
+      %th Subject
+      %th Channel
+      %th Owner
+      %th State
+      %th 
+  %tbody
+    - @requests.each do |request|
+      %tr
+        %th{scope: "row"}= request.id
+        %td= request.partner_title
+        %td= request.business_name
+        %td= request.subject
+        %td= request.channel
+        %td= request.owner_username
+        %td= request.state
+        %td
+          = link_to 'destroy', partner_request_path(request), method: :delete, data: { confirm: 'Are you sure?' }
+          = link_to 'view', partner_request_path(request)
+          = link_to 'edit', edit_partner_request_path(request)
+        

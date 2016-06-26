@@ -23,16 +23,16 @@ RSpec.describe Business::Website, type: :model do
     let(:url) { Faker::Internet.url }
     it "raises error with same url" do
       FactoryGirl.create(:business_website, business: business, url: url)
-      expect(FactoryGirl.build(:business_website, business: business, url: url)).to_not be_valid
+      expect(FactoryGirl.create(:business_website, business: business, url: url)).to_not be_valid
     end
   end
   context 'when URL already exists for an other business' do
     let(:business1) { FactoryGirl.create :business }
     let(:business2) { FactoryGirl.create :business }
     let(:url) { Faker::Internet.url }
-    it "allows same url" do
+    it "raises error with same url" do
       FactoryGirl.create(:business_website, business: business1, url: url)
-      expect(FactoryGirl.build(:business_website, business: business2, url: url)).to be_valid
+      expect(FactoryGirl.create(:business_website, business: business2, url: url)).to_not be_valid
     end
   end
   

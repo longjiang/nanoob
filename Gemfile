@@ -44,6 +44,10 @@ gem 'devise'
 # activerecord
 gem "validate_url"
 
+# state machine
+gem 'state_machine'
+gem 'ruby-graphviz', :require => 'graphviz' # Optional: only required for graphing
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
 end

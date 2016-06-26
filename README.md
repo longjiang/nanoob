@@ -48,6 +48,7 @@ url
 
 ````
 Partner
+Partner::Category (TODO)
 Partner::Request
 Partner::Backlink
 
@@ -65,7 +66,7 @@ url
 ````
 
 * `Title`: Title of the website 
-* `Category`: Category of the website (available categories depends on product line) 
+* `Category`: Category of the website 
 * `Domain`: Domain name (extract from url without https://)
 * `name`: Contact name (used for sending request, and reminders)
 * `email`: Contact email (used for sending request and reminders)
@@ -78,7 +79,7 @@ partner_id
 business_id
 subject
 body
-mode 
+channel 
 sent_at
 status
 owner_id
@@ -91,7 +92,7 @@ updated_at
 * `Business_id`: Business (Rideaux, Poignées...)
 * `Subject`: Subject of email if sent by email / or web form if applicable
 * `Body`: Body of email / web form
-* `Mode`: email / web form
+* `Channel`: email / web form
 * `sent_at`: first contact
 * `Status`: One of the following
   * Draft (request has not been sent yet)

@@ -19,6 +19,10 @@ class ApplicationController < ActionController::Base
         menu.add "Businesses", businesses_path do |submenu|
           submenu.add "Websites", business_websites_path
         end
+        menu.add "Partners", partners_path do |submenu|
+          submenu.add "Requests", partner_requests_path
+          submenu.add "Backlinks", partner_backlinks_path
+        end
       end
     end
 end

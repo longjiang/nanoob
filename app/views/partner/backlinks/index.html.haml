@@ -1,0 +1,40 @@
+/ views/partner/backlinks/index.html.haml
+
+= link_to new_partner_backlink_path, 
+  class: 'btn btn-primary btn-lg pull-right', 
+  role: 'button', 
+  title: th('activerecord.actions.new') do
+  = i 'plus', '2x'
+          
+%h1 Backlinks
+
+%table.table.table-striped.table-bordered.table-sm
+  %thead
+    %tr
+      %th #
+      %th Partner
+      %th Business
+      %th Request
+      %th Referrer
+      %th Anchor
+      %th Link
+      %th Owner
+      %th Status
+      %th 
+  %tbody
+    - @backlinks.each do |backlink|
+      %tr
+        %th{scope: "row"}= backlink.id
+        %td= backlink.partner_title
+        %td= backlink.business_name
+        %td= link_to "Request", partner_request_path(backlink.partner_request_id) unless backlink.partner_request_id.nil?
+        %td= backlink.referrer
+        %td= backlink.anchor
+        %td= backlink.link
+        %td= backlink.owner_username
+        %td= backlink.status
+        %td
+          = link_to 'destroy', partner_backlink_path(backlink), method: :delete, data: { confirm: 'Are you sure?' }
+          = link_to 'view', partner_backlink_path(backlink)
+          = link_to 'edit', edit_partner_backlink_path(backlink)
+        
