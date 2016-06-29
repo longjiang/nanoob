@@ -17,19 +17,19 @@ ActiveRecord::Schema.define(version: 20160625085223) do
 
   create_table "business_websites", force: :cascade do |t|
     t.integer  "business_id"
-    t.integer  "platform"
-    t.string   "url"
+    t.integer  "platform",    null: false
+    t.string   "url",         null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["business_id"], name: "index_business_websites_on_business_id", using: :btree
   end
 
   create_table "businesses", force: :cascade do |t|
-    t.string   "name",         default: "", null: false
-    t.string   "product_line", default: "", null: false
-    t.integer  "language",     default: 0,  null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "name",         null: false
+    t.string   "product_line", null: false
+    t.integer  "language",     null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "partner_backlinks", force: :cascade do |t|
@@ -73,13 +73,13 @@ ActiveRecord::Schema.define(version: 20160625085223) do
 
   create_table "partners", force: :cascade do |t|
     t.string   "title"
-    t.integer  "category",      default: 0, null: false
+    t.integer  "category"
     t.string   "url"
     t.string   "contact_name"
     t.string   "contact_email"
     t.string   "webform_url"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "users", force: :cascade do |t|

@@ -1,0 +1,26 @@
+a.nav-link {
+
+  text-decoration: none;
+  color: #cfd2da;
+  @include hover-focus {
+    color: $link-hover-color;
+    background: #fff;
+  }
+  
+  
+
+}
+
+.nav-pills .nav-link.active {
+  color: black;
+}
+
+ a.active + .submenu-1 {
+  border: inset 1px black;
+  @include border-bottom-radius ($border-radius);
+}
+
+.submenu-1 {
+  background: #434857;
+  font-weight: 200;
+}

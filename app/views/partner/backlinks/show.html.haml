@@ -1,1 +1,15 @@
 / views/partner/backlinks/show.html.haml
+
+%h1= "Backlink ##{@backlink.id}"
+
+%ul
+  %li
+    %b Partner
+    = @backlink.partner_title
+  %li
+    %b Business
+    = @backlink.business_name
+    
+%p= link_to "edit", edit_partner_backlink_path(@backlink)
+
+%p= link_to "Backlinks", partner_backlinks_path

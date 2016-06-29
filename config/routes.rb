@@ -7,5 +7,6 @@ Rails.application.routes.draw do
     resources :partners
     resources :partner_requests, controller: 'partner/requests'
     resources :partner_backlinks, controller: 'partner/backlinks'
+    resources :users
   end
 end

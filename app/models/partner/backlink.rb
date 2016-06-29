@@ -4,9 +4,13 @@ class Partner::Backlink < ApplicationRecord
   
   before_validation :update_website
   
-  validates   :link,       url: true,       allow_nil: true
-  validates   :referrer,   url: true,       allow_nil: true
-  validates   :website,    presence: true,  if: "link.present?"
+  validates   :link,                url: true,       allow_nil: true
+  validates   :referrer,            url: true,       allow_nil: true
+  validates   :website,             presence: { message: "link does not match any of our websites", if: "link.present?" } 
+  validates   :partner_id,          presence: true
+  validates   :business_id,         presence: true
+  validates   :anchor,              presence: true,  if: "link.present?"
+  
   
   belongs_to  :partner
   belongs_to  :business
@@ -14,13 +18,17 @@ class Partner::Backlink < ApplicationRecord
   belongs_to  :owner,                   class_name: 'User',               foreign_key: :user_id
   belongs_to  :website, optional: true, class_name: "Business::Website",  foreign_key: :business_website_id
   
-  delegate    :title, to: :partner, prefix: true
-  delegate    :name, to: :business, prefix: true
+  delegate    :title,    to: :partner, prefix: true
+  delegate    :name,     to: :business, prefix: true
   delegate    :username, to: :owner, prefix: true
   
   before_save :update_status_timestamp
   
   private
+  
+  def nilify_attributes
+    %w( referrer link )
+  end
   
   def update_status_timestamp
     unless new_record? && activated_at.present?

@@ -3,7 +3,10 @@ class Partner::Request < ApplicationRecord
   enum channel: [ :email, :webform ]
   #enum status: [ :draft, :sent, :canceled, :paid, :rejected, :in_progress, :accepted, :submitted, :published ]
   
-  validates :state,         presence: true
+  validates :state,              presence: true
+  validates :partner_id,         presence: true
+  validates :business_id,        presence: true
+  validates :user_id,            presence: true
   
   belongs_to :partner
   delegate :title, to: :partner, prefix: true

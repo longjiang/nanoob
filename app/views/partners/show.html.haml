@@ -1,2 +1,15 @@
 / views/partners/show.html.haml
 
+%h1= @partner.title
+
+%ul
+  %li
+    %b category
+    = @partner.category
+  %li
+    %b contact
+    = @partner.contact_name
+    
+%p= link_to "edit", edit_partner_path(@partner)
+
+%p= link_to "Partners", partners_path

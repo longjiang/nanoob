@@ -1,8 +1,10 @@
 / views/business/websites/_new.html.haml
 
+- unless @business.nil?
+  = i 'industry'
+  = "#{@business.name}" 
+
 %h1 
-  New
-  = "#{@business.name} " unless @business.nil?
-  Website
+  New Website
 
 = render 'form'

@@ -3,5 +3,5 @@
 = bootstrap_form_for(@business) do |f|
   = f.text_field :name
   = f.text_field :product_line
-  = f.select :language, Business.languages.keys.map{|l| [l.humanize, l]}
+  = f.select :language, Business.languages.keys.map{|l| [l.humanize, l]}, :prompt => "Select language..."
   = f.primary

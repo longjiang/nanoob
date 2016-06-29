@@ -5,9 +5,13 @@
   
   %body
     = render 'navbar'
-    .container-fluid
-      .row
-        .col-sm-3.col-md-2.sidebar
+    #main.container-fluid
+      .row.row-offcanvas.row-offcanvas-left
+        #sidebar.col-md-3.col-lg-2.sidebar-offcanvas{role: "navigation"}
           = sidebar_menu
-        .col-sm-9.col-sm-offset-3.col-md-10.col-md-offset-2.main
+        .col-md-9.col-lg-10.main
+          %p.hidden-md-up
+            %button.btn.btn-primary-outline.btn-sm{type: "button", data: {toggle: "offcanvas"}}
+              = i 'chevron-left'
+              Menu
           = yield

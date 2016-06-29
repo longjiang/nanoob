@@ -81,10 +81,10 @@ subject
 body
 channel 
 sent_at
-status
+state
 owner_id
 created_at
-updated_by
+state_updated_by
 updated_at
 ````
 
@@ -94,7 +94,7 @@ updated_at
 * `Body`: Body of email / web form
 * `Channel`: email / web form
 * `sent_at`: first contact
-* `Status`: One of the following
+* `State`: One of the following
   * Draft (request has not been sent yet)
   * Sent (request sent)
   * Canceled (request canceled by user)
@@ -116,8 +116,8 @@ updated_at
 partner_id
 business_id
 request_id
-url
-term
+referrer
+anchor
 link
 status
 activated_at
@@ -127,8 +127,8 @@ deactivated_at
 * `partner_id`
 * `business_id`
 * `request_id` if applicable
-* `url` URL of the page where the backlink is visible
-* `term` Term of the link
+* `referrer` URL of the page where the backlink is visible
+* `anchor` Term of the link
 * `link` URL of the link to our business
 * `status`
   * active

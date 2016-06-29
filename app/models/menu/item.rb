@@ -20,11 +20,11 @@ class Menu::Item
   end
   
   def add(body, url, *args, &block)
-    add! body, url, true, *args, &block
+    add! body, url, false, *args, &block
   end
   
   def update(body, url, *args, &block)
-    add! body, url, false, *args, &block
+    add! body, url, true, *args, &block
   end
   
   private
@@ -37,7 +37,9 @@ class Menu::Item
     end
     raise "Can't add menu. Id `#{@id}` already exists. Use update instead." unless (@items[@id].blank? || force)
     children = block_given? ? { children: self.class.new(&block).items} : {}
-    @items[@id] = { body: body, url: url }.merge(@options).merge(children)
+    icon = {icon: @options.delete(:icon) {'plus'}}
+    options = @options.merge(icon)
+    @items[@id] = { body: body, url: url, options: options}.merge(children)
   end
   
   def parse(args, url)

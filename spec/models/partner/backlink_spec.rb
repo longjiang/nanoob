@@ -76,6 +76,6 @@ RSpec.describe Partner::Backlink, type: :model do
     backlink.link = "http://example.com/path/to"
     expect { backlink.save! }
     .to raise_error(ActiveRecord::RecordInvalid)
-    .with_message(/Website can't be blank/)
+    .with_message(/link does not match any of our websites/)
   end
 end

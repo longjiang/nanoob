@@ -1,34 +1,63 @@
 / views/businesses/index.html.haml
 
+
 = link_to new_business_path, 
-  class: 'btn btn-primary btn-lg pull-right', 
+  class: 'btn btn-primary pull-right', 
   role: 'button', 
   title: th('activerecord.actions.new') do
-  = i 'plus', '2x'
-          
-%h1 Businesses
+  = i 'plus'
+  = t 'activerecord.actions.new'
 
-%table.table.table-striped.table-bordered.table-sm
-  %thead
-    %tr
-      %th #
-      %th Name
-      %th Product Line
-      %th Language
-      %th Websites
-      %th 
-  %tbody
-    - @businesses.each do |business|
+  
+.h1 Businesses
+  
+%p= t 'descriptions.businesses'
+
+.table-responsive
+  %table.table.table-sm.table-hover
+    %thead.thead-default
       %tr
-        %th{scope: "row"}= business.id
-        %td= business.name
-        %td= business.product_line
-        %td= business.language
-        %td
-          = link_to business.websites.count, business_websites_path(business_id: business)
-          = link_to 'new', new_business_website_path(business_id: business)
-        %td
-          = link_to 'destroy', business, method: :delete, data: { confirm: 'Are you sure?' }
-          = link_to 'view', business
-          = link_to 'edit', edit_business_path(business)
+        %th #
+        %th= han :business, :name
+        %th= han :business, :product_line
+        %th.text-xs-center.text-md-left
+          = i 'globe'
+          %span.hidden-xs-down= tmp 'business/website'
+        %th.text-xs-center.text-md-left
+          = i 'file-text'
+          %span.hidden-xs-down= tmp 'partner/request'
+        %th.text-xs-center.text-md-left
+          = i 'link'
+          %span.hidden-xs-down= tmp 'partner/backlink'
+        %th 
+    %tbody
+      - @businesses.each do |business|
+        %tr
+          %th{scope: "row"}= business.id
+          %td
+            = flag(business.language)
+            = link_to business.name, business
+          %td= business.product_line.humanize
+          %td.text-xs-center.text-md-left
+            %span.label.label-default= link_to business.websites.count, business_websites_path(business_id: business)
+            = link_to new_business_website_path(business_id: business), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+              = i 'plus'
+              %span.hidden-xs-down= t 'activerecord.actions.new'
+          %td.text-xs-center.text-md-left
+            %span.label.label-default= link_to business.requests.count, partner_requests_path(business_id: business)
+            = link_to new_partner_request_path(business_id: business), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+              = i 'plus'
+              %span.hidden-xs-down= t 'activerecord.actions.new'
+          %td.text-xs-center.text-md-left
+            %span.label.label-default= link_to business.backlinks.count, partner_backlinks_path(business_id: business)
+            = link_to new_partner_backlink_path(business_id: business), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+              = i 'plus'
+              %span.hidden-xs-down= t 'activerecord.actions.new'
+          %td
+            = link_to business, method: :delete, data: { confirm: 'Are you sure?' } do
+              = i 'trash-o'
+            = link_to business do
+              = i 'eye'
+            = link_to edit_business_path(business) do
+              = i 'pencil'
         

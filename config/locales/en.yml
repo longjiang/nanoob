@@ -1,10 +1,37 @@
 en:
+# Forms
+  forms:
+    select: Select
+    
+# descriptions
+  descriptions:
+    businesses: This is the list of the products we are working on.
+    
+# Menu
+  menu:
+    businesses: Businesses
+    websites: Websites
+    partners: Partners
+    requests: Requests
+    backlinks: Backlinks
+    business:
+      all: All Businesses
+      add_new: Add new
   
 # ACTIVE RECORD  
   activerecord:
     actions:
-      new: add new
+      new: Add new
     models:
+      partner:
+        one: partner
+        other: partners
+      partner/request:
+        one: request
+        other: requests
+      partner/backlink:
+        one: backlink
+        other: backlinks
       business:
         one: business
         other: businesses
@@ -14,7 +41,7 @@ en:
     attributes:
       business:
         name: Name
-        product_line: Product line
+        product_line: Product Line
         language: Language
       business/website:
         platform: Platform

@@ -1,1 +1,15 @@
 / views/partner/requests/show.html.haml
+
+%h1= "Request ##{@request.id}"
+
+%ul
+  %li
+    %b Partner
+    = @request.partner_title
+  %li
+    %b Business
+    = @request.business_name
+    
+%p= link_to "edit", edit_partner_request_path(@request)
+
+%p= link_to "Requests", partner_requests_path
