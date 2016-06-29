@@ -18,11 +18,9 @@ class ApplicationController < ActionController::Base
     
     def init_menu
       @menu = Menu.new do |menu|
-        menu.add I18n.t("menu.businesses"), businesses_path, {icon: 'industry'}
-        menu.add I18n.t("menu.websites"), business_websites_path, {icon: 'globe'}
-        menu.add I18n.t("menu.partners"), partners_path, {icon: 'users'}
-        menu.add I18n.t("menu.requests"), partner_requests_path, {icon: 'file-text'}
-        menu.add I18n.t("menu.backlinks"), partner_backlinks_path, {icon: 'link'}
+        %w(business business/website partner partner/request partner/backlink).each do |item|
+          menu.add I18n.t("menu.#{item.pluralize}"), send("#{item.pluralize.gsub(/\//, '_')}_path"), {icon: item.classify.constantize.decorator_class.icon}
+        end
       end
     end
     
@@ -31,6 +29,5 @@ class ApplicationController < ActionController::Base
     end
     
     def add_menu_items
-      
     end
 end

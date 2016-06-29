@@ -2,13 +2,14 @@ class Business::Website < ApplicationRecord
   
   enum platform: [ :wordpress, :blogger ]
   
+  validates :business_id,  presence: true
   validates :platform,     presence: true
   validates :url,          presence: true
   validates :url,          uniqueness: true
   validates :url,          url: true
   
   belongs_to  :business
-  has_many    :backlinks, foreign_key: :business_website_id
+  has_many    :backlinks, class_name: 'Partner::Backlink', foreign_key: :business_website_id
   
   delegate :name, to: :business, prefix: true
   

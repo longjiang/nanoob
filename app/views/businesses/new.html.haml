@@ -1,3 +1,22 @@
-%h1 New Business
+%ol.breadcrumb
+  %li
+    = link_to businesses_path do
+      = i Business.decorator_class.icon
+      = tmp :business
+  %li.active
+    - if @business.nil? || @business.name.blank?
+      = t 'activerecord.actions.new'
+      = tm :business
+    - else
+      = @business.name
 
-= render 'form'
+
+%h1
+  = t 'activerecord.actions.new'
+  = tm :business
+
+.row
+  .col-md-12.col-lg-9
+    = render 'form'
+  .hidden-md-down.col-lg-3
+    = render 'form-aside'

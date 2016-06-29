@@ -1,40 +1,68 @@
 / views/partners/index.html.haml
 
 = link_to new_partner_path, 
-  class: 'btn btn-primary btn-lg pull-right', 
+  class: 'btn btn-primary pull-right', 
   role: 'button', 
   title: th('activerecord.actions.new') do
-  = i 'plus', '2x'
+  = i 'plus'
+  = t 'activerecord.actions.new'
           
-%h1 Partners
+%h1
+  = i Partner.decorator_class.icon
+  = tmp :partner
+  
+%p= t 'descriptions.partners'
 
-%table.table.table-striped.table-bordered.table-sm
-  %thead
-    %tr
-      %th #
-      %th Title
-      %th Category
-      %th Contact
-      %th 
-  %tbody
-    - @partners.each do |partner|
+.table-responsive
+  %table.table.table-sm.table-hover
+    %thead.thead-default
       %tr
-        %th{scope: "row"}= partner.id
-        %td
-          = partner.title
-          = link_to partner.url do 
-            = i 'external-link'
-        %td= partner.category.humanize
-        %td
-          = partner.contact_name
-          - if partner.contact_email.present?
-            = mail_to partner.contact_email do
-              = i 'envelope'
-          - if partner.webform_url.present?
-            = link_to partner.webform_url do
-              = i 'wpforms'
-        %td
-          = link_to 'destroy', partner, method: :delete, data: { confirm: 'Are you sure?' }
-          = link_to 'view', partner
-          = link_to 'edit', edit_partner_path(partner)
+        %th.text-xs-center #
+        %th= han :partner, :title
+        %th= han :partner, :category
+        %th= han :partner, :contact
+        %th.text-xs-center.text-lg-left
+          = i Partner::Request.decorator_class.icon
+          %span.hidden-md-down= tmp 'partner/request'
+        %th.text-xs-center.text-lg-left
+          = i Partner::Backlink.decorator_class.icon
+          %span.hidden-md-down= tmp 'partner/backlink'
+        %th 
+    %tbody
+      - @partners.each do |partner|
+        %tr
+          %th.text-xs-center{scope: "row"}= partner.id
+          %td
+            = link_to partner_path(partner) do
+              = partner.title
+            = link_to partner.url do 
+              = i 'external-link'
+          %td= partner.category.humanize
+          %td
+            = partner.contact_name
+            - if partner.contact_email.present?
+              = mail_to partner.contact_email do
+                = i 'envelope'
+            - if partner.webform_url.present?
+              = link_to partner.webform_url do
+                = i 'wpforms'
+          
+          %td.text-xs-center.text-lg-left
+            %span.label{class: partner.requests.count.eql?(0) ? 'label-default' : 'label-info'}= link_to partner.requests.count, partner_requests_path(partner_id: partner)
+            = link_to new_partner_request_path(partner_id: partner), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+              = i 'plus'
+              %span.hidden-md-down= t 'activerecord.actions.new'
+          
+          %td.text-xs-center.text-lg-left
+            %span.label.label-default= link_to partner.backlinks.count, partner_backlinks_path(partner_id: partner)
+            = link_to new_partner_backlink_path(partner_id: partner), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+              = i 'plus'
+              %span.hidden-md-down= t 'activerecord.actions.new'
+          %td
+            = link_to partner_path(partner) do
+              = i 'eye'
+            = link_to edit_partner_path(partner) do
+              = i 'pencil'
+            = link_to partner_path(partner), method: :delete, data: { confirm: 'Are you sure?' } do
+              = i 'trash-o'
         

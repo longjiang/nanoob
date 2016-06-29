@@ -6,22 +6,28 @@ en:
 # descriptions
   descriptions:
     businesses: This is the list of the products we are working on.
+    business/websites: This is the list of our websites.
+    partners: This is the list of our partners who may publish backlinks to our websites.
     
 # Menu
   menu:
     businesses: Businesses
-    websites: Websites
+    business/websites: Websites
     partners: Partners
-    requests: Requests
-    backlinks: Backlinks
+    partner/requests: Requests
+    partner/backlinks: Backlinks
     business:
       all: All Businesses
+      add_new: Add new
+    business/website:
+      all: All Websites
       add_new: Add new
   
 # ACTIVE RECORD  
   activerecord:
     actions:
       new: Add new
+      edit: Edit
     models:
       partner:
         one: partner
@@ -41,8 +47,14 @@ en:
     attributes:
       business:
         name: Name
-        product_line: Product Line
+        product: Product Line
         language: Language
+        business_product_id: Product Line
       business/website:
         platform: Platform
         url: Url
+        host: Host
+      partner:
+        title: Title
+        category: Category
+        contact: Contact

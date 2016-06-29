@@ -1,3 +1,4 @@
+Business::Product.destroy_all
 Partner.destroy_all
 Business.destroy_all
 User.destroy_all
@@ -6,25 +7,29 @@ User.destroy_all
 user1 = User.create!(username: 'admin', email: 'admin@example.com', password: 'secret', password_confirmation: 'secret')
 
 # Business
-[['Le Marché du Rideau', 'curtains'], ['La Poignée de Main', 'handles'], ['Propulsion EC', 'platform']].each do |o|
-  b = Business.new(name: o[0], product_line: o[1])
+b_name1 = 'Le Marché du Rideau'
+b_name2 = 'La Poignée de Main'
+b_name3 = 'Propulsion EC'
+[[b_name1, 'curtains'], [b_name2, 'handles'], [b_name3, 'other']].each do |o|
+  p = Business::Product.create!(name: o[1])
+  b = Business.new(name: o[0], product: p)
   b.french!
 end
 
 # Business::Website
-business1 = Business.find_by_product_line('curtains')
+business1 = Business.find_by_name(b_name1)
 w = business1.websites.new(url: 'https://lemarchedurideau.com')
 w.wordpress!
 w = business1.websites.new(url: 'http://blog.lemarchedurideau.com')
 w.blogger!
 
-business2 = Business.find_by_product_line('handles')
+business2 = Business.find_by_name(b_name2)
 w = business2.websites.new(url: 'https://lapoigneedemain.com')
 w.wordpress!
 w = business2.websites.new(url: 'http://blog.lapoigneedemain.com')
 w.blogger!
 
-business3 = Business.find_by_product_line('platform')
+business3 = Business.find_by_name(b_name3)
 w = business3.websites.new(url: 'https://propulsionec.com')
 w.wordpress!
 
@@ -45,3 +50,62 @@ backlink1.active!
 
 backlink2 = Partner::Backlink.new(partner: partner2, business: business1, owner: user1, referrer: 'http://www.secondbureau.fr/fr/lagence', anchor: 'Co-fondateur & Directeur Général Asie', link: 'https://propulsionec.com/notre-equipe/')
 backlink2.active!
+
+
+# Random Data
+require 'Faker'
+nbUsers = 5
+nbPartners = 70
+nbRequests = 50
+
+(1..nbUsers).each do |i|
+  User.create!(username: "user#{i}", email: "user#{i}@example.com", password: 'secret', password_confirmation: 'secret')
+end
+
+(1..nbPartners).each do |i|
+  Partner.create!(title: Faker::Lorem.word, 
+                    category: Partner.categories.keys.sample,
+                    url: Faker::Internet.url, 
+                    contact_name: Faker::Name.name, 
+                    contact_email: Faker::Internet.email, 
+                    webform_url: Faker::Internet.url)
+end
+
+states = %w( draft sent canceled paid rejected in_progress accepted submitted published )
+(1..nbRequests).each do |i|
+  user = User.all.sample
+  p = Partner::Request.new(partner: Partner.all.sample, 
+                          business: business1, 
+                          owner: user,
+                          updater: user, 
+                          subject: Faker::Lorem.sentence(3), 
+                          body: Faker::Lorem.paragraph(2) , 
+                          channel: Partner::Request.channels.keys.sample,
+                          state: states.sample)
+ case p.state
+   when 'draft'
+     date = Faker::Time.between(DateTime.now - 30, DateTime.now)
+     p.state_updated_at = date
+     p.created_at = date
+     p.updated_at = date
+   when 'sent'
+     date = Faker::Time.between(DateTime.now - 30, DateTime.now - 1)
+     p.created_at = date
+     sent_date = Faker::Time.between(date, DateTime.now)
+     p.sent_at = sent_date
+     p.state_updated_at = sent_date
+     p.updated_at = sent_date
+     p.updater = User.all.sample
+   else
+     date = Faker::Time.between(DateTime.now - 30, DateTime.now - 5)
+     p.created_at = date
+     sent_date = Faker::Time.between(date, date + 2.day)
+     p.sent_at = sent_date
+     state_updated_at = Faker::Time.between(sent_date, DateTime.now)
+     p.updated_at = state_updated_at
+     p.state_updated_at = state_updated_at
+     p.updater = User.all.sample
+   end
+   p.save!
+end
+  

@@ -1,7 +1,13 @@
 / views/businesses/_form.html.haml
 
 = bootstrap_form_for(@business) do |f|
+
   = f.text_field :name
-  = f.text_field :product_line
-  = f.select :language, Business.languages.keys.map{|l| [l.humanize, l]}, :prompt => "Select language..."
+  
+  = f.select :business_product_id, Business::Product.all.map{ |_| [_.name.humanize, _.id]},
+    :prompt => "#{t('forms.select')} #{han(:business, :business_product_id).downcase}..."
+    
+  = f.select :language, Business.languages.keys.map{|l| [l.humanize, l]},
+    :prompt => "#{t('forms.select')} #{han(:business, :language).downcase}..."
+  
   = f.primary

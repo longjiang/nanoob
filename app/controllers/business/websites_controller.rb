@@ -14,6 +14,15 @@ class Business::WebsitesController < CrudController
   
   private
   
+  def add_menu_items
+    @menu.update do |menu|
+      menu.update I18n.t("menu.business/websites"), business_websites_path, {icon: Business::Website.decorator_class.icon} do |submenu|
+        submenu.add I18n.t("menu.business/website.all"), business_websites_path, {icon: false}
+        submenu.add I18n.t("menu.business/website.add_new"), new_business_website_path, {icon: false}
+      end
+    end
+  end
+  
   def find_business
     @business = if params[:business_id].present?
       Business.find_by_id(params[:business_id]) 

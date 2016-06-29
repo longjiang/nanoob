@@ -16,11 +16,18 @@ body.modal-open {
    padding-left:0;
 }
 
+
+.test-offcanvas {
+  display: block ;
+}
+
 /*
  * Off Canvas at medium breakpoint
  * --------------------------------------------------
  */
-@media screen and (max-width: 48em) {
+//@media screen and (max-width: 48em) {
+  
+  @media screen and (max-width: 767px) {
 
   .row-offcanvas {
     position: relative;
@@ -50,7 +57,9 @@ body.modal-open {
  * Off Canvas wider at sm breakpoint
  * --------------------------------------------------
  */
-@media screen and (max-width: 34em) {
+//@media screen and (max-width: 34em) {
+  @media screen and (max-width: 543px) {
+  
   .row-offcanvas-left
   .sidebar-offcanvas {
     left: -45%;

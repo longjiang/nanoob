@@ -40,6 +40,8 @@ gem "font-awesome-rails"
 #gem 'bootstrap_form', :git => 'https://github.com/bootstrap-ruby/rails-bootstrap-forms'
 #gem 'bootstrap_form', :git => 'https://github.com/SecondBureau/rails-bootstrap-forms'
 gem 'bootstrap_form', :path => '/Users/gilles/Workspaces/rails-bootstrap-forms'
+#gem 'draper', '~> 1.3'
+gem 'draper', :git => 'https://github.com/drapergem/draper.git', :branch => 'rails-5'
 
 
 # Authentication
