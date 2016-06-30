@@ -1,6 +1,9 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
   
+  include Filterable
+  include Sortable
+  
   before_validation :nilify_blanks
   
   private

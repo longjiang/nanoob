@@ -7,6 +7,9 @@ RSpec.describe Partner, type: :model do
   it "is not valid without a title" do
     expect(FactoryGirl.build(:partner, title: nil)).to_not be_valid
   end
+  it "is not valid without an owner" do
+    expect(FactoryGirl.build(:partner, owner: nil)).to_not be_valid
+  end
   it "is not valid without a category" do
     expect(FactoryGirl.build(:partner, category: nil)).to_not be_valid
   end
@@ -58,6 +61,29 @@ RSpec.describe Partner, type: :model do
   %w( path example.com example.com/my/path ).each do |url|
     it "is not valid with a badly formatted url" do
       expect(FactoryGirl.build(:partner, url: url)).to_not be_valid
+    end
+  end
+  context "counter cache" do 
+    #let!(:partner) { FactoryGirl.create(:partner) }
+    let(:count)   { rand(3)+3 }
+    before(:each) do
+      @partner = FactoryGirl.create(:partner)
+      count.times do
+        FactoryGirl.create(:partner_request, partner: @partner)
+        FactoryGirl.create(:partner_backlink, partner: @partner)
+      end
+    end
+    it "increments requests_count" do
+      expect(@partner.requests_count).to eql(count)
+    end
+    it "increments backlinks_count" do
+      expect(@partner.backlinks_count).to eql(count)
+    end
+    it "decrements requests_count" do
+      expect{Partner::Request.all.sample.destroy}.to change{@partner.reload.requests_count}.by(-1)
+    end
+    it "decrements backlinks_count" do
+      expect{Partner::Backlink.all.sample.destroy}.to change{@partner.reload.backlinks_count}.by(-1)
     end
   end
 end

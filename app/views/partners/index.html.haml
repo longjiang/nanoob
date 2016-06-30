@@ -13,12 +13,46 @@
   
 %p= t 'descriptions.partners'
 
+/ %h2 Filters
+/ = bootstrap_form_tag url: partners_path, method: :get, layout: :inline do |f|
+/   = f.select :category, Partner.categories.keys.map{|l| [l.humanize, l]}, :prompt => "Select Category..."
+/   = f.text_field :starts_with, value: params[:starts_with]
+/   = f.text_field :contact, value: params[:contact]
+/   = f.text_field :recent
+/   = f.text_field :inactive
+/   = f.select :owner, User.all.map{|_| [_.username, _.id]}, :prompt => "Select User..."
+/   = f.submit
+
+= render 'filters'
+
+= bootstrap_form_tag url: partners_path, method: :get, layout: :inline do |f|
+  = f.hidden_field :recent, value: params[:value]       unless params[:recent].blank?
+  = f.hidden_field :inactive, value: params[:inactive]  unless params[:inactive].blank?
+  = f.hidden_field :owner, value: params[:owner]        unless params[:owner].blank?
+  = f.text_field :starts_with, value: params[:starts_with], hide_label: true, class: 'form-control-sm', placeholder: 'Title'
+  = f.text_field :contact,     value: params[:contact],     hide_label: true, class: 'form-control-sm', placeholder: 'contact'
+  = f.select :category, Partner.categories.keys.map{|l| [l.humanize, l]}, 
+    selected: params[:category], 
+    include_blank: 'All categories',
+    hide_label: true
+  = f.submit 'Filter'
+
 .table-responsive
   %table.table.table-sm.table-hover
     %thead.thead-default
       %tr
         %th.text-xs-center #
-        %th= han :partner, :title
+        %th
+          = link_to sorted_entries_path(title: desc?(:title) ? :asc : :desc) do
+            = han :partner, :title
+          - unless params[:sort_by_title].blank?
+            = i 'sort-alpha-asc' if asc? :title
+            = i 'sort-alpha-desc' if desc? :title
+          - unless params[:starts_with].blank?
+            = link_to filtered_entries_path(starts_with: nil) do
+              %span.fa-stack
+                %i.fa.fa-filter.fa-stack-1x.text-primary
+                %i.fa.fa-ban.fa-stack-1x.text-danger
         %th= han :partner, :category
         %th= han :partner, :contact
         %th.text-xs-center.text-lg-left
@@ -27,6 +61,7 @@
         %th.text-xs-center.text-lg-left
           = i Partner::Backlink.decorator_class.icon
           %span.hidden-md-down= tmp 'partner/backlink'
+        %th= han :partner, :created_at
         %th 
     %tbody
       - @partners.each do |partner|
@@ -48,7 +83,7 @@
                 = i 'wpforms'
           
           %td.text-xs-center.text-lg-left
-            %span.label{class: partner.requests.count.eql?(0) ? 'label-default' : 'label-info'}= link_to partner.requests.count, partner_requests_path(partner_id: partner)
+            %span.label.label-default= link_to partner.requests.count, partner_requests_path(partner_id: partner)
             = link_to new_partner_request_path(partner_id: partner), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
               = i 'plus'
               %span.hidden-md-down= t 'activerecord.actions.new'
@@ -58,6 +93,8 @@
             = link_to new_partner_backlink_path(partner_id: partner), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
               = i 'plus'
               %span.hidden-md-down= t 'activerecord.actions.new'
+          %td
+            = partner.decorate.created_at 
           %td
             = link_to partner_path(partner) do
               = i 'eye'

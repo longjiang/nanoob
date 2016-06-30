@@ -34,10 +34,10 @@ w = business3.websites.new(url: 'https://propulsionec.com')
 w.wordpress!
 
 # Partners
-partner1 = Partner.new(title: 'Made in Design', url: 'http://madeindesign.com', contact_name: 'Guillaume', contact_email: 'guillaume@madeindesign.com', webform_url: 'http://www.madeindesign.com/contact.html')
+partner1 = Partner.new(owner: user1, title: 'Made in Design', url: 'http://madeindesign.com', contact_name: 'Guillaume', contact_email: 'guillaume@madeindesign.com', webform_url: 'http://www.madeindesign.com/contact.html')
 partner1.decoration!
 
-partner2 = Partner.new(title: 'Second Bureau', url: 'http://secondbureau.com', contact_name: 'Gilles', contact_email: 'gilles@secondbureau.com')
+partner2 = Partner.new(owner: user1, title: 'Second Bureau', url: 'http://secondbureau.com', contact_name: 'Gilles', contact_email: 'gilles@secondbureau.com')
 partner2.network_fr!
 
 # Requests
@@ -63,18 +63,24 @@ nbRequests = 50
 end
 
 (1..nbPartners).each do |i|
+  date = Faker::Time.between(DateTime.now - 60, DateTime.now - 10)
   Partner.create!(title: Faker::Lorem.word, 
                     category: Partner.categories.keys.sample,
                     url: Faker::Internet.url, 
                     contact_name: Faker::Name.name, 
                     contact_email: Faker::Internet.email, 
-                    webform_url: Faker::Internet.url)
+                    webform_url: Faker::Internet.url,
+                    created_at: date,
+                    updated_at: date,
+                    owner: User.all.sample
+                    )
 end
 
 states = %w( draft sent canceled paid rejected in_progress accepted submitted published )
 (1..nbRequests).each do |i|
   user = User.all.sample
-  p = Partner::Request.new(partner: Partner.all.sample, 
+  partner = Partner.all.sample
+  p = Partner::Request.new(partner: partner, 
                           business: business1, 
                           owner: user,
                           updater: user, 
@@ -84,12 +90,12 @@ states = %w( draft sent canceled paid rejected in_progress accepted submitted pu
                           state: states.sample)
  case p.state
    when 'draft'
-     date = Faker::Time.between(DateTime.now - 30, DateTime.now)
+     date = Faker::Time.between(partner.created_at, DateTime.now)
      p.state_updated_at = date
      p.created_at = date
      p.updated_at = date
    when 'sent'
-     date = Faker::Time.between(DateTime.now - 30, DateTime.now - 1)
+     date = Faker::Time.between(partner.created_at, DateTime.now - 1)
      p.created_at = date
      sent_date = Faker::Time.between(date, DateTime.now)
      p.sent_at = sent_date
@@ -97,7 +103,7 @@ states = %w( draft sent canceled paid rejected in_progress accepted submitted pu
      p.updated_at = sent_date
      p.updater = User.all.sample
    else
-     date = Faker::Time.between(DateTime.now - 30, DateTime.now - 5)
+     date = Faker::Time.between(partner.created_at, DateTime.now - 5)
      p.created_at = date
      sent_date = Faker::Time.between(date, date + 2.day)
      p.sent_at = sent_date

@@ -1,4 +1,4 @@
-class Partner::BacklinkDecorator < Draper::Decorator
+class Partner::BacklinkDecorator < ApplicationRecordDecorator
   delegate_all
 
   def self.icon

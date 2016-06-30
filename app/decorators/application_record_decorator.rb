@@ -1,8 +1,8 @@
 class ApplicationRecordDecorator < Draper::Decorator
   delegate_all
   
-  def mytest
-    "hello"
+  def created_at
+    object.created_at.strftime("%d/%m/%Y")
   end
   
   # Define presentation-specific methods here. Helpers are accessed through

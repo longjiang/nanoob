@@ -38,8 +38,8 @@ gem 'haml'
 gem 'bootstrap', '~> 4.0.0.alpha3'
 gem "font-awesome-rails"
 #gem 'bootstrap_form', :git => 'https://github.com/bootstrap-ruby/rails-bootstrap-forms'
-#gem 'bootstrap_form', :git => 'https://github.com/SecondBureau/rails-bootstrap-forms'
-gem 'bootstrap_form', :path => '/Users/gilles/Workspaces/rails-bootstrap-forms'
+gem 'bootstrap_form', :git => 'https://github.com/SecondBureau/rails-bootstrap-forms'
+#gem 'bootstrap_form', :path => '/Users/gilles/Workspaces/rails-bootstrap-forms'
 #gem 'draper', '~> 1.3'
 gem 'draper', :git => 'https://github.com/drapergem/draper.git', :branch => 'rails-5'
 
@@ -78,6 +78,7 @@ group :development do
   gem 'rspec-mocks', '= 3.5.0.beta3'
   gem 'rspec-support', '= 3.5.0.beta3'
   gem 'guard-rspec', '~> 4.7'
+  gem 'guard-livereload', '~> 2.5', require: false
   gem 'growl'
   gem 'rdoc', '~> 4.2', '>= 4.2.2'
 end

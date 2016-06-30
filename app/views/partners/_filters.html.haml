@@ -1,0 +1,34 @@
+
+- if params.slice(*PartnersController.filtering_params).blank?
+  = link_to partners_path do
+    All
+    %span.label.label-default= Partner.count
+- else
+  All
+|
+- if params[:owner] && params[:owner].to_i.eql?(current_user.id)
+  Mine
+  = link_to filtered_entries_path(owner: nil) do
+    = i 'times-circle-o'
+- else
+  = link_to filtered_entries_path(owner: current_user.id) do
+    Mine
+    %span.label.label-default= @partners.owner(current_user.id).count
+|
+- unless params[:recent].blank?
+  Recent
+  = link_to filtered_entries_path(recent: nil) do
+    = i 'times-circle-o'
+- else
+  = link_to filtered_entries_path(recent: 10) do
+    Recent
+    %span.label.label-default= @partners.recent(10).count
+|
+- unless params[:inactive].blank?
+  New
+  = link_to filtered_entries_path(inactive: nil) do
+    = i 'times-circle-o'
+- else
+  = link_to filtered_entries_path(inactive: 30)  do
+    New
+    %span.label.label-default= @partners.inactive(30).count

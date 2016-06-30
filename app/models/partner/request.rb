@@ -8,19 +8,17 @@ class Partner::Request < ApplicationRecord
   validates :business_id,        presence: true
   validates :user_id,            presence: true
   
-  belongs_to :partner
-  delegate :title, to: :partner, prefix: true
-  
+  belongs_to :partner,  counter_cache: true
   belongs_to :business
-  delegate :name, to: :business, prefix: true
-  
-  belongs_to :owner,    class_name: 'User',               foreign_key: :user_id
-  delegate :username, to: :owner, prefix: true
-  
-  belongs_to :updater,  class_name: 'User',               foreign_key: :state_updated_by
-  delegate :username, to: :updater, prefix: true
+  belongs_to :owner,    class_name: 'User',  foreign_key: :user_id
+  belongs_to :updater,  class_name: 'User',  foreign_key: :state_updated_by
   
   has_one :backlink,    class_name: 'Partner::Backlink',  foreign_key: :partner_request_id, :dependent => :nullify
+  
+  delegate :title, to: :partner, prefix: true
+  delegate :name, to: :business, prefix: true
+  delegate :username, to: :owner, prefix: true
+  delegate :username, to: :updater, prefix: true
   
   before_save :default_values
   

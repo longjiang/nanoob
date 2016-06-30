@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
   before_action :add_menu_items, unless: :devise_controller?
   before_action :menu_activate, unless: :devise_controller?
   
+  around_action :set_time_zone
+  
   protected
 
     def configure_permitted_parameters
@@ -30,4 +32,12 @@ class ApplicationController < ActionController::Base
     
     def add_menu_items
     end
+    
+  private
+
+    def set_time_zone(&block)
+      time_zone = current_user.try(:time_zone) || 'UTC'
+      Time.use_zone(time_zone, &block)
+    end  
+    
 end

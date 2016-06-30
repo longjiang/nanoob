@@ -9,6 +9,8 @@ FactoryGirl.define do
     contact_name  { Faker::Name.name }
     contact_email { Faker::Internet.email }
     webform_url   { Faker::Internet.url }
+    association :owner, factory: :user
+    
   end
   
 end

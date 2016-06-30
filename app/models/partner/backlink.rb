@@ -11,8 +11,7 @@ class Partner::Backlink < ApplicationRecord
   validates   :business_id,         presence: true
   validates   :anchor,              presence: true,  if: "link.present?"
   
-  
-  belongs_to  :partner
+  belongs_to  :partner, counter_cache: true
   belongs_to  :business
   belongs_to  :request, optional: true, class_name: 'Partner::Request',   foreign_key: :partner_request_id
   belongs_to  :owner,                   class_name: 'User',               foreign_key: :user_id

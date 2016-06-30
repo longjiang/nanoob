@@ -2,7 +2,7 @@ class CrudController < ApplicationController
   
   include Nanoob::GenericModel
   
-  class_attribute :permitted_attrs
+  class_attribute :permitted_attrs, :filtering_params, :sortable_attrs
   
   before_action :entry, only: [:show, :new, :edit, :update, :destroy]
   

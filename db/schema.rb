@@ -85,8 +85,12 @@ ActiveRecord::Schema.define(version: 20160625085223) do
     t.string   "contact_name"
     t.string   "contact_email"
     t.string   "webform_url"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "requests_count",  default: 0
+    t.integer  "backlinks_count", default: 0
+    t.integer  "user_id"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["user_id"], name: "index_partners_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -118,4 +122,5 @@ ActiveRecord::Schema.define(version: 20160625085223) do
   add_foreign_key "partner_requests", "partners"
   add_foreign_key "partner_requests", "users"
   add_foreign_key "partner_requests", "users", column: "state_updated_by"
+  add_foreign_key "partners", "users"
 end
