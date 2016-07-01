@@ -16,3 +16,17 @@ label.required:after {
 .select2-container--bootstrap {
   color: #000;
 }
+
+fieldset.bootsy {
+  border: solid 1px grey;
+  padding: 10px;
+  
+  textarea {
+    height: 300px;
+    color: #000;
+  }
+}
+
+body.bootsy_text_area  a {
+ color: red; 
+}

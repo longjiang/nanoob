@@ -1,5 +1,7 @@
 class Partner::Request < ApplicationRecord
   
+  # include Bootsy::Container
+  
   enum channel: [ :email, :webform ]
   #enum status: [ :draft, :sent, :canceled, :paid, :rejected, :in_progress, :accepted, :submitted, :published ]
   
@@ -22,10 +24,20 @@ class Partner::Request < ApplicationRecord
   
   before_save :default_values
   
+  def body_xs=(value)
+    @body_xs = value
+  end
+  def body_xs
+    @body_xs ||= body
+  end
+
+
+  
   private
   
   def default_values
     self.state_updated_at ||= Time.now
   end
+  
   
 end

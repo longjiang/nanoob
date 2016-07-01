@@ -33,6 +33,6 @@
     hide_label: true,
     :prompt => "Select Status..."
     
-  = f.hidden_field :user_id, value: @backlink.user_id || current_user.id
+  = f.hidden_field :user_id, value: @backlink.try(:user_id) || current_user.id
 
   = f.primary

@@ -43,7 +43,8 @@ gem 'bootstrap_form', :git => 'https://github.com/SecondBureau/rails-bootstrap-f
 #gem 'draper', '~> 1.3'
 gem 'draper', :git => 'https://github.com/drapergem/draper.git', :branch => 'rails-5'
 gem 'select2-rails'
-
+#gem 'bootsy'
+gem 'bootsy', :git => 'https://github.com/volmer/bootsy.git', :branch => 'bootstrap-4'
 
 # Authentication
 gem 'devise'

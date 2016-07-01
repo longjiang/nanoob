@@ -72,3 +72,5 @@ en:
         owner: Owner
         subject: Subject
         state: Status
+        body: Body
+        body_xs: Body

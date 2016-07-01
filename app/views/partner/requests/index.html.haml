@@ -50,7 +50,7 @@
         %th 
     %tbody
       - @requests.each do |request|
-        %tr
+        %tr{class: request.state.eql?('draft') ? 'text text-muted' : ''}
           
           %th.text-xs-center{scope: "row"}
             = link_to  request.id, partner_request_path(request)
@@ -69,7 +69,7 @@
           
           %td.hidden-xs-down
             = i request.decorate.channel_icon
-            %span.hidden-md-down= request.channel.humanize
+            %span.hidden-md-down= request.channel.try(:humanize) 
           
           %td= request.owner_username
           

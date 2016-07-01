@@ -1,8 +1,9 @@
 class Partner::RequestsController < CrudController
-  self.permitted_attrs = [:partner_id, :business_id, :subject, :body, :channel, :sent_at, :state, :user_id, :state_updated_by]
+  self.permitted_attrs = [:partner_id, :business_id, :subject, :body, :body_was, :body_xs, :body_xs_was, :channel, :sent_at, :state, :user_id, :state_updated_by, :bootsy_image_gallery_id]
   
   before_action :find_business
   before_action :find_partner
+  before_action :update_bodies, only: [:create, :update]
   
   def index
     if @business
@@ -41,6 +42,12 @@ class Partner::RequestsController < CrudController
     elsif @request && !@request.new_record?
       @request.partner 
     end
+  end
+  
+  def update_bodies
+    p = params[:partner_request]
+    p[:body]    = p[:body_xs] unless p[:body_xs].eql?(p.delete(:body_xs_was))
+    p[:body_xs] = p[:body]    unless p[:body].eql?(p.delete(:body_was)) 
   end
   
   

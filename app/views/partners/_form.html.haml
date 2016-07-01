@@ -1,6 +1,8 @@
 / views/partners/_form.html.haml
 
 = bootstrap_form_for(@partner) do |f|
+
+  = f.alert_message "Please fix the errors below."
   
   = f.text_field :title
   
@@ -14,6 +16,8 @@
   = f.email_field :contact_email
   
   = f.url_field :webform_url
+  
+  = f.hidden_field :user_id, value: @partner.try(:user_id) || current_user.id
   
   = f.primary
   

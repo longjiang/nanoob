@@ -5,7 +5,7 @@ class CreatePartnerRequests < ActiveRecord::Migration[5.0]
       t.references :business, foreign_key: true
       t.references :user, foreign_key: true
       t.string    :subject
-      t.text      :body
+      t.text      :body, default: ''
       t.integer   :channel
       t.datetime  :sent_at
       t.string    :state, null: false, default: 'draft'

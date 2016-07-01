@@ -112,6 +112,7 @@ class CrudController < ApplicationController
     entry.attributes = model_params
   end
 
+
   # The form params for this model.
   def model_params
     params.require(model_identifier).permit(permitted_attrs)
