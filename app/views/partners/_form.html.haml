@@ -1,10 +1,19 @@
 / views/partners/_form.html.haml
 
 = bootstrap_form_for(@partner) do |f|
+  
   = f.text_field :title
-  = f.select :category, Partner.categories.keys.map{|l| [l.humanize, l]}, :prompt => "Select Category..."
+  
+  = f.select :category, Partner.categories.keys.map{|l| [l.humanize, l]},
+    :prompt => "#{t('forms.select')} #{han(:partner, :category).downcase}..."
+  
   = f.url_field :url
+  
   = f.text_field :contact_name
+  
   = f.email_field :contact_email
+  
   = f.url_field :webform_url
+  
   = f.primary
+  

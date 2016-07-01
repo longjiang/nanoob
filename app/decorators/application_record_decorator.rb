@@ -1,8 +1,12 @@
 class ApplicationRecordDecorator < Draper::Decorator
   delegate_all
   
+  def short_date_format
+    "%d/%m/%Y"
+  end
+  
   def created_at
-    object.created_at.strftime("%d/%m/%Y")
+    object.created_at.strftime(short_date_format)
   end
   
   # Define presentation-specific methods here. Helpers are accessed through

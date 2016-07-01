@@ -42,6 +42,7 @@ gem 'bootstrap_form', :git => 'https://github.com/SecondBureau/rails-bootstrap-f
 #gem 'bootstrap_form', :path => '/Users/gilles/Workspaces/rails-bootstrap-forms'
 #gem 'draper', '~> 1.3'
 gem 'draper', :git => 'https://github.com/drapergem/draper.git', :branch => 'rails-5'
+gem 'select2-rails'
 
 
 # Authentication
@@ -62,6 +63,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   gem 'rspec-rails', '3.5.0.beta3'
+  gem 'faker', :require => false
 end
 
 group :development do
@@ -87,7 +89,6 @@ group :test do
   gem "codeclimate-test-reporter", require: nil
   gem 'simplecov', :require => false
   gem 'factory_girl_rails'
-  gem 'faker', :require => false
 end
 
 group :heroku do

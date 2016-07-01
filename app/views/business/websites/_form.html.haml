@@ -6,10 +6,10 @@
     = f.hidden_field :business_id, value: @business.id
   - else
     = f.select :business_id, Business.all.map{|b| [b.name, b.id]},
-      :prompt => "#{t('forms.select')} #{han('business/website', :business_id).downcase}..."
+      prompt: "#{t('forms.select')} #{han('business/website', :business_id).downcase}..."
   
   = f.select :platform, Business::Website.platforms.keys.map{|p| [p.humanize, p]},
-    :prompt => "#{t('forms.select')} #{han('business/website', :platform).downcase}..."
+    prompt: "#{t('forms.select')} #{han('business/website', :platform).downcase}..."
   
   = f.url_field :url, placeholder: 'https://'
   

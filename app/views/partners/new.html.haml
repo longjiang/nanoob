@@ -1,5 +1,24 @@
 / views/partners/new.html.haml
 
-%h1 New Partner
+%ol.breadcrumb
+  %li
+    = link_to partners_path do
+      = i Partner.decorator_class.icon
+      = tmp :partner
+  %li.active
+    - if @partner.nil? || @partner.title.blank?
+      = t 'activerecord.actions.new'
+      = tm :partner
+    - else
+      = @partner.title
 
-= render 'form'
+
+%h1
+  = t 'activerecord.actions.new'
+  = tm :partner
+
+.row
+  .col-md-12.col-lg-9
+    = render 'form'
+  .hidden-md-down.col-lg-3
+    = render 'form-aside'

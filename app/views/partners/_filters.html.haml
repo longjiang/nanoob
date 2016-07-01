@@ -32,3 +32,15 @@
   = link_to filtered_entries_path(inactive: 30)  do
     New
     %span.label.label-default= @partners.inactive(30).count
+
+= bootstrap_form_tag url: partners_path, method: :get, layout: :inline do |f|
+  = f.hidden_field :recent, value: params[:value]       unless params[:recent].blank?
+  = f.hidden_field :inactive, value: params[:inactive]  unless params[:inactive].blank?
+  = f.hidden_field :owner, value: params[:owner]        unless params[:owner].blank?
+  = f.text_field :starts_with, value: params[:starts_with], hide_label: true, class: 'form-control-sm', placeholder: 'Title'
+  = f.text_field :contact,     value: params[:contact],     hide_label: true, class: 'form-control-sm', placeholder: 'contact'
+  = f.select :category, Partner.categories.keys.map{|l| [l.humanize, l]}, 
+    selected: params[:category], 
+    include_blank: 'All categories',
+    hide_label: true
+  = f.submit 'Filter'

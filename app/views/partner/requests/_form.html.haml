@@ -1,23 +1,23 @@
 / views/partner/requests/_form.html.haml
 
 = bootstrap_form_for(@request) do |f|
-  
-  = f.alert_message "Please fix the errors below.", error_summary: false
-  
-  = f.select :partner_id, Partner.all.map{|_| [_.title, _.id]}, 
-    hide_label: true, 
+
+  - if @business
+    = f.hidden_field :business_id, value: @business.id
+  - else 
+    = f.select :business_id, Business.all.map{|_| [_.name, _.id]}, 
+    prompt: "#{t('forms.select')} #{tm(:business)}..."
+    
+  - if @partner
+    = f.hidden_field :partner_id, value: @partner.id
+  - else 
+    = f.select :partner_id, Partner.all.map{|_| [_.title, _.id]}, 
     prompt: "#{t('forms.select')} #{tm(:partner)}..."
   
-  = f.select :business_id, Business.all.map{|_| [_.name, _.id]}, 
-    hide_label: true,
-    prompt: "#{t('forms.select')} #{tm(:business)}..."
-  
   = f.text_field :subject,
-    hide_label: true,
     placeholder: "Subject"
   
   = f.text_area :body,
-    hide_label: true,
     placeholder: "Body"
   
   = f.select :channel, Partner::Request.channels.keys.map{|_| [_.humanize, _]}, 

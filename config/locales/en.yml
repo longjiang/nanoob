@@ -8,6 +8,7 @@ en:
     businesses: This is the list of the products we are working on.
     business/websites: This is the list of our websites.
     partners: This is the list of our partners who may publish backlinks to our websites.
+    partner/requests: List of partnership requests we made to our partners. 
     
 # Menu
   menu:
@@ -22,6 +23,12 @@ en:
     business/website:
       all: All Websites
       add_new: Add new
+    partner:
+      all: All Partners
+      add_new: Add new
+    partner/request:
+      all: All Requests
+      add_new: Add new
   
 # ACTIVE RECORD  
   activerecord:
@@ -29,6 +36,9 @@ en:
       new: Add new
       edit: Edit
     models:
+      user:
+        one: User
+        other: Users
       partner:
         one: partner
         other: partners
@@ -58,3 +68,7 @@ en:
         title: Title
         category: Category
         contact: Contact
+      partner/request:
+        owner: Owner
+        subject: Subject
+        state: Status

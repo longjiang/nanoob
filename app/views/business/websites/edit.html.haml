@@ -3,8 +3,7 @@
 %ol.breadcrumb
   %li= link_to @business.decorate.name, business_websites_path(business_id: @business.id)
   %li.active
-    = i Business::Website.decorator_class.icon
-    = @website.decorate.host
+    = @website.decorate.name
 
 %h1
   = t 'activerecord.actions.edit'

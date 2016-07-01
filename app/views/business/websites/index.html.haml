@@ -25,7 +25,9 @@
       %tr
         %th.text-xs-center #
         - if @business.nil?
-          %th= tm :business
+          %th
+            = i Business.decorator_class.icon
+            = tm :business
         %th= han 'business/website', :platform
         %th= han 'business/website', :host
         %th.text-xs-center.text-lg-left

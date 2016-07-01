@@ -3,7 +3,7 @@
 %ol.breadcrumb
   %li
     - if @business.nil?
-      = link_to 'Websites', business_websites_path
+      = link_to tmp('business/website'), business_websites_path
     - else
       = link_to @business.decorate.name, business_websites_path(business_id: @business.id)
   
@@ -12,8 +12,7 @@
       = t 'activerecord.actions.new'
       = tm 'business/website'
     - else
-      = i 'globe'
-      = @website.decorate.host 
+      = @website.decorate.name 
 
 
 %h1

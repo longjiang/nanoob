@@ -53,10 +53,10 @@ backlink2.active!
 
 
 # Random Data
-require 'Faker'
+require 'faker'
 nbUsers = 5
-nbPartners = 70
-nbRequests = 50
+nbPartners = 150
+nbRequests = 100
 
 (1..nbUsers).each do |i|
   User.create!(username: "user#{i}", email: "user#{i}@example.com", password: 'secret', password_confirmation: 'secret')
@@ -84,7 +84,7 @@ states = %w( draft sent canceled paid rejected in_progress accepted submitted pu
                           business: business1, 
                           owner: user,
                           updater: user, 
-                          subject: Faker::Lorem.sentence(3), 
+                          subject: Faker::Lorem.sentence(5, true, 30), 
                           body: Faker::Lorem.paragraph(2) , 
                           channel: Partner::Request.channels.keys.sample,
                           state: states.sample)

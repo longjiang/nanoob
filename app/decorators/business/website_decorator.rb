@@ -1,5 +1,9 @@
 class Business::WebsiteDecorator < ApplicationRecordDecorator
   delegate_all
+  
+  def name
+    "#{h.i(self.class.icon)} #{host}".html_safe
+  end
 
   def host
     uri = URI(object.url)
