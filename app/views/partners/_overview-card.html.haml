@@ -1,0 +1,35 @@
+/ views/partners/_overview-card.html.haml
+
+.card.card-block
+  %h4.card-title= t :overview
+  %ul.list-group.list-group-flush
+    %li.list-group-item= partner.decorate.category
+    %li.list-group-item
+      = i Partner.decorator_class.attribute_icon(:contact)
+      = partner.contact_name
+      - if partner.contact_email.present?
+        = mail_to partner.contact_email do
+          = i 'envelope'
+      - if partner.webform_url.present?
+        = link_to partner.webform_url do
+          = i 'wpforms'
+    %li.list-group-item
+      Created : 
+      = partner.decorate.created_at
+    %li.list-group-item
+      Owner :
+      = partner.decorate.owner
+    %li.list-group-item
+      Requests :
+      = partner.requests.count
+      %span.pull-right
+        = link_to new_partner_request_path(partner_id: partner.id), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+          = i 'plus'
+          %span.hidden-md-down= t 'activerecord.actions.new'
+    %li.list-group-item
+      Backlink :
+      = partner.backlinks.count
+      %span.pull-right
+        = link_to new_partner_backlink_path(partner_id: partner.id), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+          = i 'plus'
+          %span.hidden-md-down= t 'activerecord.actions.new'

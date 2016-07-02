@@ -1,10 +1,14 @@
 class Partner::RequestDecorator < ApplicationRecordDecorator
   delegate_all
   
+  SUBJECT_LENGTH_OPTIONS  = {default: 60, xs: 10, sm: 20, md: 30, lg: 40}
+  CHANNEL_ICON_OPTIONS    = {default: 'exclamation-triangle', email: 'envelope', webform: 'wpforms'}
+  STATE_ICON_OPTIONS      = {default:'exclamation-triangle', draft:'sticky-note-o', sent:'send-o', canceled:'times-circle-o', paid:'euro' ,rejected:'frown-o', in_progress:['spinner','pulse'], accepted:'thumbs-up', submitted:'file-word-o', published:'flag-checkered'}
+  STATE_COLOR_OPTIONS     = {default:'muted', draft:'muted', sent:'', canceled:'info', paid:'warning' ,rejected:'danger', in_progress:'', accepted:'success', submitted:'', published:'success'}
+  
   def name
     "#{h.i(self.class.icon)} Request ##{object.id}".html_safe
   end
-  
   
   def state_updated_at
     if object.state_updated_at < 30.days.ago
@@ -16,88 +20,31 @@ class Partner::RequestDecorator < ApplicationRecordDecorator
   
   def subject(size=:xxl)
     return object.subject if size.eql?(:xxl)
-    length = case size
-    when :xs
-      10
-    when :sm
-      20
-    when :md
-      30
-    when :lg
-      40
-    else
-      60
-    end  
-    h.truncate(object.subject, length: length, separator: " ")
+    h.truncate(object.subject, length: subject_length(size), separator: ' ')
   end
   
   def i_channel
     "#{h.i(channel_icon)} #{object.channel.humanize}".html_safe
   end
   
-  def channel_icon
-    case object.channel
-    when 'email'
-      'envelope'
-    when 'webform'
-      'wpforms'
-    else
-      'exclamation-triangle'
-    end
-  end
-  
   def i_state
     "#{h.i(state_icon)} #{object.state.humanize}".html_safe
   end
   
+  def subject_length(size)
+    option :subject_length, size
+  end
+  
+  def channel_icon
+    option :channel_icon, object.channel
+  end
+  
   def state_icon
-    case object.state
-    when 'draft'
-      'sticky-note-o'
-    when 'sent'
-      'send-o'
-    when 'canceled'
-      'times-circle-o'
-    when 'paid'
-      'euro'
-    when 'rejected'
-      'frown-o'
-    when 'in_progress'
-      ['spinner','pulse']
-    when 'accepted'
-      'thumbs-up'
-    when 'submitted'
-      'file-word-o'
-    when 'published'
-      'flag-checkered'
-    else
-      'exclamation-triangle'
-    end
+    option :state_icon, object.state
   end
   
   def state_color
-    case object.state
-    when 'draft'
-      'muted'
-    when 'sent'
-      ''
-    when 'canceled'
-      'info'
-    when 'paid'
-      'warning'
-    when 'rejected'
-      'danger'
-    when 'in_progress'
-      ''
-    when 'accepted'
-      'success'
-    when 'submitted'
-      ''
-    when 'published'
-      'success'
-    else
-      'muted'
-    end
+   option :state_color, object.state
   end
 
   def self.icon

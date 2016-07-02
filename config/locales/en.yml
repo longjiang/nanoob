@@ -1,4 +1,10 @@
 en:
+  
+# Generic
+  overview: Overview
+  history: History
+  
+  
 # Forms
   forms:
     select: Select
@@ -9,6 +15,7 @@ en:
     business/websites: This is the list of our websites.
     partners: This is the list of our partners who may publish backlinks to our websites.
     partner/requests: List of partnership requests we made to our partners. 
+    partner/backlinks: List of actual backlinks published (active or not).
     
 # Menu
   menu:
@@ -28,6 +35,9 @@ en:
       add_new: Add new
     partner/request:
       all: All Requests
+      add_new: Add new
+    partner/backlink:
+      all: All Backlinks
       add_new: Add new
   
 # ACTIVE RECORD  
@@ -74,3 +84,11 @@ en:
         state: Status
         body: Body
         body_xs: Body
+        channels:
+          email: E-mail
+          webform: Web Form
+      partner/backlink:
+        statuses:
+          active: Active
+          inactive: Inactived
+          unknown: In Progress

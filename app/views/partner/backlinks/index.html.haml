@@ -1,40 +1,74 @@
 / views/partner/backlinks/index.html.haml
 
-= link_to new_partner_backlink_path, 
-  class: 'btn btn-primary btn-lg pull-right', 
-  role: 'button', 
-  title: th('activerecord.actions.new') do
-  = i 'plus', '2x'
-          
-%h1 Backlinks
+= render partial: 'partner/shared/index-header', locals: {relation: 'backlink'}
 
-%table.table.table-striped.table-bordered.table-sm
-  %thead
-    %tr
-      %th #
-      %th Partner
-      %th Business
-      %th Request
-      %th Referrer
-      %th Anchor
-      %th Link
-      %th Owner
-      %th Status
-      %th 
-  %tbody
-    - @backlinks.each do |backlink|
+.table-responsive
+  %table.table.table-sm.table-hover
+    %thead.thead-default
       %tr
-        %th{scope: "row"}= backlink.id
-        %td= backlink.partner_title
-        %td= backlink.business_name
-        %td= link_to "Request", partner_request_path(backlink.partner_request_id) unless backlink.partner_request_id.nil?
-        %td= backlink.referrer
-        %td= backlink.anchor
-        %td= backlink.link
-        %td= backlink.owner_username
-        %td= backlink.status
-        %td
-          = link_to 'destroy', partner_backlink_path(backlink), method: :delete, data: { confirm: 'Are you sure?' }
-          = link_to 'view', partner_backlink_path(backlink)
-          = link_to 'edit', edit_partner_backlink_path(backlink)
         
+        %th.text-xs-center #
+        
+        - if @business.nil?
+          %th.text-xs-center.text-sm-left
+            = i Business.decorator_class.icon
+            %span.hidden-xs-down= tm :business
+            
+        %th.text-xs-center.text-sm-left
+          = i Partner.decorator_class.icon
+          %span.hidden-xs-down= tmp :partner
+        
+        %th.text-xs-center.text-sm-left
+          = i Partner::Request.decorator_class.icon
+          %span.hidden-xs-down= tmp 'partner/request'
+          
+        %th Referrer
+        %th Anchor
+        %th Link
+        
+        %th.text-xs-center.text-sm-left
+          = i User.decorator_class.icon
+          %span.hidden-xs-down
+            = han 'partner/request', :owner
+            
+        %th Status
+        %th 
+    %tbody
+      - @backlinks.each do |backlink|
+        %tr
+        
+          %th.text-xs-center{scope: "row"}
+            = link_to  backlink.id, partner_backlink_path(backlink)
+            
+          - if @business.nil?
+            %td= link_to backlink.business_name, business_path(backlink.business)
+            
+          %td= link_to backlink.partner_title, partner_path(backlink.partner)
+            
+          %td.text-xs-center.text-sm-left
+            - unless backlink.partner_request_id.nil?
+              = link_to partner_request_path(backlink.partner_request_id) do
+                %span.hidden-xs-down= tm 'partner/request'
+                ="##{backlink.partner_request_id}"
+          
+          %td
+            = backlink.decorate.referrer
+            = link_to backlink.referrer do 
+              = i 'external-link'
+          
+          %td= backlink.anchor
+          
+          %td
+            = backlink.decorate.link
+            %span.hidden-xs-down
+              = link_to backlink.link do 
+                = i 'external-link'
+          
+          %td= backlink.owner_username
+          
+          %td
+            %span{class: "text-#{backlink.decorate.status_color}"}
+              = i backlink.decorate.status_icon
+              %span.hidden-xs-down= backlink.decorate.status          
+          %td
+            = render partial: 'shared/form_actions', locals: {object: backlink}

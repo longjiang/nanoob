@@ -53,8 +53,8 @@ gem 'devise'
 gem "validate_url"
 
 # state machine
-gem 'state_machine'
-gem 'ruby-graphviz', :require => 'graphviz' # Optional: only required for graphing
+gem 'aasm'
+#gem 'ruby-graphviz', :require => 'graphviz' # Optional: only required for graphing
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
@@ -64,6 +64,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   gem 'rspec-rails', '3.5.0.beta3'
+  gem 'rails-controller-testing'
   gem 'faker', :require => false
 end
 

@@ -52,9 +52,4 @@
               = i 'plus'
               %span.hidden-md-down= t 'activerecord.actions.new'
           %td            
-            = link_to business_website_path(website) do
-              = i 'eye'
-            = link_to edit_business_website_path(website) do
-              = i 'pencil'
-            = link_to business_website_path(website), method: :delete, data: { confirm: 'Are you sure?' } do
-              = i 'trash-o'
+            = render partial: 'shared/form_actions', locals: {object: website}

@@ -3,6 +3,7 @@ class Partner::RequestsController < CrudController
   
   before_action :find_business
   before_action :find_partner
+  before_action :default_user, only: [:new]
   before_action :update_bodies, only: [:create, :update]
   
   def index
@@ -10,6 +11,19 @@ class Partner::RequestsController < CrudController
       @requests = @business.requests
     else
       super
+    end
+  end
+  
+  def create
+    super
+    send_request if params[:send_request].present?
+  end
+  
+  def update
+    super do |format, updated|
+      if updated && params[:send_request].present?
+        send_request(format)
+      end
     end
   end
   
@@ -50,5 +64,16 @@ class Partner::RequestsController < CrudController
     p[:body_xs] = p[:body]    unless p[:body].eql?(p.delete(:body_was)) 
   end
   
+  def default_user
+    @request.owner = current_user unless @request.owner 
+  end
+  
+  def send_request(format)
+    begin
+      @request.send_request
+    rescue AASM::InvalidTransition
+      format.html { render :new }
+    end
+  end
   
 end

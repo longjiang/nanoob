@@ -82,11 +82,11 @@ ActiveRecord::Schema.define(version: 20160701121319) do
     t.text     "body"
     t.integer  "channel"
     t.datetime "sent_at"
-    t.string   "state",            default: "draft", null: false
+    t.integer  "state",            default: 0, null: false
     t.datetime "state_updated_at"
     t.integer  "state_updated_by"
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.index ["business_id"], name: "index_partner_requests_on_business_id", using: :btree
     t.index ["partner_id"], name: "index_partner_requests_on_partner_id", using: :btree
     t.index ["user_id"], name: "index_partner_requests_on_user_id", using: :btree

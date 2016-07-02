@@ -1,0 +1,10 @@
+/ views/partner/requests/_overview-card.html.haml
+
+.card.card-block
+  %h4.card-title= t :overview
+  %ul.list-group.list-group-flush
+    %li.list-group-item
+      %span{class: "text-#{request.decorate.state_color}"}= request.decorate.i_state
+    %li.list-group-item
+      Last Updated : 
+      = request.decorate.state_updated_at

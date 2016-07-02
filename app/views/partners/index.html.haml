@@ -75,10 +75,5 @@
           %td
             = partner.decorate.created_at 
           %td
-            = link_to partner_path(partner) do
-              = i 'eye'
-            = link_to edit_partner_path(partner) do
-              = i 'pencil'
-            = link_to partner_path(partner), method: :delete, data: { confirm: 'Are you sure?' } do
-              = i 'trash-o'
+            = render partial: 'shared/form_actions', locals: {object: partner}
         

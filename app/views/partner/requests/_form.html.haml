@@ -14,7 +14,20 @@
     = f.select :partner_id, Partner.all.map{|_| [_.title, _.id]}, 
     prompt: "#{t('forms.select')} #{tm(:partner)}..."
   
-  = f.text_field :subject, placeholder: "Subject"
+  .row
+  
+    .col-md-6
+  
+      = f.text_field :subject, placeholder: "Subject"
+    
+    .col-md-6
+  
+      = f.form_group :channel, label: { text: "Channel" } do
+        .clearfix
+        - Partner::Request.channels.keys.each do |channel|
+          = f.radio_button :channel, channel, label: Partner::Request.decorator_class.human_enum_name(:channel, channel), inline: true
+        
+      -# = f.select :channel, Partner::Request.channels.keys.map{|_| [_.humanize, _]},:prompt => "#{t('forms.select')} #{han('partner/request', :channel)}..."
   
   = f.hidden_field :body_xs_was, value: @request.body_xs
   
@@ -26,16 +39,25 @@
     %label{for: :partner_request_body}= han('partner/request', :body)
     = f.bootsy_area :body, class: 'form-control', placeholder: "Body"
   
-  = f.select :channel, Partner::Request.channels.keys.map{|_| [_.humanize, _]}, 
-    :prompt => "#{t('forms.select')} #{han('partner/request', :channel)}..."
   
-  = f.date_field :sent_at
-  
-  = f.text_field :state, placeholder: "State"
-  
-  = f.select :user_id, User.all.map{|_| [_.username, _.id]},
-    prompt: "Select Owner..."
   
   = f.hidden_field :state_updated_by, value: current_user.id
   
-  = f.primary
+  = f.primary "Save Draft", name: 'submit'
+  
+  - if @request.draft?
+    = f.submit "Send Request", class: "btn btn-secondary", name: 'send_request'
+  
+  .clearfix
+  
+  %hr
+  
+  =link_to 'Extra Fields', '#', class: 'btn btn-danger hidden-md-down', id: 'show_extra_fields'
+  
+  #extra_fields
+  
+    = f.date_field :sent_at
+  
+    = f.select :state, Partner::Request.states.keys.map{|_| [_.humanize, _]}, prompt: "Select State..."
+  
+    = f.select :user_id, User.all.map{|_| [_.username, _.id]}, prompt: "Select Owner..."

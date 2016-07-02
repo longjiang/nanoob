@@ -2,7 +2,7 @@
 
 = bootstrap_form_for(@partner) do |f|
 
-  = f.alert_message "Please fix the errors below."
+  -#= f.alert_message "Please fix the errors below."
   
   = f.text_field :title
   
@@ -20,4 +20,6 @@
   = f.hidden_field :user_id, value: @partner.try(:user_id) || current_user.id
   
   = f.primary
+  
+  = f.primary 'create and make a request'
   

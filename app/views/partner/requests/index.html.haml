@@ -1,22 +1,6 @@
 / views/partner/requests/index.html.haml
 
-- unless @business.nil?
-  %ol.breadcrumb
-    %li.active
-      = @business.decorate.name
-
-= link_to new_partner_request_path, 
-  class: 'btn btn-primary pull-right', 
-  role: 'button', 
-  title: th('activerecord.actions.new') do
-  = i 'plus'
-  = t 'activerecord.actions.new'
-          
-%h1
-  = i Partner::Request.decorator_class.icon
-  = tmp 'partner/request'
-
-%p= t 'descriptions.partner/requests'
+= render partial: 'partner/shared/index-header', locals: {relation: 'request'}
 
 .table-responsive
   %table.table.table-sm.table-hover
@@ -88,11 +72,5 @@
           %td= request.decorate.state_updated_at
 
           %td
-            %span.hidden-xs-down
-              = link_to partner_request_path(request) do
-                = i 'eye'
-            = link_to edit_partner_request_path(request) do
-              = i 'pencil'
-            = link_to partner_request_path(request), method: :delete, data: { confirm: 'Are you sure?' } do
-              = i 'trash-o'
+            = render partial: 'shared/form_actions', locals: {object: request}
         

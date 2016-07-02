@@ -1,0 +1,12 @@
+/ views/partner/backlinks/_card.html.haml
+
+.card.card-block
+  %h4.card-title= link_to backlink.decorate.name, partner_backlink_path(backlink)
+  %p.card-text
+    %span= backlink.decorate.status
+  %p.card-text
+    Created : 
+    = backlink.decorate.created_at
+  %p.card-text
+    Last Updated : 
+    = backlink.updated_at
