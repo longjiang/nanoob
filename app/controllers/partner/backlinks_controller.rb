@@ -7,7 +7,7 @@ class Partner::BacklinksController < CrudController
   
   def add_menu_items
     @menu.update do |menu|
-      menu.update I18n.t("menu.partner/backlinks"), partner_backlinks_path, {icon: Partner::Request.decorator_class.icon} do |submenu|
+      menu.update I18n.t("menu.partner/backlinks"), partner_backlinks_path, 'backlinks', {icon: Partner::Request.decorator_class.icon} do |submenu|
         submenu.add I18n.t("menu.partner/backlink.all"), partner_backlinks_path, {icon: false}
         submenu.add I18n.t("menu.partner/backlink.add_new"), new_partner_backlink_path, {icon: false}
       end

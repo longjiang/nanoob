@@ -31,7 +31,7 @@ class Partner::RequestsController < CrudController
   
   def add_menu_items
     @menu.update do |menu|
-      menu.update I18n.t("menu.partner/requests"), partner_requests_path, {icon: Partner::Request.decorator_class.icon} do |submenu|
+      menu.update I18n.t("menu.partner/requests"), partner_requests_path, 'requests', {icon: Partner::Request.decorator_class.icon} do |submenu|
         submenu.add I18n.t("menu.partner/request.all"), partner_requests_path, {icon: false}
         submenu.add I18n.t("menu.partner/request.add_new"), new_partner_request_path, {icon: false}
       end

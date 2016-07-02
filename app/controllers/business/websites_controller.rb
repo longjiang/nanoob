@@ -16,7 +16,7 @@ class Business::WebsitesController < CrudController
   
   def add_menu_items
     @menu.update do |menu|
-      menu.update I18n.t("menu.business/websites"), business_websites_path, {icon: Business::Website.decorator_class.icon} do |submenu|
+      menu.update I18n.t("menu.business/websites"), business_websites_path, 'websites', {icon: Business::Website.decorator_class.icon} do |submenu|
         submenu.add I18n.t("menu.business/website.all"), business_websites_path, {icon: false}
         submenu.add I18n.t("menu.business/website.add_new"), new_business_website_path, {icon: false}
       end
