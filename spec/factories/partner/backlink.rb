@@ -1,6 +1,6 @@
 require 'faker'
 
-THREEDAYSAGO = DateTime.new(Time.now.year, Time.now.month, Time.now.day - 3, 22, 30, 10)
+THREEDAYSAGO = DateTime.new(Time.now.year, Time.now.month, Time.now.day.eql?(3) ? -1 : Time.now.day - 3, 22, 30, 10)
 
 
 FactoryGirl.define do
