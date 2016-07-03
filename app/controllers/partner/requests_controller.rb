@@ -8,9 +8,9 @@ class Partner::RequestsController < CrudController
   
   def index
     if @business
-      @requests = @business.requests
+      @requests = @business.requests.includes(:owner).includes(:partner).includes(:backlink)
     else
-      super
+      @requests = Partner::Request.all.includes(:owner).includes(:partner).includes(:backlink).includes(:business)
     end
   end
   
