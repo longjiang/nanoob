@@ -1,3 +1,4 @@
+/ views/partners/_filters.html.haml
 
 - if params.slice(*PartnersController.filtering_params).blank?
   All
@@ -13,7 +14,7 @@
 - else
   = link_to filtered_entries_path(owner: current_user.id) do
     Mine
-    %span.label.label-default= @partners.owner(current_user.id).count
+    %span.label.label-default= @partners_unsliced.owner(current_user.id).count
 |
 - unless params[:recent].blank?
   Recent
@@ -22,7 +23,7 @@
 - else
   = link_to filtered_entries_path(recent: 10) do
     Recent
-    %span.label.label-default= @partners.recent(10).count
+    %span.label.label-default= @partners_unsliced.recent(10).count
 |
 - unless params[:inactive].blank?
   New
@@ -31,7 +32,7 @@
 - else
   = link_to filtered_entries_path(inactive: 30)  do
     New
-    %span.label.label-default= @partners.inactive(30).count
+    %span.label.label-default= @partners_unsliced.inactive(30).count
 
 = bootstrap_form_tag url: partners_path, method: :get, layout: :inline do |f|
   = f.hidden_field :recent, value: params[:value]       unless params[:recent].blank?

@@ -17,11 +17,11 @@ class Partner::BacklinkDecorator < ApplicationRecordDecorator
   end
   
   def i_status
-    "#{h.i(status_icon)} #{object.status.humanize}".html_safe
+    "#{h.i(status_icon)} #{status}".html_safe
   end
   
   def status
-    self.class.human_enum_name(:status, object.status || 'unknown')
+    self.class.human_enum_name(:status, object.status || 'unknown').humanize
   end
   
   def status_icon

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160701121319) do
+ActiveRecord::Schema.define(version: 20160703162010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,23 @@ ActiveRecord::Schema.define(version: 20160701121319) do
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.index ["business_product_id"], name: "index_businesses_on_business_product_id", using: :btree
+  end
+
+  create_table "dashboard_periods", force: :cascade do |t|
+    t.string   "name"
+    t.string   "starts_at"
+    t.integer  "cycle"
+    t.integer  "cycles_count"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "meta", force: :cascade do |t|
+    t.string   "object_class"
+    t.integer  "object_id"
+    t.jsonb    "datas",        default: {}, null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "partner_backlinks", force: :cascade do |t|
@@ -119,6 +136,7 @@ ActiveRecord::Schema.define(version: 20160701121319) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
+    t.jsonb    "preferences",            default: {}, null: false
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree

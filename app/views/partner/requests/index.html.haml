@@ -2,75 +2,43 @@
 
 = render partial: 'partner/shared/index-header', locals: {relation: 'request'}
 
+#pagination.pull-right.hidden-xs-down
+  = paginate @requests, remote: true
+  
+= render 'filters'
+
 .table-responsive
-  %table.table.table-sm.table-hover
+  %table.table.table-sm.table-hover.loading
     %thead.thead-default
       %tr
         
-        %th.text-xs-center #
+        %th.text-nowrap.text-xs-center #
         
         - if @business.nil?
-          %th.text-xs-center.text-sm-left
+          %th.text-nowrap.text-xs-center.text-sm-left
             = i Business.decorator_class.icon
             %span.hidden-xs-down= tm :business
         
-        %th.text-xs-center.text-sm-left
+        %th.text-nowrap.text-xs-center.text-sm-left
           = i Partner.decorator_class.icon
           %span.hidden-xs-down= tmp :partner
         
-        %th.hidden-xs-down= han 'partner/request', :subject
+        %th.text-nowrap.hidden-xs-down= han 'partner/request', :subject
         
-        %th.hidden-xs-down
+        %th.text-nowrap.hidden-xs-down
           %span.hidden-md-down= han 'partner/request', :channel
           %span.hidden-lg-up= han('partner/request', :channel)[0]
         
-        %th.text-xs-center.text-sm-left
+        %th.text-nowrap.text-xs-center.text-sm-left
           = i User.decorator_class.icon
           %span.hidden-xs-down
             = han 'partner/request', :owner
         
-        %th.text-xs-center.text-sm-left{colspan:2}= han 'partner/request', :state
+        %th.text-nowrap.text-xs-center.text-sm-left{colspan:2}= han 'partner/request', :state
         
-        %th 
+        %th.text-nowrap 
     %tbody
-      - @requests.each do |request|
-        %tr{class: request.state.eql?('draft') ? 'text text-muted' : ''}
-          
-          %th.text-xs-center{scope: "row"}
-            = link_to  request.id, partner_request_path(request)
-          
-          - if @business.nil?
-            %td= link_to request.business_name, business_path(request.business)
-          
-          %td= link_to request.partner_title, partner_path(request.partner)
-          
-          %td.hidden-xs-down
-            %span.hidden-sm-up= request.decorate.subject(:xs)
-            %span.hidden-md-up.hidden-xs-down= request.decorate.subject(:sm)
-            %span.hidden-lg-up.hidden-sm-down= request.decorate.subject(:md)
-            %span.hidden-xl-up.hidden-md-down= request.decorate.subject(:lg)
-            %span.hidden-lg-down= request.decorate.subject(:xl)
-          
-          %td.hidden-xs-down
-            = i request.decorate.channel_icon
-            %span.hidden-md-down= request.channel.try(:humanize) 
-          
-          %td= request.owner_username
-          
-          %td
-            - if request.backlink 
-              = link_to partner_backlink_path(request.backlink) do
-                %span{class: "text-#{request.decorate.state_color}"}
-                  = i request.decorate.state_icon
-                  %span.hidden-xs-down= request.state.humanize
-                = i Partner::Backlink.decorator_class.icon
-            - else
-              %span{class: "text-#{request.decorate.state_color}"}
-                = i request.decorate.state_icon
-                %span.hidden-xs-down= request.state.humanize
-          
-          %td= request.decorate.state_updated_at
+      = render partial: 'index-table-tr', collection: @requests, as: :request
 
-          %td
-            = render partial: 'shared/form_actions', locals: {object: request}
-        
+#pagination-bottom.text-xs-center       
+  = paginate @requests, remote: true

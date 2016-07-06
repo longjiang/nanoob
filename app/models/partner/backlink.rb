@@ -21,6 +21,11 @@ class Partner::Backlink < ApplicationRecord
   delegate    :name,     to: :business, prefix: true
   delegate    :username, to: :owner, prefix: true
   
+  scope :owner,         -> (user)       { where owner: user.to_i }
+  scope :status,        -> (status)      { where status: status }
+  scope :recent,        -> (days)       { where("updated_at > ? ", days.to_i.days.ago) }
+  scope :business_id,   -> (id)         { where business_id: id }
+  
   before_save :update_status_timestamp
   
   private

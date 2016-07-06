@@ -20,7 +20,6 @@ RSpec.describe BusinessesController, type: :controller do
     let(:business) { businesses[rand 4] }
     before(:each) { process :show, method: :get, params: { id: business.id } }
     it 'success' do
-      debugger
       expect(response).to be_success
     end
     it 'assigns it to @business' do

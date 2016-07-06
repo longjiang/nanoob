@@ -13,7 +13,10 @@
   = t 'activerecord.actions.new'
   
 %h1
-  = i Partner::Request.decorator_class.icon
+  = i "Partner::#{relation.capitalize}".constantize.decorator_class.icon
   = tmp "partner/#{relation}"
+  %span.label.label-info
+    = instance_variable_get("@#{relation.pluralize}_unsliced").count
+
 
 %p= t "descriptions.partner/#{relation.pluralize}"

@@ -23,33 +23,33 @@
   %table.table.table-sm.table-hover
     %thead.thead-default
       %tr
-        %th.text-xs-center #
+        %th.text-nowrap.text-xs-center #
         - if @business.nil?
           %th
             = i Business.decorator_class.icon
             = tm :business
         %th= han 'business/website', :platform
         %th= han 'business/website', :host
-        %th.text-xs-center.text-lg-left
+        %th.text-nowrap.text-xs-center.text-lg-left
           = i Partner::Backlink.decorator_class.icon
           %span.hidden-md-down= tmp 'partner/backlink'
-        %th 
+        %th.text-nowrap 
     %tbody
       - @websites.each do |website|
         %tr
-          %th.text-xs-center{scope: "row"}= website.id
+          %th.text-nowrap.text-xs-center{scope: "row"}= website.id
           - if @business.nil?
-            %td= link_to website.business_name, business_path(website.business) 
-          %td= website.decorate.platform
+            %td.text-nowrap= link_to website.business_name, business_path(website.business) 
+          %td.text-nowrap= website.decorate.platform
           %td
             = link_to website.decorate.host, business_website_path(website)
             = link_to website.url do
               = i 'external-link'
             
-          %td.text-xs-center.text-lg-left
+          %td.text-nowrap.text-xs-center.text-lg-left
             %span.label.label-default= link_to website.backlinks.count, partner_backlinks_path(website_id: website.id)
             = link_to new_partner_backlink_path(website_id: website.id), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
               = i 'plus'
               %span.hidden-md-down= t 'activerecord.actions.new'
-          %td            
+          %td.text-nowrap            
             = render partial: 'shared/form_actions', locals: {object: website}

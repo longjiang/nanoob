@@ -13,14 +13,16 @@
   
 %p= t 'descriptions.partners'
 
+#pagination.pull-right.hidden-xs-down
+  = paginate @partners, remote: true
  
 = render 'filters'
 
 .table-responsive
-  %table.table.table-sm.table-hover
+  %table.table.table-sm.table-hover.loading
     %thead.thead-default
       %tr
-        %th.text-xs-center #
+        %th.text-nowrap.text-xs-center #
         %th
           = link_to sorted_entries_path(title: asc?(:title) ? :desc : :asc) do
             = han :partner, :title
@@ -34,46 +36,16 @@
                 %i.fa.fa-ban.fa-stack-1x.text-danger
         %th= han :partner, :category
         %th= han :partner, :contact
-        %th.text-xs-center.text-lg-left
+        %th.text-nowrap.text-xs-center.text-lg-left
           = i Partner::Request.decorator_class.icon
           %span.hidden-md-down= tmp 'partner/request'
-        %th.text-xs-center.text-lg-left
+        %th.text-nowrap.text-xs-center.text-lg-left
           = i Partner::Backlink.decorator_class.icon
           %span.hidden-md-down= tmp 'partner/backlink'
         %th= han :partner, :created_at
-        %th 
+        %th.text-nowrap 
     %tbody
-      - @partners.each do |partner|
-        %tr
-          %th.text-xs-center{scope: "row"}= partner.id
-          %td
-            = link_to partner_path(partner) do
-              = partner.title
-            = link_to partner.url do 
-              = i 'external-link'
-          %td= partner.category.humanize
-          %td
-            = partner.contact_name
-            - if partner.contact_email.present?
-              = mail_to partner.contact_email do
-                = i 'envelope'
-            - if partner.webform_url.present?
-              = link_to partner.webform_url do
-                = i 'wpforms'
-          
-          %td.text-xs-center.text-lg-left
-            %span.label.label-default= link_to partner.requests_count, partner_requests_path(partner_id: partner)
-            = link_to new_partner_request_path(partner_id: partner), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
-              = i 'plus'
-              %span.hidden-md-down= t 'activerecord.actions.new'
-          
-          %td.text-xs-center.text-lg-left
-            %span.label.label-default= link_to partner.backlinks_count, partner_backlinks_path(partner_id: partner)
-            = link_to new_partner_backlink_path(partner_id: partner), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
-              = i 'plus'
-              %span.hidden-md-down= t 'activerecord.actions.new'
-          %td
-            = partner.decorate.created_at 
-          %td
-            = render partial: 'shared/form_actions', locals: {object: partner}
-        
+      = render partial: 'index-table-tr', collection: @partners, as: :partner
+ 
+#pagination-bottom.text-xs-center          
+  = paginate @partners, remote: true

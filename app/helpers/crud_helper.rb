@@ -5,7 +5,7 @@ module CrudHelper
   end
   
   def filtered_entries_path(filter)
-    method        = "#{controller_name}_path"
+    method        = "#{controller_path.gsub('/','_')}_path"
     ctrl          = controller
     permit_params = ctrl.filtering_params + ctrl.sortable_attrs.map {|_| sortable_attr_name(_).to_sym}
     send(method, params.slice(*permit_params).permit(*permit_params).merge(filter))

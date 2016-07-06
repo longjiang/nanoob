@@ -3,7 +3,16 @@ Business::Product.destroy_all
 Partner.destroy_all
 Business.destroy_all
 User.destroy_all
+Dashboard::Period.destroy_all
 
+# Periods
+[[:today, "beginning_of_day", :daily, 1],
+[:yesterday, "beginning_of_day - 1.day", :daily, 1],
+[:this_week, "beginning_of_week", :weekly, 1],
+[:last_week, "beginning_of_week - 1.week", :weekly, 1],
+[:seven_last_days, "beginning_of_day - 6.days", :daily, 7]].each do |params|
+  Dashboard::Period.create!(name: params[0], starts_at: params[1], cycle: params[2], cycles_count: params[3])
+end
 # Users
 user1 = User.create!(username: 'admin', email: 'admin@example.com', password: 'secret', password_confirmation: 'secret')
 
@@ -55,9 +64,9 @@ backlink2.active!
 
 # Random Data
 require 'faker'
-nbUsers = 5
-nbPartners = 250
-nbRequests = 250
+nbUsers = 3
+nbPartners = 500
+nbRequests = 900
 
 (1..nbUsers).each do |i|
   User.create!(username: "user#{i}", email: "user#{i}@example.com", password: 'secret', password_confirmation: 'secret')
@@ -77,18 +86,18 @@ end
                     )
 end
 
-states = %w( draft sent canceled paid rejected in_progress accepted submitted published )
+
 (1..nbRequests).each do |i|
   user = User.all.sample
   partner = Partner.all.sample
   p = Partner::Request.new(partner: partner, 
-                          business: business1, 
+                          business: Business.all.sample, 
                           owner: user,
                           updater: user, 
                           subject: Faker::Lorem.sentence(5, true, 30), 
                           body: Faker::Lorem.paragraph(2) , 
                           channel: Partner::Request.channels.keys.sample,
-                          state: states.sample)
+                          state: Partner::Request.states.keys.sample)
  case p.state
    when 'draft'
      date = Faker::Time.between(partner.created_at, DateTime.now)

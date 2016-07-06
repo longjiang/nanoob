@@ -1,0 +1,10 @@
+/ views/partner/backlink/_overview-card.html.haml
+
+.card.card-block
+  %h4.card-title= t :overview
+  %ul.list-group.list-group-flush
+    %li.list-group-item
+      %span{class: "text-#{backlink.decorate.status_color}"}= backlink.decorate.i_status
+    %li.list-group-item
+      Last Updated : 
+      = backlink.decorate.updated_at

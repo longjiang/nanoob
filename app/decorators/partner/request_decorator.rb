@@ -3,8 +3,8 @@ class Partner::RequestDecorator < ApplicationRecordDecorator
   
   SUBJECT_LENGTH_OPTIONS  = {default: 60, xs: 10, sm: 20, md: 30, lg: 40}
   CHANNEL_ICON_OPTIONS    = {default: 'exclamation-triangle', email: 'envelope', webform: 'wpforms'}
-  STATE_ICON_OPTIONS      = {default:'exclamation-triangle', draft:'sticky-note-o', sent:'send-o', canceled:'times-circle-o', paid:'euro' ,rejected:'frown-o', in_progress:['spinner','pulse'], accepted:'thumbs-up', submitted:'file-word-o', published:'flag-checkered'}
-  STATE_COLOR_OPTIONS     = {default:'muted', draft:'muted', sent:'', canceled:'info', paid:'warning' ,rejected:'danger', in_progress:'', accepted:'success', submitted:'', published:'success'}
+  STATE_ICON_OPTIONS      = {default:'exclamation-triangle', draft:'sticky-note-o', sent:'send-o', canceled:'times-circle-o', paying:'money', paid:'euro' ,rejected:'frown-o', in_progress:['spinner','pulse'], accepted:'thumbs-up', submitted:'file-word-o', published:'flag-checkered'}
+  STATE_COLOR_OPTIONS     = {default:'muted', draft:'muted', sent:'', canceled:'info', paying:'warning', paid:'' ,rejected:'danger', in_progress:'', accepted:'success', submitted:'', published:'success'}
   
   def name
     "#{h.i(self.class.icon)} Request ##{object.id}".html_safe

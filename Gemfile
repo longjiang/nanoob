@@ -45,6 +45,7 @@ gem 'draper', :git => 'https://github.com/drapergem/draper.git', :branch => 'rai
 gem 'select2-rails'
 #gem 'bootsy'
 gem 'bootsy', :git => 'https://github.com/volmer/bootsy.git', :branch => 'bootstrap-4'
+gem 'kaminari'
 
 # Authentication
 gem 'devise'
@@ -55,6 +56,10 @@ gem "validate_url"
 # state machine
 gem 'aasm'
 #gem 'ruby-graphviz', :require => 'graphviz' # Optional: only required for graphing
+
+# settings
+#gem 'storext'
+gem 'storext', :git => 'https://github.com/G5/storext.git'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
