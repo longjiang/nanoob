@@ -1,0 +1,20 @@
+/ views/partners/edit.html.haml
+
+%ol.breadcrumb
+  %li
+    = link_to partners_path do
+      = i Partner.decorator_class.icon
+      = tmp :partner
+  %li.active
+    = @partner.title
+
+
+%h1
+  = t 'activerecord.actions.edit'
+  = tm :partner
+
+.row
+  .col-md-12.col-lg-9
+    = render 'form'
+  .hidden-md-down.col-lg-3
+    = render 'form-aside'

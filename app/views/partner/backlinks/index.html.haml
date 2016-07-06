@@ -1,0 +1,81 @@
+/ views/partner/backlinks/index.html.haml
+
+= render partial: 'partner/shared/index-header', locals: {relation: 'backlink'}
+
+.pull-right
+  = paginate @backlinks
+  
+= render 'filters'
+
+.table-responsive
+  %table.table.table-sm.table-hover
+    %thead.thead-default
+      %tr
+        
+        %th.text-nowrap.text-xs-center #
+        
+        - if @business.nil?
+          %th.text-nowrap.text-xs-center.text-sm-left
+            = i Business.decorator_class.icon
+            %span.hidden-xs-down= tm :business
+            
+        %th.text-nowrap.text-xs-center.text-sm-left
+          = i Partner.decorator_class.icon
+          %span.hidden-xs-down= tmp :partner
+        
+        %th.text-nowrap.text-xs-center.text-sm-left
+          = i Partner::Request.decorator_class.icon
+          %span.hidden-xs-down= tmp 'partner/request'
+          
+        %th.text-nowrap Referrer
+        %th.text-nowrap Anchor
+        %th.text-nowrap Link
+        
+        %th.text-nowrap.text-xs-center.text-sm-left
+          = i User.decorator_class.icon
+          %span.hidden-xs-down
+            = han 'partner/request', :owner
+            
+        %th.text-nowrap Status
+        %th.text-nowrap 
+    %tbody
+      - @backlinks.each do |backlink|
+        %tr
+        
+          %th.text-nowrap.text-xs-center{scope: "row"}
+            = link_to  backlink.id, partner_backlink_path(backlink)
+            
+          - if @business.nil?
+            %td.text-nowrap= link_to backlink.business_name, business_path(backlink.business)
+            
+          %td.text-nowrap= link_to backlink.partner_title, partner_path(backlink.partner)
+            
+          %td.text-nowrap.text-xs-center.text-sm-left
+            - unless backlink.partner_request_id.nil?
+              = link_to partner_request_path(backlink.partner_request_id) do
+                %span.hidden-xs-down= tm 'partner/request'
+                ="##{backlink.partner_request_id}"
+          
+          %td
+            = backlink.decorate.referrer
+            = link_to backlink.referrer do 
+              = i 'external-link'
+          
+          %td.text-nowrap= backlink.anchor
+          
+          %td
+            = backlink.decorate.link
+            %span.hidden-xs-down
+              = link_to backlink.link do 
+                = i 'external-link'
+          
+          %td.text-nowrap= backlink.owner_username
+          
+          %td
+            %span{class: "text-#{backlink.decorate.status_color}"}
+              = i backlink.decorate.status_icon
+              %span.hidden-xs-down= backlink.decorate.status          
+          %td
+            = render partial: 'shared/form_actions', locals: {object: backlink}
+            
+= paginate @backlinks

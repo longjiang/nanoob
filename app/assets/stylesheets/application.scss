@@ -1,6 +1,14 @@
-
-// Custom bootstrap variables must be set or imported before bootstrap itself.
+@import 'bootstrap-variables.scss';
 @import "bootstrap";
 @import "font-awesome";
+@import "fonts";
+
+@import "select2";
+@import "select2-bootstrap";
+@import "bootsy";
+
+//@import "glyphicons";
 @import "layout";
 @import "forms";
+@import "menu";
+@import "pagination";

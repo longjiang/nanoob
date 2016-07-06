@@ -1,10 +1,63 @@
 en:
   
+# Generic
+  overview: Overview
+  history: History
+  
+  
+# Forms
+  forms:
+    select: Select
+    
+# descriptions
+  descriptions:
+    businesses: This is the list of the products we are working on.
+    business/websites: This is the list of our websites.
+    partners: This is the list of our partners who may publish backlinks to our websites.
+    partner/requests: List of partnership requests we made to our partners. 
+    partner/backlinks: List of actual backlinks published (active or not).
+    
+# Menu
+  menu:
+    businesses: Businesses
+    business/websites: Websites
+    partners: Partners
+    partner/requests: Requests
+    partner/backlinks: Backlinks
+    business:
+      all: All Businesses
+      add_new: Add new
+    business/website:
+      all: All Websites
+      add_new: Add new
+    partner:
+      all: All Partners
+      add_new: Add new
+    partner/request:
+      all: All Requests
+      add_new: Add new
+    partner/backlink:
+      all: All Backlinks
+      add_new: Add new
+  
 # ACTIVE RECORD  
   activerecord:
     actions:
-      new: add new
+      new: Add new
+      edit: Edit
     models:
+      user:
+        one: User
+        other: Users
+      partner:
+        one: partner
+        other: partners
+      partner/request:
+        one: request
+        other: requests
+      partner/backlink:
+        one: backlink
+        other: backlinks
       business:
         one: business
         other: businesses
@@ -14,8 +67,28 @@ en:
     attributes:
       business:
         name: Name
-        product_line: Product line
+        product: Product Line
         language: Language
+        business_product_id: Product Line
       business/website:
         platform: Platform
         url: Url
+        host: Host
+      partner:
+        title: Title
+        category: Category
+        contact: Contact
+      partner/request:
+        owner: Owner
+        subject: Subject
+        state: Status
+        body: Body
+        body_xs: Body
+        channels:
+          email: E-mail
+          webform: Web Form
+      partner/backlink:
+        statuses:
+          active: Active
+          inactive: Inactived
+          unknown: In Progress

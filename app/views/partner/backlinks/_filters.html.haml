@@ -1,0 +1,49 @@
+/ views/partner/backlinks/_filters.html.haml
+
+- if params.slice(*Partner::BacklinksController.filtering_params).blank?
+  All
+- else
+  = link_to partner_backlinks_path do
+    All
+    %span.label.label-default= Partner::Backlink.count
+|
+- if params[:owner] && params[:owner].to_i.eql?(current_user.id)
+  Mine
+  = link_to filtered_entries_path(owner: nil) do
+    = i 'times-circle-o'
+- else
+  = link_to filtered_entries_path(owner: current_user.id) do
+    Mine
+    %span.label.label-default= @backlinks_unsliced.owner(current_user.id).count
+|
+- unless params[:recent].blank?
+  Recent
+  = link_to filtered_entries_path(recent: nil) do
+    = i 'times-circle-o'
+- else
+  = link_to filtered_entries_path(recent: 10) do
+    Recent
+    %span.label.label-default= @backlinks_unsliced.recent(10).count
+
+= bootstrap_form_tag url: partner_backlinks_path, method: :get, layout: :inline do |f|
+  = f.hidden_field :owner, value: params[:owner]        unless params[:owner].blank?
+  = f.hidden_field :recent, value: params[:recent]       unless params[:recent].blank?
+  
+  = f.select :business_id, Business.all.map{|_| [_.name, _.id]}, 
+    selected: params[:business_id], 
+    include_blank: 'All businesses',
+    hide_label: true
+    
+  = f.select :status, Partner::Backlink.statuses.keys.map{|_| [_.humanize, _]}, 
+    selected: params[:status], 
+    include_blank: 'All statuses',
+    hide_label: true
+    
+  = f.select :owner, User.all.map{|_| [_.decorate.name, _.id ]}, 
+    selected: params[:owner], 
+    include_blank: 'All owners',
+    hide_label: true
+    
+  
+    
+  = f.submit 'Filter'

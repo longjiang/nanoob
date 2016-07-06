@@ -1,33 +1,55 @@
 / views/business/websites/index.html.haml
 
+- unless @business.nil?
+  %ol.breadcrumb
+    %li.active
+      = @business.decorate.name
+
 = link_to new_business_website_path(business_id: @business), 
-  class: 'btn btn-primary btn-lg pull-right', 
+  class: 'btn btn-primary pull-right', 
   role: 'button', 
   title: th('activerecord.actions.new') do
-  = i 'plus', '2x'
+  = i 'plus'
+  = t 'activerecord.actions.new'
+
 
 %h1 
-  = "#{@business.name} " unless @business.nil?
-  Websites
+  = i Business::Website.decorator_class.icon
+  = tmp 'business/website'
+  
+%p= t 'descriptions.business/websites'
 
-%table.table.table-striped.table-bordered.table-sm
-  %thead
-    %tr
-      %th #
-      - if @business.nil?
-        %th Business
-      %th Platform
-      %th Url
-      %th 
-  %tbody
-    - @websites.each do |website|
+.table-responsive
+  %table.table.table-sm.table-hover
+    %thead.thead-default
       %tr
-        %th{scope: "row"}= website.id
+        %th.text-nowrap.text-xs-center #
         - if @business.nil?
-          %td= link_to website.business_name, business_path(website.business) 
-        %td= website.platform
-        %td= website.url
-        %td
-          = link_to 'destroy', business_website_path(website), method: :delete, data: { confirm: 'Are you sure?' }
-          = link_to 'edit', edit_business_website_path(website)
-          = link_to 'view', business_website_path(website)
+          %th
+            = i Business.decorator_class.icon
+            = tm :business
+        %th= han 'business/website', :platform
+        %th= han 'business/website', :host
+        %th.text-nowrap.text-xs-center.text-lg-left
+          = i Partner::Backlink.decorator_class.icon
+          %span.hidden-md-down= tmp 'partner/backlink'
+        %th.text-nowrap 
+    %tbody
+      - @websites.each do |website|
+        %tr
+          %th.text-nowrap.text-xs-center{scope: "row"}= website.id
+          - if @business.nil?
+            %td.text-nowrap= link_to website.business_name, business_path(website.business) 
+          %td.text-nowrap= website.decorate.platform
+          %td
+            = link_to website.decorate.host, business_website_path(website)
+            = link_to website.url do
+              = i 'external-link'
+            
+          %td.text-nowrap.text-xs-center.text-lg-left
+            %span.label.label-default= link_to website.backlinks.count, partner_backlinks_path(website_id: website.id)
+            = link_to new_partner_backlink_path(website_id: website.id), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+              = i 'plus'
+              %span.hidden-md-down= t 'activerecord.actions.new'
+          %td.text-nowrap            
+            = render partial: 'shared/form_actions', locals: {object: website}

@@ -13,4 +13,12 @@ module ApplicationHelper
     th "activerecord.models.#{model.to_s}", options.merge(count: 1)
   end
   
+  def tmp(model, options = {})
+    th "activerecord.models.#{model.to_s}", options.merge(count: 2)
+  end
+  
+  def han(model, attribute)
+    model.to_s.classify.constantize.send('human_attribute_name', attribute)
+  end
+  
 end

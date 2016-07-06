@@ -1,0 +1,19 @@
+$brand-primary: #1ca8dd;
+$body-bg: #252830;
+$body-color: #fff;
+$font-family-base: "Roboto";
+$font-size-root: 14px;
+$headings-font-weight: 300;
+$link-color: #ffffff;
+$link-hover-decoration: none;
+$link-hover-color: $brand-primary;
+$table-bg-hover: #434857;
+$card-bg: #434857;
+$breadcrumb-bg: #434857;
+$pagination-bg: #434857;
+$pagination-active-border: #fff;
+
+.list-group-item, 
+.list-group-item a{
+  color: #000;
+}

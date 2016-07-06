@@ -22,6 +22,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5.x'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # Use Redis adapter to run Action Cable in production
@@ -36,13 +37,29 @@ gem 'jbuilder', '~> 2.0'
 gem 'haml'
 gem 'bootstrap', '~> 4.0.0.alpha3'
 gem "font-awesome-rails"
-gem 'bootstrap_form', :git => 'https://github.com/bootstrap-ruby/rails-bootstrap-forms'
+#gem 'bootstrap_form', :git => 'https://github.com/bootstrap-ruby/rails-bootstrap-forms'
+gem 'bootstrap_form', :git => 'https://github.com/SecondBureau/rails-bootstrap-forms'
+#gem 'bootstrap_form', :path => '/Users/gilles/Workspaces/rails-bootstrap-forms'
+#gem 'draper', '~> 1.3'
+gem 'draper', :git => 'https://github.com/drapergem/draper.git', :branch => 'rails-5'
+gem 'select2-rails'
+#gem 'bootsy'
+gem 'bootsy', :git => 'https://github.com/volmer/bootsy.git', :branch => 'bootstrap-4'
+gem 'kaminari'
 
 # Authentication
 gem 'devise'
 
 # activerecord
 gem "validate_url"
+
+# state machine
+gem 'aasm'
+#gem 'ruby-graphviz', :require => 'graphviz' # Optional: only required for graphing
+
+# settings
+#gem 'storext'
+gem 'storext', :git => 'https://github.com/G5/storext.git'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
@@ -52,6 +69,8 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   gem 'rspec-rails', '3.5.0.beta3'
+  gem 'rails-controller-testing'
+  gem 'faker', :require => false
 end
 
 group :development do
@@ -68,6 +87,7 @@ group :development do
   gem 'rspec-mocks', '= 3.5.0.beta3'
   gem 'rspec-support', '= 3.5.0.beta3'
   gem 'guard-rspec', '~> 4.7'
+  gem 'guard-livereload', '~> 2.5', require: false
   gem 'growl'
   gem 'rdoc', '~> 4.2', '>= 4.2.2'
 end
@@ -76,7 +96,6 @@ group :test do
   gem "codeclimate-test-reporter", require: nil
   gem 'simplecov', :require => false
   gem 'factory_girl_rails'
-  gem 'faker', :require => false
 end
 
 group :heroku do

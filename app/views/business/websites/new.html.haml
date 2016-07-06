@@ -1,8 +1,26 @@
 / views/business/websites/_new.html.haml
 
-%h1 
-  New
-  = "#{@business.name} " unless @business.nil?
-  Website
+%ol.breadcrumb
+  %li
+    - if @business.nil?
+      = link_to tmp('business/website'), business_websites_path
+    - else
+      = link_to @business.decorate.name, business_websites_path(business_id: @business.id)
+  
+  %li.active
+    - if @website.nil? || @website.url.blank?
+      = t 'activerecord.actions.new'
+      = tm 'business/website'
+    - else
+      = @website.decorate.name 
 
-= render 'form'
+
+%h1
+  = t 'activerecord.actions.new'
+  = tm 'business/website'
+
+.row
+  .col-md-12.col-lg-9
+    = render 'form'
+  .hidden-md-down.col-lg-3
+    = render 'form-aside'

@@ -1,4 +1,6 @@
-%li
-  = link_to url, options[:html_options] do
+%li.nav-item
+  = link_to url, options.delete(:html_options) {{class: 'nav-link'}} do
+    = i options[:icon]
+    &nbsp;
     = body
   = options[:submenu]

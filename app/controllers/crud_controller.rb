@@ -2,7 +2,9 @@ class CrudController < ApplicationController
   
   include Nanoob::GenericModel
   
-  class_attribute :permitted_attrs
+  class_attribute :permitted_attrs, :filtering_params, :sortable_attrs
+  
+  self.sortable_attrs = []
   
   before_action :entry, only: [:show, :new, :edit, :update, :destroy]
   
@@ -10,8 +12,9 @@ class CrudController < ApplicationController
     entries
   end
   
-  # def show
-  # end
+  def show
+    instance_variable_set(:"@#{object_name false}", instance_variable_get(:"@#{object_name false}").send(:decorate))
+  end
   #
   # def new
   # end
@@ -110,6 +113,7 @@ class CrudController < ApplicationController
   def assign_attributes
     entry.attributes = model_params
   end
+
 
   # The form params for this model.
   def model_params

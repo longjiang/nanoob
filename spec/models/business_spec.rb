@@ -7,8 +7,8 @@ RSpec.describe Business, type: :model do
   it "is invalid without a name" do
     expect(FactoryGirl.build(:business, name: nil)).to_not be_valid
   end
-  it "is invalid without a product line" do
-    expect(FactoryGirl.build(:business, product_line: nil)).to_not be_valid
+  it "is invalid without a product" do
+    expect(FactoryGirl.build(:business, product: nil)).to_not be_valid
   end
   it "is invalid without a language" do
     expect(FactoryGirl.build(:business, language: nil)).to_not be_valid

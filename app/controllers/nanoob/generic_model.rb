@@ -27,7 +27,7 @@ module Nanoob
     end
     
     def set_entries
-      instance_variable_set(:"@#{object_name true}", model_class.all)
+      instance_variable_set(:"@#{object_name true}", model_class.sort(params.slice(*sortable_params)).filter(params.slice(*filtering_params)))
     end
     
     def get_entry
@@ -61,9 +61,17 @@ module Nanoob
       last
     end
     
+    def sortable_params
+      sortable_attrs.map {|_| "#{Sortable::PREFIX}#{_.to_s}".to_sym} if sortable_attrs
+    end
+    
+    
+    
+    
     class_methods do
-      
-      
+      def all_params
+        sortable_params.merge(filtering_params)
+      end
 
     end
   

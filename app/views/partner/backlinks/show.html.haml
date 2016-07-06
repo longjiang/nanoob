@@ -1,0 +1,39 @@
+/ views/partner/backlinks/show.html.haml
+
+= render 'breadcrumbs'
+
+= link_to edit_partner_request_path(@backlink), 
+  class: 'btn btn-primary pull-right', 
+  role: 'button', 
+  title: th('activerecord.actions.edit') do
+  = i 'pencil'
+  = t 'activerecord.actions.edit'
+
+%h1= @backlink.name
+
+.row
+  
+  .col-md-6
+    = render partial: 'overview-card', locals: {backlink: @backlink}
+    
+  / - if @request.backlink.present?
+  /   .col-md-6
+  /     = render partial: 'partner/backlinks/card', locals: {backlink: @request.backlink}
+      
+.row
+  .col-md-12
+    .card.card-block
+      %h4.card-title= t :history
+      %ul.list-group.list-group-flush
+        %li.list-group-item
+          %span.label-pill.label-info 1
+          created:
+          = @backlink.decorate.created_at 
+        %li.list-group-item
+          %span.label-pill.label-info 2
+          activated:
+          = @backlink.decorate.activated_at
+        %li.list-group-item
+          %span.label-pill.label-info 3
+          deactivated:
+          = @backlink.decorate.deactivated_at

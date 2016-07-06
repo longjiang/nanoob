@@ -1,0 +1,38 @@
+/ views/partner/backlinks/_form.html.haml
+
+= bootstrap_form_for(@backlink) do |f|
+
+  = f.alert_message "Please fix the errors below."
+
+  = f.select :partner_id, Partner.all.map{|_| [_.title, _.id]}, 
+    hide_label: true, 
+    prompt: "#{t('forms.select')} #{tm(:partner)}..."
+
+  = f.select :business_id, Business.all.map{|_| [_.name, _.id]}, 
+    hide_label: true,
+    prompt: "#{t('forms.select')} #{tm(:business)}..."
+  
+  = f.select :partner_request_id, Partner::Request.all.map{|_| ["##{_.id}", _.id]}, 
+    hide_label: true,
+    prompt: "#{t('forms.select')} #{tm(:'partner/request')}..."
+
+  = f.url_field :referrer,
+    hide_label: true,
+    placeholder: "Referrer"
+
+  = f.text_field :anchor,
+    hide_label: true,
+    placeholder: "Anchor"
+  
+  = f.url_field :link,
+    hide_label: true,
+    placeholder: "Link"
+  = f.errors_on :website, hide_attribute_name: true
+
+  = f.select :status, Partner::Backlink.statuses.keys.map{|_| [_.humanize, _]}, 
+    hide_label: true,
+    :prompt => "Select Status..."
+    
+  = f.hidden_field :user_id, value: @backlink.try(:user_id) || current_user.id
+
+  = f.primary

@@ -43,18 +43,50 @@ class Menu
    @markup[type] = { :block => block, :options => options } 
   end
   
+  def activate(options)
+    if (path = options[:path]).present?
+      activate_by_path path
+    elsif (id = options[:id]).present?
+      activate_by_id id
+    end
+    
+  end
+  
   def build
     build! @items
   end
   
   private
   
+  def activate_by_path(path, items=nil)
+    items ||= @items
+    items.each do |id, item|
+      if /#{item[:url]}/i =~ path  
+        items[id][:options][:active] = true
+      elsif item[:children].present?
+        activate_by_path path, item[:children]
+      end
+    end
+  end
+  
+  def activate_by_id(id, items=nil)
+    items ||= @items
+    if items[id].present?
+      items[id][:options][:active] = true
+    else
+      items.each do |_, item|
+        activate_by_id(id, item[:children]) if item[:children].present?
+      end
+    end
+  end
+  
   def build!(items, level=0)
     return '' if items.nil?
     output = ''
     items.each do |id, item|
-      is_active = !item[:active].blank?
-      output += @markup[is_active ? 'active_item' : 'item'][:block].call(item[:body], item[:url], {submenu: build!(item[:children], level+1)})
+      is_active = !item[:options][:active].blank?
+      options = item[:options].merge({submenu: build!(item[:children], level+1)})
+      output += @markup[is_active ? 'active_item' : 'item'][:block].call(item[:body], item[:url], options)
     end
     @markup['container'][:block].call(output, {class: "submenu-#{level}"})
   end
