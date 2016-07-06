@@ -11,4 +11,3 @@ created develop->devise branch
 
 24/06/2016
 delete devise branch
-
