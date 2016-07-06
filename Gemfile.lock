@@ -14,14 +14,14 @@ GIT
 
 GIT
   remote: https://github.com/drapergem/draper.git
-  revision: 4b4f392826c439f95f3c9c8b790418e52d0e2212
+  revision: de70008a5e68007d26bd9be87f9a83e0ea64750e
   branch: rails-5
   specs:
     draper (2.1.0)
-      actionpack (> 5.x)
-      activemodel (> 5.x)
-      activemodel-serializers-xml
-      activesupport (> 5.x)
+      actionpack (~> 5.0)
+      activemodel (~> 5.0)
+      activemodel-serializers-xml (~> 1.0)
+      activesupport (~> 5.0)
       request_store (~> 1.0)
 
 GIT
@@ -138,7 +138,7 @@ GEM
       railties (>= 3.0.0)
     faker (1.6.3)
       i18n (~> 0.5)
-    ffi (1.9.10)
+    ffi (1.9.12)
     font-awesome-rails (4.6.3.1)
       railties (>= 3.2, < 5.1)
     formatador (0.2.5)
@@ -326,10 +326,11 @@ GEM
       equalizer (~> 0.0, >= 0.0.9)
     warden (1.2.6)
       rack (>= 1.0)
-    web-console (3.3.0)
-      activemodel (>= 4.2)
+    web-console (3.3.1)
+      actionview (>= 5.0)
+      activemodel (>= 5.0)
       debug_inspector
-      railties (>= 4.2)
+      railties (>= 5.0)
     websocket-driver (0.6.4)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
