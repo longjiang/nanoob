@@ -61,6 +61,9 @@ gem 'aasm'
 #gem 'storext'
 gem 'storext', :git => 'https://github.com/G5/storext.git'
 
+# emails
+gem 'postmark-rails', '>= 0.10.0'
+
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
 end

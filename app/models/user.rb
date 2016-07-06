@@ -57,7 +57,8 @@ class User < ApplicationRecord
   
   def set_business
     unless business_manual || business_updated_at > 10.days.ago
-      self.business_id = Partner::Request.where(user_id: id).where('created_at > ?', 10.days.ago).group(:business_id).count.sort_by{|id, count| count}.last[0]
+      business = Partner::Request.where(user_id: id).where('created_at > ?', 10.days.ago).group(:business_id).count.sort_by{|id, count| count}
+      self.business_id = business.try(:last[0]) unless business.blank?
     end
   end
 
