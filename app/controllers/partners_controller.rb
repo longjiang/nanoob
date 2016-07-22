@@ -1,5 +1,5 @@
 class PartnersController < CrudController
-  self.permitted_attrs  = [:title, :category, :url, :contact_name, :contact_email, :webform_url, :user_id]
+  self.permitted_attrs  = [:title, :category, :url, :contact_name, :contact_email, :webform_url, :user_id, :pending_request_id]
   self.filtering_params = [ :category, :starts_with, :contact, :recent, :inactive, :owner ]
   self.sortable_attrs   = [ :title, :category, :contact_name, :created_at ]
   
@@ -7,6 +7,23 @@ class PartnersController < CrudController
     super
     @partners_unsliced = @partners
     @partners = @partners.page(params[:page])
+  end
+  
+  def edit
+    @partner.pending_request_id = params[:pending_request_id] if params[:pending_request_id].present?
+  end
+  
+  def update
+    params[:partner].delete(:pending_request_id) if params[:commit].present?
+    super do |format, updated|
+      if updated
+        if params[:send_request].present?
+          @partner.pending_request.send_request 
+        elsif params[:new_request].present?
+          format.html { redirect_to new_partner_request_path(partner_id: @partner.id) }
+        end
+      end
+    end
   end
   
   private

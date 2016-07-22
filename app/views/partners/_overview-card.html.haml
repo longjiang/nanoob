@@ -3,7 +3,7 @@
 .card.card-block
   %h4.card-title= t :overview
   %ul.list-group.list-group-flush
-    %li.list-group-item= partner.decorate.category
+    %li.list-group-item= partner.i_category
     %li.list-group-item
       = i Partner.decorator_class.attribute_icon(:contact)
       = partner.contact_name
@@ -15,10 +15,10 @@
           = i 'wpforms'
     %li.list-group-item
       Created : 
-      = partner.decorate.created_at
+      = partner.created_at
     %li.list-group-item
       Owner :
-      = partner.decorate.owner
+      = partner.owner
     %li.list-group-item
       Requests :
       = partner.requests.count

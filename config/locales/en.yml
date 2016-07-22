@@ -9,6 +9,14 @@ en:
   forms:
     select: Select
     
+  requests:
+    create:
+      flash: 
+        success_html: Request has been successfully created.
+    update:
+      flash:
+        success_html: Request has been successfully updated.
+    
 # descriptions
   descriptions:
     businesses: This is the list of the products we are working on.

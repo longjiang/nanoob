@@ -2,12 +2,13 @@
 
 = render 'breadcrumbs'
 
-= link_to edit_partner_request_path(@request), 
-  class: 'btn btn-primary pull-right', 
-  role: 'button', 
-  title: th('activerecord.actions.edit') do
-  = i 'pencil'
-  = t 'activerecord.actions.edit'
+- if @request.draft?
+  = link_to edit_partner_request_path(@request), 
+    class: 'btn btn-primary pull-right', 
+    role: 'button', 
+    title: th('activerecord.actions.edit') do
+    = i 'pencil'
+    = t 'activerecord.actions.edit'
 
 %h1= @request.name
 
@@ -15,6 +16,15 @@
   
   .col-md-6
     = render partial: 'overview-card', locals: {request: @request}
+    
+  / .col-md-6
+  /   .card.card-block
+  /     %h4.card-title= t :overview
+  /     %ul.list-group.list-group-flush
+  /       %li.list-group-item
+  /         = @request.subject
+  /       %li.list-group-item
+  /         = @request.body.html_safe
     
   - if @request.backlink.present?
     .col-md-6
@@ -25,8 +35,13 @@
     .card.card-block
       %h4.card-title= t :history
       %ul.list-group.list-group-flush
-        %li.list-group-item
-          %span.label-pill.label-info 1
-          created:
-          = @request.decorate.created_at 
+        - @request.histories.each_with_index do | history, idx |
+          %li.list-group-item
+            %span.label-pill.label-info.pull-left= idx
+            .row
+              .col-md-3
+                = history.user.try(:username)
+                = history.decorate.valid_from
+              .col-md-3
+                = history.comment
       

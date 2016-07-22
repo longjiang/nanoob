@@ -74,55 +74,60 @@ end
 
 (1..nbPartners).each do |i|
   date = Faker::Time.between(DateTime.now - 60, DateTime.now - 10)
-  Partner.create!(title: Faker::Hipster.words(rand(3)+1).join(' ').humanize, 
+  p = Partner.new(title: Faker::Hipster.words(rand(3)+1).join(' ').humanize, 
                     category: Partner.categories.keys.sample,
                     url: Faker::Internet.url, 
-                    contact_name: Faker::Name.name, 
-                    contact_email: Faker::Internet.email, 
-                    webform_url: Faker::Internet.url,
                     created_at: date,
                     updated_at: date,
                     owner: User.all.sample
                     )
+  if rand(100) > 50
+    p.contact_name = Faker::Name.name
+  end
+  if rand(100) > 50
+    p.contact_email = Faker::Internet.email
+  end
+  if rand(100) > 50
+    p.webform_url = Faker::Internet.url
+  end
+  puts "Partner #{p.id} created!"
+  p.save!
 end
 
 
 (1..nbRequests).each do |i|
   user = User.all.sample
   partner = Partner.all.sample
-  p = Partner::Request.new(partner: partner, 
+  r = Partner::Request.new(partner: partner, 
                           business: Business.all.sample, 
                           owner: user,
                           updater: user, 
                           subject: Faker::Lorem.sentence(5, true, 30), 
-                          body: Faker::Lorem.paragraph(2) , 
-                          channel: Partner::Request.channels.keys.sample,
-                          state: Partner::Request.states.keys.sample)
- case p.state
-   when 'draft'
-     date = Faker::Time.between(partner.created_at, DateTime.now)
-     p.state_updated_at = date
-     p.created_at = date
-     p.updated_at = date
-   when 'sent'
-     date = Faker::Time.between(partner.created_at, DateTime.now - 1.day)
-     p.created_at = date
-     sent_date = Faker::Time.between(date, DateTime.now)
-     p.sent_at = sent_date
-     p.state_updated_at = sent_date
-     p.updated_at = sent_date
-     p.updater = User.all.sample
-   else
-     date = Faker::Time.between(partner.created_at, DateTime.now - 5.day)
-     p.created_at = date
-     sent_date = Faker::Time.between(date, date + 2.day)
-     p.sent_at = sent_date
-     state_updated_at = Faker::Time.between(sent_date, DateTime.now)
-     p.updated_at = state_updated_at
-     p.state_updated_at = state_updated_at
-     p.updater = User.all.sample
-   end
-   p.save!
+                          body: Faker::Lorem.paragraph(2),
+                          channel: Partner::Request.channels.keys.sample)
+  # draft
+  created_at = Faker::Time.between(partner.created_at, DateTime.now - 12.hours)
+  Timecop.travel created_at
+  r.state = :draft
+  r.save!
+  
+  # sending
+  sent_at = Faker::Time.between(created_at, DateTime.now)
+  sending = false
+  if partner.is_valid_for_email_request?
+    r.channel = :email
+    sending = true
+  elsif partner.is_valid_for_webform_request?
+    r.channel = :webform
+    sending = true
+  end
+  if sending
+    Timecop.travel sent_at
+    r.updater = User.all.sample
+    r.send_request
+  end
+  
+  puts "Request #{r.id} created!"
 end
   
 Partner::Request.published.each do |request|

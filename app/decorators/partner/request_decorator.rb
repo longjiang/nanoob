@@ -18,6 +18,15 @@ class Partner::RequestDecorator < ApplicationRecordDecorator
     end
   end
   
+  def sent_at
+    return if object.sent_at.nil?
+    if object.sent_at < 30.days.ago
+      object.sent_at.strftime(short_date_format)
+    else
+      h.time_ago_in_words(object.sent_at)
+    end
+  end
+  
   def subject(size=:xxl)
     return object.subject if size.eql?(:xxl)
     h.truncate(object.subject, length: subject_length(size), separator: ' ')
@@ -45,6 +54,10 @@ class Partner::RequestDecorator < ApplicationRecordDecorator
   
   def state_color
    option :state_color, object.state
+  end
+  
+  def body_xs_if_error_class
+    "has-error" if object.errors && object.errors[:body_xs].present?
   end
 
   def self.icon

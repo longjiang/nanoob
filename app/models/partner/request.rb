@@ -3,6 +3,8 @@ class Partner::Request < ApplicationRecord
   # include Bootsy::Container
   include AASM
   
+  include Nanoob::History
+  
   enum channel: [ :email, :webform ]
   enum state: [ :draft, :sent, :canceled, :paying, :rejected, :in_progress, :accepted, :paid, :submitted, :published ]
   
@@ -31,6 +33,7 @@ class Partner::Request < ApplicationRecord
   scope :recent,        -> (days)       { where("state_updated_at > ? ", days.to_i.days.ago) }
   scope :business_id,   -> (id)         { where business_id: id }
   
+  after_create :init_history
   before_save :default_values
   
   attr_writer :body_xs
@@ -44,9 +47,9 @@ class Partner::Request < ApplicationRecord
     state :draft, initial: true
     state :sent, :canceled, :paying, :rejected, :in_progress, :accepted, :paid, :submitted, :published
     
-    after_all_transitions Proc.new { self.state_updated_at = Time.now }
+    after_all_events :after_all_events
     
-    event :send_request, after: :do_send_request, guard: :sendable? do
+    event :send_request, after: :do_send_request, if: :sendable? do
       transitions from: :draft, to: :sent
     end
     
@@ -66,48 +69,39 @@ class Partner::Request < ApplicationRecord
 
   end
   
-  def self.period(period)
-    now = Time.zone.now
-    case period
-    when :today
-      start_slice = now.beginning_of_day
-      end_slice   = Time.now
-    when :yesterday
-      start_slice = now.beginning_of_day - 1.day
-      end_slice = start_slice + 1.day
-    when :two_days_ago
-      start_slice = now.beginning_of_day - 2.day
-      end_slice = start_slice + 1.day
-    when :this_week
-      start_slice = now.beginning_of_week
-      end_slice = Time.now
-    when :last_week
-      start_slice = now.beginning_of_week - 7.day
-      end_slice = start_slice + 7.days
-    when :two_weeks_ago
-      start_slice = now.beginning_of_day - 14.day
-      end_slice = start_slice + 7.day
-    end
-    after(start_slice).before(end_slice)
-  end
-  
-  private
-  
-  def do_send_request
-    if email?
-      # send email by owner
-      logger.info "Sending email to #{partner.contact_name} <#{partner.contact_email}> with subject #{subject}"
-    end
-    self.sent_at = Time.now
+  def form_completed?
+    subject.present? && body.present? && channel.present?
   end
   
   def sendable?
     form_completed? && (webform? && partner_webform_valid? || email? && partner_contact_valid?)
   end
+
   
-  def form_completed?
-    subject.present? && body.present? && channel.present?
+  private
+  
+  def init_history
+    add_to_history({},{},"New request created", owner)
   end
+  
+  def after_all_events
+    self.state_updated_at = Time.now
+    add_to_history({state: aasm.from_state}, {state: aasm.to_state}, "event: #{aasm.current_event}", updater)
+    self.save!
+  end
+  
+  def do_send_request
+    if email?
+      PartnerRequestMailer.initial_request({request_id: self.id}).deliver
+      logger.info "Sending email to #{partner.contact_name} <#{partner.contact_email}> with subject #{subject}"
+    end
+    
+    self.sent_at = Time.now
+  end
+  
+  
+  
+  
   
   def partner_contact_valid?
     partner.contact_email.present? && partner.contact_name.present?

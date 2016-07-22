@@ -19,7 +19,11 @@
   
   = f.hidden_field :user_id, value: @partner.try(:user_id) || current_user.id
   
+  = f.hidden_field :pending_request_id, value: @partner.pending_request.try(:id)
+  
   = f.primary
   
-  = f.primary 'create and make a request'
+  = f.submit "create/Update and make a request", class: "btn btn-secondary", name: 'new_request' unless @partner.pending_request
+  
+  = f.submit "Update and Send Request ##{@partner.pending_request.id}", class: "btn btn-secondary", name: 'send_request' if @partner.pending_request
   

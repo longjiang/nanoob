@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160703162010) do
+ActiveRecord::Schema.define(version: 20160706150127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,17 @@ ActiveRecord::Schema.define(version: 20160703162010) do
     t.integer  "cycles_count"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+  end
+
+  create_table "histories", force: :cascade do |t|
+    t.string   "object_class",              null: false
+    t.integer  "object_id",                 null: false
+    t.integer  "user_id"
+    t.datetime "valid_from",                null: false
+    t.datetime "valid_to",                  null: false
+    t.integer  "lock_version", default: 0,  null: false
+    t.jsonb    "datas",        default: {}, null: false
+    t.index ["user_id"], name: "index_histories_on_user_id", using: :btree
   end
 
   create_table "meta", force: :cascade do |t|
@@ -145,6 +156,7 @@ ActiveRecord::Schema.define(version: 20160703162010) do
 
   add_foreign_key "business_websites", "businesses"
   add_foreign_key "businesses", "business_products"
+  add_foreign_key "histories", "users"
   add_foreign_key "partner_backlinks", "business_websites"
   add_foreign_key "partner_backlinks", "businesses"
   add_foreign_key "partner_backlinks", "partner_requests"
