@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :updated_requests, foreign_key: :state_updated_by
   has_many :backlinks,        foreign_key: :user_id
   has_many :partners,         foreign_key: :user_id
+  has_many :histories
   
   store_attributes :preferences do
     #subscribed_to_newsletter Boolean, default: false

@@ -12,9 +12,9 @@ class CrudController < ApplicationController
     entries
   end
   
-  def show
-    instance_variable_set(:"@#{object_name false}", instance_variable_get(:"@#{object_name false}").send(:decorate))
-  end
+  # def show
+#     instance_variable_set(:"@#{object_name false}", instance_variable_get(:"@#{object_name false}").send(:decorate))
+#   end
   #
   # def new
   # end

@@ -3,6 +3,7 @@ class Partner::Backlink < ApplicationRecord
   enum status: [ :active, :inactive ]
   
   before_validation :update_website
+  before_save :update_status_timestamp
   
   validates   :link,                url: true,       allow_nil: true
   validates   :referrer,            url: true,       allow_nil: true
@@ -25,8 +26,6 @@ class Partner::Backlink < ApplicationRecord
   scope :status,        -> (status)      { where status: status }
   scope :recent,        -> (days)       { where("updated_at > ? ", days.to_i.days.ago) }
   scope :business_id,   -> (id)         { where business_id: id }
-  
-  before_save :update_status_timestamp
   
   private
   

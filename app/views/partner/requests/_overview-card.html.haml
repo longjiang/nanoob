@@ -4,7 +4,16 @@
   %h4.card-title= t :overview
   %ul.list-group.list-group-flush
     %li.list-group-item
-      %span{class: "text-#{request.decorate.state_color}"}= request.decorate.i_state
+      %span{class: "text-#{request.state_color}"}= request.i_state
+      .pull-right
+        Last Updated : 
+        = request.state_updated_at
     %li.list-group-item
-      Last Updated : 
-      = request.decorate.state_updated_at
+      .request-channel
+        = request.i_channel
+        sent/posted
+        = request.sent_at
+      .request-subject
+        = request.subject
+      .request-body
+        = request.body.html_safe

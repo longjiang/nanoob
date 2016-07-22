@@ -10,9 +10,15 @@ class Partner < ApplicationRecord
   validates :webform_url,   url: true,      allow_nil: true
   validates :user_id,       presence: true
   
+  validates :contact_email, presence: true, if: "pending_request_id.present? && pending_request.email?"
+  validates :contact_name,  presence: true, if: "pending_request_id.present? && pending_request.email?"
+  validates :webform_url,   presence: true, if: "pending_request_id.present? && pending_request.webform?"
+  
   has_many :requests,   dependent: :destroy
   has_many :backlinks,  dependent: :destroy
   belongs_to :owner,    class_name: 'User',  foreign_key: :user_id
+  
+  attr_accessor :pending_request_id 
   
   scope :category,      -> (category)   { where category: category }
   scope :starts_with,   -> (title)      { where("lower(title) like ?", "#{title.downcase}%") }
@@ -20,6 +26,18 @@ class Partner < ApplicationRecord
   scope :recent,        -> (days)       { where("created_at > ? ", days.to_i.days.ago) }
   scope :inactive,      -> (days)       { where("requests_count = 0 and backlinks_count = 0 and created_at > ? ", days.to_i.days.ago) }
   scope :owner,         -> (user)       { where owner: user.to_i }
+  
+  def pending_request
+    Partner::Request.find_by_id(pending_request_id) if pending_request_id
+  end
+  
+  def is_valid_for_email_request?
+    contact_email.present? && contact_name.present?
+  end
+  
+  def is_valid_for_webform_request?
+    webform_url.present?
+  end
   
   private
   

@@ -30,3 +30,9 @@ fieldset.bootsy {
 body.bootsy_text_area  a {
  color: red; 
 }
+
+.has-error {
+  span.help-block, label.control-label {
+    color: $brand-danger;
+  }
+}

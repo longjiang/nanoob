@@ -1,0 +1,7 @@
+
+- bootstrap4mapping = {alert: 'danger', notice: 'info'}
+- flash.each do |level, message|
+  - if bootstrap4mapping[level.to_sym].blank?
+    .alert.alert-danger= "#{level} unknown"
+  - else
+    .alert{class: "alert-#{bootstrap4mapping[level.to_sym]}"}=message

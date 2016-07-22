@@ -47,6 +47,10 @@ gem 'select2-rails'
 gem 'bootsy', :git => 'https://github.com/volmer/bootsy.git', :branch => 'bootstrap-4'
 gem 'kaminari'
 
+gem 'resque'
+gem 'resque_mailer'
+gem 'sinatra', github: 'sinatra/sinatra', branch: 'master'
+
 # Authentication
 gem 'devise'
 
@@ -74,6 +78,7 @@ group :development, :test do
   gem 'rspec-rails', '3.5.0.beta3'
   gem 'rails-controller-testing'
   gem 'faker', :require => false
+  gem 'timecop'
 end
 
 group :development do

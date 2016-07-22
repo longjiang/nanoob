@@ -16,15 +16,29 @@ class Partner::RequestsController < CrudController
     @requests = @requests.page(params[:page])
   end
   
+  def edit
+    #respond_to do |format|
+      unless @request.draft?
+        flash[:alert] = "Request is not editable"
+        redirect_on_failure({location: partner_request_path(@request)})
+        #format.html { redirect_on_failure({location: partner_request_path(@request)}) }
+        #format.json { render json: entry.errors, status: :unprocessable_entity }
+      end
+    #end
+  end
+  
   def create
-    super
-    send_request if params[:send_request].present?
+    super do |format, created|
+      if created && params[:send_request].present?
+        send_request(format, :new)
+      end
+    end
   end
   
   def update
     super do |format, updated|
       if updated && params[:send_request].present?
-        send_request(format)
+        send_request(format, :edit)
       end
     end
   end
@@ -70,11 +84,29 @@ class Partner::RequestsController < CrudController
     @request.owner = current_user unless @request.owner 
   end
   
-  def send_request(format)
-    begin
-      @request.send_request
-    rescue AASM::InvalidTransition
-      format.html { render :new }
+  def send_request(format, action)
+    if !@request.form_completed?
+      [:channel, :subject, :body_xs].each do |att|
+        @request.errors[att] << "Can't be blank" if @request.send(att).blank?
+      end
+      flash[:alert] = "Request saved but can't be sent"
+      format.html { render action }
+      format.json { render json: entry.errors, status: :unprocessable_entity }
+    elsif !@request.sendable?
+      flash[:alert] = "Request saved but can't be sent because partner informations are not valid"
+      format.html { redirect_to edit_partner_path(@request.partner, {pending_request_id: @request.id}) }
+      format.json { render json: entry.errors, status: :unprocessable_entity }
+    else
+      begin
+        @request.send_request
+        flash[:notice] = "Request has been sent"
+        format.html { redirect_to show_path }
+        format.json { render json: entry.errors, status: :unprocessable_entity }
+      rescue AASM::InvalidTransition
+        flash[:alert] = "Request saved but can't be sent for now"
+        format.html { redirect_to show_path }
+        format.json { render json: entry.errors, status: :unprocessable_entity }
+      end
     end
   end
   

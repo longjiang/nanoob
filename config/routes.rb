@@ -1,8 +1,12 @@
+require 'resque/server'
+
 Rails.application.routes.draw do
   
   devise_for :users
   
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
+  
+  mount Resque::Server.new, :at => "/resque"
   
   root 'welcome#index'
   

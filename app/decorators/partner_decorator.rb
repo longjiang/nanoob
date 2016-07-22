@@ -7,8 +7,8 @@ class PartnerDecorator < ApplicationRecordDecorator
     "#{h.i(self.class.icon)} #{object.title}".html_safe
   end
   
-  def category
-    "#{h.i(self.class.attribute_icon(:category))} #{object.category.humanize}".html_safe
+  def i_category
+    "#{h.i(self.class.attribute_icon(:category))} #{object.category.try(:humanize)}".html_safe
   end
   
   def owner

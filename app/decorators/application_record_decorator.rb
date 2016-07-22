@@ -4,7 +4,11 @@ class ApplicationRecordDecorator < Draper::Decorator
   ATTR_ICON_OPTIONS = {} 
   
   def short_date_format
-    "%d/%m/%Y"
+    "%d/%m/%y"
+  end
+  
+  def datetime_format
+    "%d/%m/%y %H:%M"
   end
   
   def short_url(url)
@@ -15,6 +19,16 @@ class ApplicationRecordDecorator < Draper::Decorator
   def created_at
     object.created_at.strftime(short_date_format)
   end
+  
+  def has_errors(attr=nil)
+    if attr
+      object.errors && object.errors[attr].present?
+    else
+      object.errors.present?
+    end
+  end
+  
+
   
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:
