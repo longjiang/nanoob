@@ -1,6 +1,6 @@
 class Business::Website < ApplicationRecord
   
-  enum platform: [ :wordpress, :blogger ]
+  enum platform: [ :wordpress, :blogger, :nanoob ]
   
   validates :business_id,  presence: true
   validates :platform,     presence: true

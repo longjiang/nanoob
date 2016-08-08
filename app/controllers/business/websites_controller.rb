@@ -5,6 +5,8 @@ class Business::WebsitesController < CrudController
   before_action :find_business
   
   def index
+    
+    add_breadcrumb 'myname', '/mypath'
     if @business
       @websites = @business.websites
     else

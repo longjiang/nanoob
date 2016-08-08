@@ -1,11 +1,9 @@
 / views/business/websites/edit.html.haml
 
-%ol.breadcrumb
-  %li= link_to @business.decorate.name, business_websites_path(business_id: @business.id)
-  %li.active
-    = @website.decorate.name
+- add_breadcrumb @business.decorate.name, business_websites_path(business_id: @business.id)
+- add_breadcrumb @website.decorate.name
 
-%h1
+- content_for :page_title do
   = t 'activerecord.actions.edit'
   = tm 'business/website'
 

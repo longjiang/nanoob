@@ -1,7 +1,7 @@
 / views/business/websites/_new.html.haml
 
 %ol.breadcrumb
-  %li
+  %li.breadcrumb-item
     - if @business.nil?
       = link_to tmp('business/website'), business_websites_path
     - else

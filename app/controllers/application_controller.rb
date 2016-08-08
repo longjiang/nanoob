@@ -19,6 +19,7 @@ class ApplicationController < ActionController::Base
     end
     
     def init_menu
+      add_breadcrumb 'home', root_path
       @menu = Menu.new do |menu|
         %w(business business/website partner partner/request partner/backlink).each do |item|
           menu.add I18n.t("menu.#{item.pluralize}"), send("#{item.pluralize.gsub(/\//, '_')}_path", owner: current_user.id, business_id: current_user.business_id), item.camelize.constantize.model_name.element.pluralize, {icon: item.classify.constantize.decorator_class.icon}

@@ -40,18 +40,18 @@
             = link_to business.name, business
           %td.text-nowrap= business.product_name.humanize
           %td.text-nowrap.text-xs-center.text-lg-left
-            %span.label.label-default= link_to business.websites.count, business_websites_path(business_id: business)
-            = link_to new_business_website_path(business_id: business), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+            %span.tag.tag-default= link_to business.websites.count, business_websites_path(business_id: business)
+            = link_to new_business_website_path(business_id: business), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
               = i 'plus'
               %span.hidden-md-down= t 'activerecord.actions.new'
           %td.text-nowrap.text-xs-center.text-lg-left
-            %span.label.label-default= link_to business.requests.count, partner_requests_path(business_id: business)
-            = link_to new_partner_request_path(business_id: business), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+            %span.tag.tag-default= link_to business.requests.count, partner_requests_path(business_id: business)
+            = link_to new_partner_request_path(business_id: business), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
               = i 'plus'
               %span.hidden-md-down= t 'activerecord.actions.new'
           %td.text-nowrap.text-xs-center.text-lg-left
-            %span.label.label-default= link_to business.backlinks.count, partner_backlinks_path(business_id: business)
-            = link_to new_partner_backlink_path(business_id: business), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+            %span.tag.tag-default= link_to business.backlinks.count, partner_backlinks_path(business_id: business)
+            = link_to new_partner_backlink_path(business_id: business), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
               = i 'plus'
               %span.hidden-md-down= t 'activerecord.actions.new'
           %td

@@ -15,4 +15,6 @@
               = i 'chevron-left'
               Menu
           = render partial: 'shared/flash'
+          = render_breadcrumbs
+          %h1= yield :page_title
           = yield

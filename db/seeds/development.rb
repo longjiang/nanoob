@@ -44,7 +44,7 @@ w = business3.websites.new(url: 'http://propulsionec.com')
 w.wordpress!
 
 # Partners
-partner1 = Partner.new(owner: user1, title: 'Made in Design', url: 'http://madeindesign.com', contact_name: 'Guillaume', contact_email: 'guillaume@madeindesign.com', webform_url: 'http://www.madeindesign.com/contact.html')
+partner1 = Partner.new(owner: user1, title: 'Made in Design', url: 'http://madeindesign.com', contact_name: 'Guillaume', contact_email: 'guillaume_madeindesign@nanoob.com', webform_url: 'http://www.madeindesign.com/contact.html')
 partner1.decoration!
 
 partner2 = Partner.new(owner: user1, title: 'Second Bureau', url: 'http://secondbureau.com', contact_name: 'Gilles', contact_email: 'gilles@secondbureau.com')
@@ -90,7 +90,7 @@ end
   if rand(100) > 50
     p.webform_url = Faker::Internet.url
   end
-  puts "Partner #{p.id} created!"
+  puts "Partner #{i} created!"
   p.save!
 end
 

@@ -1,5 +1,15 @@
 require 'resque/server'
 
+class DomainConstraint
+  def self.matches? request
+    matching_website?(request)
+  end
+  def self.matching_website? request
+    url = "#{request.protocol}#{request.domain}"
+    Business::Website.find_by_url(url).present?
+  end
+end
+
 Rails.application.routes.draw do
   
   devise_for :users
@@ -22,4 +32,6 @@ Rails.application.routes.draw do
     resources :partner_backlinks, controller: 'partner/backlinks', :concerns => :paginatable
     resources :users
   end
+  
+  match '/:year/:month/:slug', to: 'posts#show', :constraints => DomainConstraint, via: [:get, :post]
 end

@@ -15,7 +15,7 @@
 %h1
   = i "Partner::#{relation.capitalize}".constantize.decorator_class.icon
   = tmp "partner/#{relation}"
-  %span.label.label-info
+  %span.tag.tag-info
     = instance_variable_get("@#{relation.pluralize}_unsliced").count
 
 

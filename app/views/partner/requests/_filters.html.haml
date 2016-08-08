@@ -5,7 +5,7 @@
 - else
   = link_to partner_requests_path do
     All
-    %span.label.label-default= Partner::Request.count
+    %span.tag.tag-default= Partner::Request.count
 |
 - if params[:owner] && params[:owner].to_i.eql?(current_user.id)
   Mine
@@ -14,7 +14,7 @@
 - else
   = link_to filtered_entries_path(owner: current_user.id) do
     Mine
-    %span.label.label-default= @requests_unsliced.owner(current_user.id).count
+    %span.tag.tag-default= @requests_unsliced.owner(current_user.id).count
 |
 - unless params[:recent].blank?
   Recent
@@ -23,7 +23,7 @@
 - else
   = link_to filtered_entries_path(recent: 10) do
     Recent
-    %span.label.label-default= @requests_unsliced.recent(10).count
+    %span.tag.tag-default= @requests_unsliced.recent(10).count
 
 = bootstrap_form_tag url: partner_requests_path, method: :get, layout: :inline do |f|
   = f.hidden_field :owner, value: params[:owner]        unless params[:owner].blank?

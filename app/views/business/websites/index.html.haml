@@ -2,7 +2,7 @@
 
 - unless @business.nil?
   %ol.breadcrumb
-    %li.active
+    %li.breadcrumb-item.active
       = @business.decorate.name
 
 = link_to new_business_website_path(business_id: @business), 
@@ -47,8 +47,8 @@
               = i 'external-link'
             
           %td.text-nowrap.text-xs-center.text-lg-left
-            %span.label.label-default= link_to website.backlinks.count, partner_backlinks_path(website_id: website.id)
-            = link_to new_partner_backlink_path(website_id: website.id), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+            %span.tag.tag-default= link_to website.backlinks.count, partner_backlinks_path(website_id: website.id)
+            = link_to new_partner_backlink_path(website_id: website.id), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
               = i 'plus'
               %span.hidden-md-down= t 'activerecord.actions.new'
           %td.text-nowrap            
