@@ -1,10 +1,5 @@
-%ol.breadcrumb
-  %li= link_to @business.decorate.name, business_websites_path(business_id: @business.id)
-  %li.active
-    = i Business::Website.decorator_class.icon
-    = @website.decorate.host
 
-%h1
+- content_for :page_title do
   = i Business::Website.decorator_class.icon
   = @website.decorate.host
   = link_to @website.url do

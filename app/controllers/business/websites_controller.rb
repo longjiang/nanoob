@@ -3,10 +3,10 @@ class Business::WebsitesController < CrudController
   self.permitted_attrs = [:platform, :url, :business_id]
   
   before_action :find_business
+  before_action :add_breadcrumbs
   
+ 
   def index
-    
-    add_breadcrumb 'myname', '/mypath'
     if @business
       @websites = @business.websites
     else
@@ -34,5 +34,22 @@ class Business::WebsitesController < CrudController
       @website.business 
     end
   end
+  
+  def add_breadcrumbs
+    add_breadcrumb @business.decorate.name, business_websites_path(business_id: @business.id) unless @business.nil?
+    unless action_name.to_sym.eql?(:index)
+      if @website.nil? || @website.url.blank?
+        add_breadcrumb tmp('business/website'), business_websites_path, icon: Business::Website.decorator_class.icon if @business.nil?
+        add_breadcrumb "#{t 'activerecord.actions.new'} #{tm 'business/website'}"
+      else
+        add_breadcrumb @website.decorate.name 
+      end
+    end
+  end
+  
+  def new_object_path
+    new_business_website_path(business_id: @business)
+  end
+  
   
 end

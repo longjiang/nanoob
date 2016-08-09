@@ -3,6 +3,8 @@ class PartnersController < CrudController
   self.filtering_params = [ :category, :starts_with, :contact, :recent, :inactive, :owner ]
   self.sortable_attrs   = [ :title, :category, :contact_name, :created_at ]
   
+  before_action :add_breadcrumbs, except: [:index, :show]
+  
   def index
     super
     @partners_unsliced = @partners
@@ -26,6 +28,16 @@ class PartnersController < CrudController
     end
   end
   
+  def create
+    super do |format, created|
+      if created
+        if params[:new_request].present?
+          format.html { redirect_to new_partner_request_path(partner_id: @partner.id) }
+        end
+      end
+    end
+  end
+  
   private
   
   def add_menu_items
@@ -35,6 +47,19 @@ class PartnersController < CrudController
         submenu.add I18n.t("menu.partner.add_new"), new_partner_path, {icon: false}
       end
     end
+  end
+  
+  def add_breadcrumbs
+    add_breadcrumb tmp(:partner), partners_path, icon: Partner.decorator_class.icon
+    if @partner.nil? || @partner.title.blank?
+      add_breadcrumb "#{t 'activerecord.actions.new'} #{tm :partner}"
+    else
+      add_breadcrumb @partner.decorate.title 
+    end
+  end
+  
+  def new_object_path
+    new_partner_path
   end
   
 end

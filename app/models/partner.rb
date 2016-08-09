@@ -20,6 +20,8 @@ class Partner < ApplicationRecord
   
   attr_accessor :pending_request_id 
   
+  delegate :username, to: :owner, prefix: true
+  
   scope :category,      -> (category)   { where category: category }
   scope :starts_with,   -> (title)      { where("lower(title) like ?", "#{title.downcase}%") }
   scope :contact,       -> (name)       { where("lower(contact_name) like ?", "%#{name.downcase}%")}

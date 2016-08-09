@@ -1,20 +1,7 @@
 / views/businesses/edit.html.haml
 
-%ol.breadcrumb
-  %li
-    = link_to businesses_path do
-      = i Business.decorator_class.icon
-      = tmp :business
-  %li.active
-    = @business.name
-
-
-%h1
+- content_for :page_title do
   = t 'activerecord.actions.edit'
   = tm :business
 
-.row
-  .col-md-12.col-lg-9
-    = render 'form'
-  .hidden-md-down.col-lg-3
-    = render 'form-aside'
+= render 'shared/form_layout'

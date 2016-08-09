@@ -1,24 +1,18 @@
 / views/partner/backlinks/show.html.haml
 
-= render 'breadcrumbs'
-
-= link_to edit_partner_request_path(@backlink), 
+= link_to edit_partner_backlink_path(@backlink), 
   class: 'btn btn-primary pull-right', 
   role: 'button', 
   title: th('activerecord.actions.edit') do
   = i 'pencil'
   = t 'activerecord.actions.edit'
 
-%h1= @backlink.name
+- content_for :page_title do
+  = @backlink.name
 
 .row
-  
   .col-md-6
     = render partial: 'overview-card', locals: {backlink: @backlink}
-    
-  / - if @request.backlink.present?
-  /   .col-md-6
-  /     = render partial: 'partner/backlinks/card', locals: {backlink: @request.backlink}
       
 .row
   .col-md-12

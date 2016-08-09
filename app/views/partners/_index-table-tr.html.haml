@@ -2,13 +2,13 @@
 
 %tr
   %th.text-nowrap.text-xs-center{scope: "row"}= partner.id
-  %td
+  %td.text-nowrap
     = link_to partner_path(partner) do
       = partner.title
     = link_to partner.url do 
       = i 'external-link'
   %td.text-nowrap= partner.category.humanize
-  %td
+  %td.text-nowrap
     = partner.contact_name
     - if partner.contact_email.present?
       = mail_to partner.contact_email do
@@ -28,7 +28,11 @@
     = link_to new_partner_backlink_path(partner_id: partner), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
       = i 'plus'
       %span.hidden-md-down= t 'activerecord.actions.new'
-  %td
+      
+  - if params[:owner].blank? 
+    %td.text-nowrap= partner.owner_username
+  
+  %td.text-nowrap
     = partner.decorate.created_at 
-  %td
+  %td.text-nowrap
     = render partial: 'shared/form_actions', locals: {object: partner}

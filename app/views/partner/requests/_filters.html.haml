@@ -1,52 +1,54 @@
 / views/partner/requests/_filters.html.haml
 
-- if params.slice(*Partner::RequestsController.filtering_params).blank?
-  All
-- else
-  = link_to partner_requests_path do
-    All
-    %span.tag.tag-default= Partner::Request.count
-|
-- if params[:owner] && params[:owner].to_i.eql?(current_user.id)
-  Mine
-  = link_to filtered_entries_path(owner: nil) do
-    = i 'times-circle-o'
-- else
-  = link_to filtered_entries_path(owner: current_user.id) do
-    Mine
-    %span.tag.tag-default= @requests_unsliced.owner(current_user.id).count
-|
-- unless params[:recent].blank?
-  Recent
-  = link_to filtered_entries_path(recent: nil) do
-    = i 'times-circle-o'
-- else
-  = link_to filtered_entries_path(recent: 10) do
-    Recent
-    %span.tag.tag-default= @requests_unsliced.recent(10).count
+.filters
 
-= bootstrap_form_tag url: partner_requests_path, method: :get, layout: :inline do |f|
-  = f.hidden_field :owner, value: params[:owner]        unless params[:owner].blank?
-  = f.hidden_field :recent, value: params[:recent]       unless params[:recent].blank?
+  - if params.slice(*Partner::RequestsController.filtering_params).blank?
+    %span.text-primary= th 'forms.all'
+  - else
+    = link_to partner_requests_path do
+      = th 'forms.all'
+      %span.tag.tag-default= Partner::Request.count
+  |
+  - if params[:owner] && params[:owner].to_i.eql?(current_user.id)
+    %span.text-primary= th 'forms.mine'
+    = link_to filtered_entries_path(owner: nil) do
+      = i 'times-circle-o'
+  - else
+    = link_to filtered_entries_path(owner: current_user.id) do
+      = th 'forms.mine'
+      %span.tag.tag-default= @requests_unsliced.owner(current_user.id).count
+  |
+  - unless params[:recent].blank?
+    %span.text-primary= th 'forms.recent'
+    = link_to filtered_entries_path(recent: nil) do
+      = i 'times-circle-o'
+  - else
+    = link_to filtered_entries_path(recent: 10) do
+      = th 'forms.recent'
+      %span.tag.tag-default= @requests_unsliced.recent(10).count
+
+  = bootstrap_form_tag url: partner_requests_path, method: :get, layout: :inline do |f|
+    = f.hidden_field :owner, value: params[:owner]        unless params[:owner].blank?
+    = f.hidden_field :recent, value: params[:recent]       unless params[:recent].blank?
  
-  = f.select :business_id, Business.all.map{|_| [_.name, _.id]}, 
-    selected: params[:business_id], 
-    include_blank: 'All businesses',
-    hide_label: true
+    = f.select :business_id, Business.all.map{|_| [_.name, _.id]}, 
+      selected: params[:business_id], 
+      include_blank: th('forms.all_businessess'),
+      hide_label: true
     
-  = f.select :channel, Partner::Request.channels.keys.map{|_| [_.humanize, _]}, 
-    selected: params[:channel], 
-    include_blank: 'All channels',
-    hide_label: true
+    = f.select :channel, Partner::Request.channels.keys.map{|_| [_.humanize, _]}, 
+      selected: params[:channel], 
+      include_blank: th('forms.all_channels'),
+      hide_label: true
     
-  = f.select :owner, User.all.map{|_| [_.decorate.name, _.id ]}, 
-    selected: params[:owner], 
-    include_blank: 'All owners',
-    hide_label: true
+    = f.select :owner, User.all.map{|_| [_.decorate.name, _.id ]}, 
+      selected: params[:owner], 
+      include_blank: th('forms.all_owners'),
+      hide_label: true
     
-  = f.select :state, Partner::Request.states.keys.map{|_| [_.humanize, _]}, 
-    selected: params[:state], 
-    include_blank: 'All states',
-    hide_label: true
+    = f.select :state, Partner::Request.states.keys.map{|_| [_.humanize, _]}, 
+      selected: params[:state], 
+      include_blank: th('forms.all_states'),
+      hide_label: true
     
-  = f.submit 'Filter'
+    = f.submit th('forms.filter')

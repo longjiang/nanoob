@@ -13,8 +13,7 @@ module Breadcrumbs
       output = ''
       items.each_with_index do |item, idx|
         is_active = idx.eql?(items.size - 1)
-        options = {}
-        output += @markup[is_active ? 'active_item' : 'item'][:block].call(item.label, item.path, options)
+        output += @markup[is_active ? 'active_item' : 'item'][:block].call(item.label, item.path, item.options)
       end
       @markup['container'][:block].call(output, {})
     end

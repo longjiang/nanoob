@@ -1,6 +1,8 @@
 / views/partner/backlinks/edit.html.haml
 
-%h1 
-  = "Edit Backlink ##{@backlink.id}"
-  
-= render 'form'
+- content_for :page_title do
+  = t 'activerecord.actions.edit'
+  = tm 'partner/backlink'
+  = "##{@backlink.id}"
+
+= render 'shared/form_layout'

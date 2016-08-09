@@ -12,8 +12,12 @@ class ApplicationRecordDecorator < Draper::Decorator
   end
   
   def short_url(url)
-    uri = URI(url)
-    "#{uri.host.gsub('www.', '')}#{uri.path}"
+    begin
+      uri = URI(url)
+      "#{uri.host.gsub('www.', '')}#{uri.path}"
+    rescue
+      url
+    end
   end
   
   def created_at

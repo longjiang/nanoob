@@ -1,47 +1,59 @@
 / views/partners/_filters.html.haml
 
-- if params.slice(*PartnersController.filtering_params).blank?
-  All
-- else
-  = link_to partners_path do
-    All
-    %span.tag.tag-default= Partner.count
-|
-- if params[:owner] && params[:owner].to_i.eql?(current_user.id)
-  Mine
-  = link_to filtered_entries_path(owner: nil) do
-    = i 'times-circle-o'
-- else
-  = link_to filtered_entries_path(owner: current_user.id) do
-    Mine
-    %span.tag.tag-default= @partners_unsliced.owner(current_user.id).count
-|
-- unless params[:recent].blank?
-  Recent
-  = link_to filtered_entries_path(recent: nil) do
-    = i 'times-circle-o'
-- else
-  = link_to filtered_entries_path(recent: 10) do
-    Recent
-    %span.tag.tag-default= @partners_unsliced.recent(10).count
-|
-- unless params[:inactive].blank?
-  New
-  = link_to filtered_entries_path(inactive: nil) do
-    = i 'times-circle-o'
-- else
-  = link_to filtered_entries_path(inactive: 30)  do
-    New
-    %span.tag.tag-default= @partners_unsliced.inactive(30).count
+.filters
 
-= bootstrap_form_tag url: partners_path, method: :get, layout: :inline do |f|
-  = f.hidden_field :recent, value: params[:value]       unless params[:recent].blank?
-  = f.hidden_field :inactive, value: params[:inactive]  unless params[:inactive].blank?
-  = f.hidden_field :owner, value: params[:owner]        unless params[:owner].blank?
-  = f.text_field :starts_with, value: params[:starts_with], hide_label: true, class: 'form-control-sm', placeholder: 'Title'
-  = f.text_field :contact,     value: params[:contact],     hide_label: true, class: 'form-control-sm', placeholder: 'contact'
-  = f.select :category, Partner.categories.keys.map{|l| [l.humanize, l]}, 
-    selected: params[:category], 
-    include_blank: 'All categories',
-    hide_label: true
-  = f.submit 'Filter'
+  - if params.slice(*PartnersController.filtering_params).blank?
+    %span.text-primary= th 'forms.all'
+  - else
+    = link_to partners_path do
+      = th 'forms.all'
+      %span.tag.tag-default= Partner.count
+  |
+  - if params[:owner] && params[:owner].to_i.eql?(current_user.id)
+    %span.text-primary= th 'forms.mine'
+    = link_to filtered_entries_path(owner: nil) do
+      = i 'times-circle-o'
+  - else
+    = link_to filtered_entries_path(owner: current_user.id) do
+      = th 'forms.mine'
+      %span.tag.tag-default= @partners_unsliced.owner(current_user.id).count
+  |
+  - unless params[:recent].blank?
+    %span.text-primary= th 'forms.recent'
+    = link_to filtered_entries_path(recent: nil) do
+      = i 'times-circle-o'
+  - else
+    = link_to filtered_entries_path(recent: 10) do
+      = th 'forms.recent'
+      %span.tag.tag-default= @partners_unsliced.recent(10).count
+  |
+  - unless params[:inactive].blank?
+    %span.text-primary= th 'forms.new'
+    = link_to filtered_entries_path(inactive: nil) do
+      = i 'times-circle-o'
+  - else
+    = link_to filtered_entries_path(inactive: 30)  do
+      = th 'forms.new'
+      %span.tag.tag-default= @partners_unsliced.inactive(30).count
+
+  .hidden-xs-down
+    = bootstrap_form_tag url: partners_path, method: :get, layout: :inline do |f|
+      = f.hidden_field :recent, value: params[:value]       unless params[:recent].blank?
+      = f.hidden_field :inactive, value: params[:inactive]  unless params[:inactive].blank?
+      = f.hidden_field :owner, value: params[:owner]        unless params[:owner].blank?
+      
+      = f.text_field :starts_with, value: params[:starts_with], hide_label: true, class: 'form-control-sms', placeholder: han(:partner, :title)
+      
+      = f.text_field :contact,     value: params[:contact],     hide_label: true, class: 'form-control-sms', placeholder: han(:partner, :contact)
+      
+      = f.select :category, Partner.categories.keys.map{|l| [l.humanize, l]}, 
+        selected: params[:category], 
+        include_blank: th('forms.all_categories'),
+        hide_label: true
+      
+      = f.select :owner, User.all.map{|_| [_.decorate.name, _.id ]}, 
+        selected: params[:owner], 
+        include_blank: th('forms.all_owners'),
+        hide_label: true
+      
+      = f.submit th('forms.filter')

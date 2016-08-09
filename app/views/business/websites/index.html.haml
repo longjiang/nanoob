@@ -1,19 +1,6 @@
 / views/business/websites/index.html.haml
 
-- unless @business.nil?
-  %ol.breadcrumb
-    %li.breadcrumb-item.active
-      = @business.decorate.name
-
-= link_to new_business_website_path(business_id: @business), 
-  class: 'btn btn-primary pull-right', 
-  role: 'button', 
-  title: th('activerecord.actions.new') do
-  = i 'plus'
-  = t 'activerecord.actions.new'
-
-
-%h1 
+- content_for :page_title do
   = i Business::Website.decorator_class.icon
   = tmp 'business/website'
   

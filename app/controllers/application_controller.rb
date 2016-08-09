@@ -1,5 +1,3 @@
-require_dependency 'lib/breadcrumbs/breadcrumb'
-
 class ApplicationController < ActionController::Base
   
   # Prevent CSRF attacks by raising an exception.
@@ -13,6 +11,10 @@ class ApplicationController < ActionController::Base
   before_action :menu_activate, unless: :devise_controller?
   
   around_action :set_time_zone
+  
+  include ApplicationHelper
+  include Breadcrumbs::ActionController
+  include IndexAddnewConcern
   
   protected
 
@@ -33,6 +35,9 @@ class ApplicationController < ActionController::Base
     end
     
     def add_menu_items
+    end
+    
+    def add_breadcrumbs
     end
     
   private

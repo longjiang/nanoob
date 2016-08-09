@@ -1,15 +1,8 @@
 / views/business/websites/edit.html.haml
 
-- add_breadcrumb @business.decorate.name, business_websites_path(business_id: @business.id)
-- add_breadcrumb @website.decorate.name
-
 - content_for :page_title do
   = t 'activerecord.actions.edit'
   = tm 'business/website'
 
-.row
-  .col-md-12.col-lg-9
-    = render 'form'
-  .hidden-md-down.col-lg-3
-    = render 'form-aside'
+= render 'shared/form_layout'
 

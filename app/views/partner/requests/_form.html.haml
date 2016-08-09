@@ -36,10 +36,10 @@
   
   .hidden-sm-up= f.text_area :body_xs, placeholder: "Body"
   
-  %fieldset.form-group.bootsy.hidden-xs-down{class: @request.body_xs_if_error_class }
+  %fieldset.form-group.bootsy.hidden-xs-down{class: @request.decorate.body_xs_if_error_class }
     %label.control-label{for: :partner_request_body}= han('partner/request', :body)
     = f.bootsy_area :body, class: 'form-control', placeholder: "Body"
-    %span.help-block= @request.errors[:body_xs].join(', ') if @request.has_errors(:body_xs)
+    %span.help-block= @request.decorate.errors[:body_xs].join(', ') if @request.decorate.has_errors(:body_xs)
   
   
   

@@ -2,5 +2,4 @@
   = link_to path do
     - if options[:icon].present?
       = i options[:icon]
-      &nbsp;
-    = label
+    = label.html_safe

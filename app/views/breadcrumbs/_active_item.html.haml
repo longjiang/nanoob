@@ -1,1 +1,4 @@
-%li.breadcrumb-item.active= label
+%li.breadcrumb-item.active
+  - if options[:icon].present?
+    = i options[:icon]
+  = label.html_safe

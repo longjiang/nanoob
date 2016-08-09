@@ -1,5 +1,7 @@
 / views/partner/backlinks/new.html.haml
 
-%h1 New Backlink
+- content_for :page_title do
+  = t 'activerecord.actions.new'
+  = tm 'partner/backlink'
 
-= render 'form'
+= render 'shared/form_layout'

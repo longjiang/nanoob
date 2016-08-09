@@ -1,14 +1,7 @@
 / views/businesses/index.html.haml
 
-= link_to new_business_path, 
-  class: 'btn btn-primary pull-right', 
-  role: 'button', 
-  title: th('activerecord.actions.new') do
-  = i 'plus'
-  = t 'activerecord.actions.new'
-
   
-.h1
+- content_for :page_title do
   = i Business.decorator_class.icon
   = tmp :business
   

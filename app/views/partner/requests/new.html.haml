@@ -1,13 +1,7 @@
 / views/partner/requests/new.html.haml
 
-= render "breadcrumbs"
-
-%h1
+- content_for :page_title do
   = t 'activerecord.actions.new'
   = tm 'partner/request'
 
-.row
-  .col-md-12.col-lg-9
-    = render 'form'
-  .hidden-md-down.col-lg-3
-    = render 'form-aside'
+= render 'shared/form_layout'

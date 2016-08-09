@@ -4,10 +4,55 @@ en:
   overview: Overview
   history: History
   
+  helpers:
+    submit:
+      and_create_request: and make a new request
+  
   
 # Forms
   forms:
-    select: Select
+    all: all
+    all_businessess: all businesses
+    all_categories: all categories
+    all_channels: all channels
+    all_owners: all owners
+    all_statuses: all statuses
+    all_states: all states
+    filter: filter
+    mine: mine
+    new: new
+    recent: recent
+    select: select
+    
+  backlinks:
+    create:
+      flash: 
+        success_html: Backlink has been successfully created.
+    update:
+      flash:
+        success_html: Backlink has been successfully updated.
+    destroy:
+      flash:
+        success_html: Backlink has been successfully deleted.
+  
+  businesses:
+    create:
+      flash: 
+        success_html: Business has been successfully created.
+    update:
+      flash:
+        success_html: Business has been successfully updated.
+        
+  partners:
+    create:
+      flash: 
+        success_html: Partner has been successfully created.
+    update:
+      flash:
+        success_html: Partner has been successfully updated.
+    destroy:
+      flash:
+        success_html: Partner has been successfully deleted.
     
   requests:
     create:
@@ -16,6 +61,17 @@ en:
     update:
       flash:
         success_html: Request has been successfully updated.
+        
+    websites:
+      create:
+        flash: 
+          success_html: Website has been successfully created.
+      update:
+        flash:
+          success_html: Website has been successfully updated.
+      destroy:
+        flash:
+          success_html: Website has been successfully deleted.
     
 # descriptions
   descriptions:
@@ -96,6 +152,10 @@ en:
           email: E-mail
           webform: Web Form
       partner/backlink:
+        referrer: Referrer
+        anchor: Anchor
+        link: Link
+        status: Status
         statuses:
           active: Active
           inactive: Inactived
