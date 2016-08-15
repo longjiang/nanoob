@@ -21,7 +21,7 @@ class History < ApplicationRecord
   private
   
   def timestamp!
-    previous = History.active.where(object_class: object_class, object_id: object_id).first
+    previous = History.active.where(archivable_type: archivable_type, archivable_id: archivable_id).first
     now = Time.now
     if previous
       previous.valid_to = now

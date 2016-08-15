@@ -80,13 +80,14 @@ ActiveRecord::Schema.define(version: 20160814031742) do
   end
 
   create_table "histories", force: :cascade do |t|
-    t.string   "object_class",              null: false
-    t.integer  "object_id",                 null: false
+    t.string   "archivable_type",              null: false
+    t.integer  "archivable_id",                null: false
     t.integer  "user_id"
-    t.datetime "valid_from",                null: false
-    t.datetime "valid_to",                  null: false
-    t.integer  "lock_version", default: 0,  null: false
-    t.jsonb    "datas",        default: {}, null: false
+    t.datetime "valid_from",                   null: false
+    t.datetime "valid_to",                     null: false
+    t.integer  "lock_version",    default: 0,  null: false
+    t.jsonb    "datas",           default: {}, null: false
+    t.index ["archivable_type", "archivable_id"], name: "index_histories_on_archivable_type_and_archivable_id", using: :btree
     t.index ["user_id"], name: "index_histories_on_user_id", using: :btree
   end
 
@@ -96,6 +97,7 @@ ActiveRecord::Schema.define(version: 20160814031742) do
     t.jsonb    "datas",         default: {}, null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.index ["metaable_type", "metaable_id"], name: "index_meta_on_metaable_type_and_metaable_id", unique: true, using: :btree
   end
 
   create_table "partner_backlinks", force: :cascade do |t|
