@@ -11,3 +11,6 @@ created develop->devise branch
 
 24/06/2016
 delete devise branch
+
+01/08/2016
+created develop->blogs branch
