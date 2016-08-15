@@ -1,4 +1,5 @@
 if Rails.env.production?
+#if ENV['AWS_ACCESS_KEY_ID']
   require "refile/s3"
   aws = {
     access_key_id: ENV['AWS_ACCESS_KEY_ID'], 

@@ -112,7 +112,7 @@ namespace :db do
               puts "WARNING : cant find any post with #{row['post_id']} -> #{attachment_parent} -> #{post_id}"
             end
           rescue Exception => e
-            debugger
+            #debugger
             puts "ERROR : #{row} can't be processed (#{e})"
           end
         end
