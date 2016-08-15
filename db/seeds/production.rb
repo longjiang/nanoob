@@ -1,5 +1,14 @@
 # production
 
+# Periods
+[[:today, "beginning_of_day", :daily, 1],
+[:yesterday, "beginning_of_day - 1.day", :daily, 1],
+[:this_week, "beginning_of_week", :weekly, 1],
+[:last_week, "beginning_of_week - 1.week", :weekly, 1],
+[:seven_last_days, "beginning_of_day - 6.days", :daily, 7]].each do |params|
+  Dashboard::Period.create!(name: params[0], starts_at: params[1], cycle: params[2], cycles_count: params[3])
+end
+
 # users
 #SEED-USERS = '{"user1":{"e":"admin@example.com","p":"secret"},{"user2":{"e":"user2@example.com","p":"secret"}}'
 users = ENV['SEED_USERS']
