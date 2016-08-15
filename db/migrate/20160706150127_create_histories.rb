@@ -9,6 +9,6 @@ class CreateHistories < ActiveRecord::Migration[5.0]
       t.integer :lock_version, default: 0, null: false
       t.jsonb :datas, null: false, default: {}
     end
-    add_index :histories, [:archivable_type, :archivable_id], unique: true
+    add_index :histories, [:archivable_type, :archivable_id]
   end
 end
