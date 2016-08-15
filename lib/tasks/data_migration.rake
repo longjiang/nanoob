@@ -106,7 +106,6 @@ namespace :db do
               url = URI.escape(url)
               print "attaching file..."
               post.remote_featured_image_url = url
-              Blog::Post.record_timestamps = false
               post.save!(touch: false)
               puts "done!... \n"
             else
