@@ -21,4 +21,8 @@ module ApplicationHelper
     model.to_s.classify.constantize.send('human_attribute_name', attribute)
   end
   
+  def hen(model, attribute, value)
+    model.to_s.classify.constantize.decorator_class.send('human_enum_name', attribute, value)
+  end
+  
 end

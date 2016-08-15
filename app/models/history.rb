@@ -5,6 +5,7 @@ class History < ApplicationRecord
   before_create :timestamp!
   
   belongs_to :user
+  belongs_to :archivable, optional: true, polymorphic: true
   
   store_attributes :datas do
     comment String

@@ -7,6 +7,10 @@ class ApplicationRecordDecorator < Draper::Decorator
     "%d/%m/%y"
   end
   
+  def short_date_format_without_year
+    "%d/%m"
+  end
+  
   def datetime_format
     "%d/%m/%y %H:%M"
   end
@@ -32,16 +36,14 @@ class ApplicationRecordDecorator < Draper::Decorator
     end
   end
   
-
-  
-  # Define presentation-specific methods here. Helpers are accessed through
-  # `helpers` (aka `h`). You can override attributes, for example:
-  #
-  #   def created_at
-  #     helpers.content_tag :span, class: 'time' do
-  #       object.created_at.strftime("%a %m/%d/%y")
-  #     end
-  #   end
+  def time_ago_in_words_or_date(date, threshold=nil)
+    threshold = 30.days.ago if 30.days.ago.nil?
+    if date < 30.days.ago
+      date.strftime(date.year.eql?(Time.now.year) ? short_date_format_without_year : short_date_format)
+    else
+      h.time_ago_in_words date
+    end
+  end
   
   
   def option(options, value)

@@ -13,9 +13,14 @@ class Partner::RequestsController < CrudController
     @requests = @requests.includes(:owner).includes(:backlink)
     @requests = @requests.includes(:partner) unless @partner
     @requests = @requests.includes(:business) unless @business
-    @requests_unsliced = @requests
+    @requests_unpaginated = @requests
     @requests = @requests.page(params[:page])
+    @requests_not_owner_filtered = Partner::Request.sort(params.slice(*sortable_params)).filter(params.slice(*filtering_params - [:owner]))
   end
+  
+  
+  
+  
   
   def edit
     #respond_to do |format|

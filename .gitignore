@@ -24,3 +24,5 @@ coverage
 rdoc
 
 dump.rdb
+
+.env

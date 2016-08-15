@@ -8,4 +8,9 @@ Rails.application.config.assets.version = '1.0'
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-# Rails.application.config.assets.precompile += %w( search.js )
+#Rails.application.config.assets.precompile += %w( **/javascripts/index.js )
+#Rails.application.config.assets.precompile += [ "./**/javascripts/index.js" ]
+
+Rails.application.config.assets.precompile += Dir.glob(Rails.root.join('app', 'assets', 'themes', '**', 'javascripts', 'index.js'))
+Rails.application.config.assets.precompile += [  'simple/stylesheets/index.css' ]
+

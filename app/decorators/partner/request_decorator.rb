@@ -11,11 +11,7 @@ class Partner::RequestDecorator < ApplicationRecordDecorator
   end
   
   def state_updated_at
-    if object.state_updated_at < 30.days.ago
-      object.state_updated_at.strftime(short_date_format)
-    else
-      h.time_ago_in_words(object.state_updated_at)
-    end
+    time_ago_in_words_or_date object.state_updated_at
   end
   
   def sent_at
@@ -61,7 +57,7 @@ class Partner::RequestDecorator < ApplicationRecordDecorator
   end
 
   def self.icon
-    'file-text'
+    'envelope'
   end
 
 end

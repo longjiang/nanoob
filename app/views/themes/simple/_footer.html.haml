@@ -1,0 +1,24 @@
+%footer
+  .container
+    .row
+      .col-lg-8.offset-lg-2.col-md-10.offset-md-1
+        %ul.list-inline.text-xs-center
+          %li.list-inline-item
+            %a{:href => "#"}
+              %span.fa-stack.fa-lg
+                %i.fa.fa-circle.fa-stack-2x
+                %i.fa.fa-twitter.fa-stack-1x.fa-inverse
+          %li.list-inline-item
+            %a{:href => "#"}
+              %span.fa-stack.fa-lg
+                %i.fa.fa-circle.fa-stack-2x
+                %i.fa.fa-facebook.fa-stack-1x.fa-inverse
+          %li.list-inline-item
+            %a{:href => "#"}
+              %span.fa-stack.fa-lg
+                %i.fa.fa-circle.fa-stack-2x
+                %i.fa.fa-github.fa-stack-1x.fa-inverse
+        %p.copyright.text-muted
+          Copyright © 
+          = @website.business.name 
+          = Time.now.strftime("%Y")

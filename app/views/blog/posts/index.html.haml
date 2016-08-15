@@ -1,0 +1,75 @@
+/ views/blog/posts/index.html.haml
+
+- unless @website.nil?
+  - add_breadcrumb @website.business.decorate.name
+  - add_breadcrumb @website.decorate.host
+  
+- content_for :page_title do
+  = i Blog::Post.decorator_class.icon
+  = tmp 'blog/post'
+  %span.tag.tag-info= @posts_unpaginated.count
+  
+%p= t 'descriptions.blog/posts'
+
+#pagination.pull-right.hidden-xs-down
+  = paginate @posts, remote: true
+  
+= render 'filters'
+
+.table-responsive
+  %table.table.table-sm.table-hover.loading
+    %thead.thead-default
+      %tr
+        %th.text-nowrap.text-xs-center #
+        
+        %th
+        
+        - if @website.nil?
+          %th.text-nowrap.text-xs-center.text-sm-left
+            = i Business::Website.decorator_class.icon
+            %span.hidden-xs-down= tm 'business/website'
+        
+        %th.text-nowrap
+          = link_to sorted_entries_path(title: asc?(:title) ? :desc : :asc) do
+            = han 'blog/post', :title
+          - unless params[:sort_by_title].blank?
+            = i 'sort-alpha-asc' if asc? :title
+            = i 'sort-alpha-desc' if desc? :title
+          - unless params[:title_contains].blank?
+            = link_to filtered_entries_path(title_contains: nil) do
+              %i.fa.fa-filter.text-primary
+        
+        - if params[:owner].blank? 
+          %th.text-nowrap.text-xs-center.text-sm-left
+            = i User.decorator_class.icon
+            %span.hidden-xs-down
+              = han 'blog/post', :owner
+        
+        %th.text-nowrap Author
+        %th.text-nowrap Categories
+        %th.text-nowrap Tags
+        
+        
+        %th.text-nowrap
+          = link_to sorted_entries_path(status_date: asc?(:status_date) ? :desc : :asc) do
+            = han 'blog/post', :status
+          - unless params[:sort_by_status_date].blank?
+            = i 'sort-alpha-asc' if asc? :status_date
+            = i 'sort-alpha-desc' if desc? :status_date
+          - unless params[:status].blank?
+            = link_to filtered_entries_path(status: nil, published_after: nil, published_before: nil) do
+              %i.fa.fa-filter.text-primary
+        
+        
+        %th.text-nowrap= i 'comment-o'
+        %th.text-nowrap SEO
+        %th
+        
+    %tbody
+      = render partial: 'index-table-tr', collection: @posts, as: :post
+
+#pagination-bottom.text-xs-center       
+  = paginate @posts, remote: true
+
+
+        

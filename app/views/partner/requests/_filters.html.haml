@@ -2,30 +2,38 @@
 
 .filters
 
-  - if params.slice(*Partner::RequestsController.filtering_params).blank?
-    %span.text-primary= th 'forms.all'
-  - else
-    = link_to partner_requests_path do
-      = th 'forms.all'
-      %span.tag.tag-default= Partner::Request.count
-  |
-  - if params[:owner] && params[:owner].to_i.eql?(current_user.id)
-    %span.text-primary= th 'forms.mine'
-    = link_to filtered_entries_path(owner: nil) do
-      = i 'times-circle-o'
-  - else
-    = link_to filtered_entries_path(owner: current_user.id) do
-      = th 'forms.mine'
-      %span.tag.tag-default= @requests_unsliced.owner(current_user.id).count
-  |
-  - unless params[:recent].blank?
-    %span.text-primary= th 'forms.recent'
-    = link_to filtered_entries_path(recent: nil) do
-      = i 'times-circle-o'
-  - else
-    = link_to filtered_entries_path(recent: 10) do
-      = th 'forms.recent'
-      %span.tag.tag-default= @requests_unsliced.recent(10).count
+  %ul.list-inline
+  
+    %li.list-inline-item
+
+      - if params.slice(*Partner::RequestsController.filtering_params).blank?
+        %span.text-primary= th 'forms.all'
+      - else
+        = link_to partner_requests_path do
+          = th 'forms.all'
+          %span.tag.tag-default= Partner::Request.count
+    
+    %li.list-inline-item
+    
+      - if params[:owner] && params[:owner].to_i.eql?(current_user.id)
+        %span.text-primary= th 'forms.mine'
+        = link_to filtered_entries_path(owner: nil) do
+          = i 'times-circle-o'
+      - else
+        = link_to filtered_entries_path(owner: current_user.id) do
+          = th 'forms.mine'
+          %span.tag.tag-default= @requests_not_owner_filtered.owner(current_user.id).count
+    
+    %li.list-inline-item
+    
+      - unless params[:recent].blank?
+        %span.text-primary= th 'forms.recent'
+        = link_to filtered_entries_path(recent: nil) do
+          = i 'times-circle-o'
+      - else
+        = link_to filtered_entries_path(recent: 10) do
+          = th 'forms.recent'
+          %span.tag.tag-default= @requests_unpaginated.recent(10).count
 
   = bootstrap_form_tag url: partner_requests_path, method: :get, layout: :inline do |f|
     = f.hidden_field :owner, value: params[:owner]        unless params[:owner].blank?

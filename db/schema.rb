@@ -10,10 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160706150127) do
+ActiveRecord::Schema.define(version: 20160814031742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "blog_posts", force: :cascade do |t|
+    t.integer  "business_website_id"
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "slug"
+    t.text     "body"
+    t.integer  "status"
+    t.datetime "published_at"
+    t.integer  "comments_count"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.string   "featured_image_id"
+    t.index ["business_website_id"], name: "index_blog_posts_on_business_website_id", using: :btree
+    t.index ["slug"], name: "index_blog_posts_on_slug", using: :btree
+    t.index ["user_id"], name: "index_blog_posts_on_user_id", using: :btree
+  end
 
   create_table "bootsy_image_galleries", force: :cascade do |t|
     t.string   "bootsy_resource_type"
@@ -74,11 +91,11 @@ ActiveRecord::Schema.define(version: 20160706150127) do
   end
 
   create_table "meta", force: :cascade do |t|
-    t.string   "object_class"
-    t.integer  "object_id"
-    t.jsonb    "datas",        default: {}, null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.string   "metaable_type"
+    t.integer  "metaable_id"
+    t.jsonb    "datas",         default: {}, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "partner_backlinks", force: :cascade do |t|
@@ -154,6 +171,8 @@ ActiveRecord::Schema.define(version: 20160706150127) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "blog_posts", "business_websites"
+  add_foreign_key "blog_posts", "users"
   add_foreign_key "business_websites", "businesses"
   add_foreign_key "businesses", "business_products"
   add_foreign_key "histories", "users"

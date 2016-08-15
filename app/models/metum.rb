@@ -2,10 +2,12 @@ class Metum < ApplicationRecord
   
   include Storext.model
   
-  #validations 
+  belongs_to :metaable, optional: true, polymorphic: true
+  
+  validates :metaable_id, uniqueness: { scope: :metaable_type}
   
   store_attributes :datas do
-    statistics Hash, default: {}
+    meta Hash, default: {}
   end
   
 end

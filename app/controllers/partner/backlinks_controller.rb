@@ -9,9 +9,11 @@ class Partner::BacklinksController < CrudController
   
   def index
     super
-    @backlinks_unsliced = @backlinks
+    @backlinks_unpaginated = @backlinks
     @backlinks = @backlinks.includes(:partner).includes(:owner)
     @backlinks = @backlinks.page(params[:page])
+    @backlinks_not_owner_filtered = Partner::Backlink.sort(params.slice(*sortable_params)).filter(params.slice(*filtering_params - [:owner]))
+    
   end
   
   private

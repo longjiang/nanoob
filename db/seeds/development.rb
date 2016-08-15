@@ -1,9 +1,15 @@
+Metum.destroy_all
+History.destroy_all
+Blog::Post.destroy_all
 Partner::Backlink.destroy_all
+Partner::Request.destroy_all
 Business::Product.destroy_all
 Partner.destroy_all
 Business.destroy_all
 User.destroy_all
 Dashboard::Period.destroy_all
+
+
 
 # Periods
 [[:today, "beginning_of_day", :daily, 1],
@@ -163,3 +169,4 @@ Partner::Request.published.each do |request|
     end
   end
 end
+

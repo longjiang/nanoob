@@ -16,6 +16,7 @@ class User < ApplicationRecord
   has_many :backlinks,        foreign_key: :user_id
   has_many :partners,         foreign_key: :user_id
   has_many :histories
+  has_many :posts,            foreign_key: :user_id
   
   store_attributes :preferences do
     #subscribed_to_newsletter Boolean, default: false
@@ -24,6 +25,9 @@ class User < ApplicationRecord
     business_id Integer # favorite business
     business_manual Boolean, default: false  # set to true if user actually selected their favorite business
     business_updated_at DateTime, default: 1.year.ago
+    website_id Integer #favorite website
+    website_manual Boolean, default: false  # set to true if user actually selected their favorite business
+    website_updated_at DateTime, default: 1.year.ago
     #theme String, default: 'dark'
     #send_highlights_browser_push Boolean, default: true
     #send_mention_email Boolean, default: true
@@ -48,6 +52,7 @@ class User < ApplicationRecord
   
   def init_preferences
     set_business
+    set_website
     self.owner_id = id
     self.save
   end
@@ -57,9 +62,16 @@ class User < ApplicationRecord
   end
   
   def set_business
-    unless business_manual || business_updated_at > 10.days.ago
+    unless business_manual || business_updated_at > 5.days.ago
       business = Partner::Request.where(user_id: id).where('created_at > ?', 10.days.ago).group(:business_id).count.sort_by{|id, count| count}
       self.business_id = business.try(:last[0]) unless business.blank?
+    end
+  end
+  
+  def set_website
+    unless website_manual || website_updated_at > 5.days.ago
+      website = Blog::Post.where(user_id: id).where('created_at > ?', 10.days.ago).group(:business_website_id).count.sort_by{|id, count| count}
+      self.website_id = website.try(:last[0]) unless website.blank?
     end
   end
 

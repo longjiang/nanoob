@@ -7,6 +7,6 @@
   = i "Partner::#{relation.capitalize}".constantize.decorator_class.icon
   = tmp "partner/#{relation}"
   %span.tag.tag-info
-    = instance_variable_get("@#{relation.pluralize}_unsliced").count
+    = instance_variable_get("@#{relation.pluralize}_unpaginated").count
 
 %p= t "descriptions.partner/#{relation.pluralize}"
