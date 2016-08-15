@@ -1,17 +1,8 @@
 / views/business/websites/edit.html.haml
 
-%ol.breadcrumb
-  %li= link_to @business.decorate.name, business_websites_path(business_id: @business.id)
-  %li.active
-    = @website.decorate.name
-
-%h1
+- content_for :page_title do
   = t 'activerecord.actions.edit'
   = tm 'business/website'
 
-.row
-  .col-md-12.col-lg-9
-    = render 'form'
-  .hidden-md-down.col-lg-3
-    = render 'form-aside'
+= render 'shared/form_layout'
 

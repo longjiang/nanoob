@@ -1,7 +1,5 @@
 / views/partner/requests/show.html.haml
 
-= render 'breadcrumbs'
-
 - if @request.draft?
   = link_to edit_partner_request_path(@request), 
     class: 'btn btn-primary pull-right', 
@@ -10,7 +8,8 @@
     = i 'pencil'
     = t 'activerecord.actions.edit'
 
-%h1= @request.name
+- content_for :page_title do
+  = @request.name
 
 .row
   
@@ -37,7 +36,7 @@
       %ul.list-group.list-group-flush
         - @request.histories.each_with_index do | history, idx |
           %li.list-group-item
-            %span.label-pill.label-info.pull-left= idx
+            %span.tag-pill.tag-info.pull-xs-left= idx
             .row
               .col-md-3
                 = history.user.try(:username)

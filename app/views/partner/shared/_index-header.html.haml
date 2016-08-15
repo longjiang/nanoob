@@ -1,22 +1,12 @@
 / views/partner/shared/_index_header.html.haml
 
 - unless @business.nil?
-  %ol.breadcrumb
-    %li.active
-      = @business.decorate.name
-
-= link_to send("new_partner_#{relation}_path"), 
-  class: 'btn btn-primary pull-right', 
-  role: 'button', 
-  title: th('activerecord.actions.new') do
-  = i 'plus'
-  = t 'activerecord.actions.new'
+  - add_breadcrumb @business.decorate.name
   
-%h1
+- content_for :page_title do
   = i "Partner::#{relation.capitalize}".constantize.decorator_class.icon
   = tmp "partner/#{relation}"
-  %span.label.label-info
-    = instance_variable_get("@#{relation.pluralize}_unsliced").count
-
+  %span.tag.tag-info
+    = instance_variable_get("@#{relation.pluralize}_unpaginated").count
 
 %p= t "descriptions.partner/#{relation.pluralize}"

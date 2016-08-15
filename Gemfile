@@ -35,7 +35,7 @@ gem 'jbuilder', '~> 2.0'
 
 # views
 gem 'haml'
-gem 'bootstrap', '~> 4.0.0.alpha3'
+gem 'bootstrap', '~> 4.0.0.alpha3.1'
 gem "font-awesome-rails"
 #gem 'bootstrap_form', :git => 'https://github.com/bootstrap-ruby/rails-bootstrap-forms'
 gem 'bootstrap_form', :git => 'https://github.com/SecondBureau/rails-bootstrap-forms'
@@ -50,12 +50,20 @@ gem 'kaminari'
 gem 'resque'
 gem 'resque_mailer', :git => 'https://github.com/SecondBureau/resque_mailer.git', :branch => 'rails5'
 gem 'sinatra', github: 'sinatra/sinatra', branch: 'master'
+gem "rack-protection", github: "sinatra/rack-protection"
+
+# Attachments
+gem 'refile', github: 'refile/refile', require: 'refile/rails'
+gem 'refile-mini_magick', github: 'refile/refile-mini_magick'
+gem 'php-serialize'
 
 # Authentication
 gem 'devise'
 
 # activerecord
 gem "validate_url"
+gem "mysql2"
+gem 'iconv'
 
 # state machine
 gem 'aasm'
@@ -79,6 +87,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'faker', :require => false
   gem 'timecop'
+  gem 'dotenv-rails'
 end
 
 group :development do

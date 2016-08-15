@@ -2,11 +2,14 @@ class CrudController < ApplicationController
   
   include Nanoob::GenericModel
   
+  index_addnew
+  
   class_attribute :permitted_attrs, :filtering_params, :sortable_attrs
   
   self.sortable_attrs = []
   
   before_action :entry, only: [:show, :new, :edit, :update, :destroy]
+  before_action :decorate_entry, only: [:show]
   
   def index
     entries

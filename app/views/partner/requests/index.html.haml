@@ -29,10 +29,11 @@
           %span.hidden-md-down= han 'partner/request', :channel
           %span.hidden-lg-up= han('partner/request', :channel)[0]
         
-        %th.text-nowrap.text-xs-center.text-sm-left
-          = i User.decorator_class.icon
-          %span.hidden-xs-down
-            = han 'partner/request', :owner
+        - if params[:owner].blank? 
+          %th.text-nowrap.text-xs-center.text-sm-left
+            = i User.decorator_class.icon
+            %span.hidden-xs-down
+              = han 'partner/request', :owner
         
         %th.text-nowrap.text-xs-center.text-sm-left{colspan:2}= han 'partner/request', :state
         

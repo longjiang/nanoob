@@ -2,13 +2,13 @@
 
 %tr
   %th.text-nowrap.text-xs-center{scope: "row"}= partner.id
-  %td
+  %td.text-nowrap
     = link_to partner_path(partner) do
       = partner.title
     = link_to partner.url do 
       = i 'external-link'
   %td.text-nowrap= partner.category.humanize
-  %td
+  %td.text-nowrap
     = partner.contact_name
     - if partner.contact_email.present?
       = mail_to partner.contact_email do
@@ -18,17 +18,21 @@
         = i 'wpforms'
   
   %td.text-nowrap.text-xs-center.text-lg-left
-    %span.label.label-default= link_to partner.requests_count, partner_requests_path(partner_id: partner)
-    = link_to new_partner_request_path(partner_id: partner), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+    %span.tag.tag-default= link_to partner.requests_count, partner_requests_path(partner_id: partner)
+    = link_to new_partner_request_path(partner_id: partner), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
       = i 'plus'
       %span.hidden-md-down= t 'activerecord.actions.new'
   
   %td.text-nowrap.text-xs-center.text-lg-left
-    %span.label.label-default= link_to partner.backlinks_count, partner_backlinks_path(partner_id: partner)
-    = link_to new_partner_backlink_path(partner_id: partner), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+    %span.tag.tag-default= link_to partner.backlinks_count, partner_backlinks_path(partner_id: partner)
+    = link_to new_partner_backlink_path(partner_id: partner), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
       = i 'plus'
       %span.hidden-md-down= t 'activerecord.actions.new'
-  %td
+      
+  - if params[:owner].blank? 
+    %td.text-nowrap= partner.owner_username
+  
+  %td.text-nowrap
     = partner.decorate.created_at 
-  %td
+  %td.text-nowrap
     = render partial: 'shared/form_actions', locals: {object: partner}

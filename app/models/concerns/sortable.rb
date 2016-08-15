@@ -11,7 +11,11 @@ module Sortable
       sortable_params.each do |key, value|
         if value.present?
           direction = value.eql?('desc') ? :desc : :asc
-          results = results.order(key.gsub(Sortable::PREFIX,'') => direction)
+          if self.respond_to?(key.to_sym)
+            results = results.send(key.to_sym, direction)
+          else
+            results = results.order(key.gsub(Sortable::PREFIX,'') => direction)
+          end
         end
       end
       results

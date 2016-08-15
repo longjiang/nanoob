@@ -6,15 +6,21 @@ class Partner::RequestsController < CrudController
   before_action :find_partner
   before_action :default_user, only: [:new]
   before_action :update_bodies, only: [:create, :update]
+  before_action :add_breadcrumbs, except: [:index]
   
   def index
     super
     @requests = @requests.includes(:owner).includes(:backlink)
     @requests = @requests.includes(:partner) unless @partner
     @requests = @requests.includes(:business) unless @business
-    @requests_unsliced = @requests
+    @requests_unpaginated = @requests
     @requests = @requests.page(params[:page])
+    @requests_not_owner_filtered = Partner::Request.sort(params.slice(*sortable_params)).filter(params.slice(*filtering_params - [:owner]))
   end
+  
+  
+  
+  
   
   def edit
     #respond_to do |format|
@@ -108,6 +114,30 @@ class Partner::RequestsController < CrudController
         format.json { render json: entry.errors, status: :unprocessable_entity }
       end
     end
+  end
+  
+  def add_breadcrumbs
+    if @business.nil?
+      add_breadcrumb tmp(:business), businesses_path, icon: Partner::Backlink.decorator_class.icon
+    else
+      add_breadcrumb @business.decorate.name, business_path(@business)
+    end
+  
+    if @partner.nil?
+      add_breadcrumb tmp(:partner), partners_path, icon: Partner.decorator_class.icon
+    else
+      add_breadcrumb @partner.decorate.name, partner_path(@partner)
+    end
+  
+    if @request.nil? || @request.id.blank?
+      add_breadcrumb "#{t 'activerecord.actions.new'} #{tm 'partner/request'}"
+    else
+      add_breadcrumb @request.decorate.name
+    end
+  end
+  
+  def new_object_path
+    new_partner_request_path
   end
   
 end

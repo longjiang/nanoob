@@ -12,6 +12,10 @@ class ApplicationController < ActionController::Base
   
   around_action :set_time_zone
   
+  include ApplicationHelper
+  include Breadcrumbs::ActionController
+  include IndexAddnewConcern
+  
   protected
 
     def configure_permitted_parameters
@@ -20,8 +24,8 @@ class ApplicationController < ActionController::Base
     
     def init_menu
       @menu = Menu.new do |menu|
-        %w(business business/website partner partner/request partner/backlink).each do |item|
-          menu.add I18n.t("menu.#{item.pluralize}"), send("#{item.pluralize.gsub(/\//, '_')}_path", owner: current_user.id, business_id: current_user.business_id), item.camelize.constantize.model_name.element.pluralize, {icon: item.classify.constantize.decorator_class.icon}
+        %w(business business/website partner partner/request partner/backlink blog/post).each do |item|
+          menu.add I18n.t("menu.#{item.pluralize}"), send("#{item.pluralize.gsub(/\//, '_')}_path", owner: current_user.id, business_id: current_user.business_id, website_id: current_user.website_id), item.camelize.constantize.model_name.element.pluralize, {icon: item.classify.constantize.decorator_class.icon}
         end
       end
     end
@@ -31,6 +35,9 @@ class ApplicationController < ActionController::Base
     end
     
     def add_menu_items
+    end
+    
+    def add_breadcrumbs
     end
     
   private

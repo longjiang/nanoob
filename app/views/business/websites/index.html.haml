@@ -1,19 +1,6 @@
 / views/business/websites/index.html.haml
 
-- unless @business.nil?
-  %ol.breadcrumb
-    %li.active
-      = @business.decorate.name
-
-= link_to new_business_website_path(business_id: @business), 
-  class: 'btn btn-primary pull-right', 
-  role: 'button', 
-  title: th('activerecord.actions.new') do
-  = i 'plus'
-  = t 'activerecord.actions.new'
-
-
-%h1 
+- content_for :page_title do
   = i Business::Website.decorator_class.icon
   = tmp 'business/website'
   
@@ -47,8 +34,8 @@
               = i 'external-link'
             
           %td.text-nowrap.text-xs-center.text-lg-left
-            %span.label.label-default= link_to website.backlinks.count, partner_backlinks_path(website_id: website.id)
-            = link_to new_partner_backlink_path(website_id: website.id), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+            %span.tag.tag-default= link_to website.backlinks.count, partner_backlinks_path(website_id: website.id)
+            = link_to new_partner_backlink_path(website_id: website.id), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
               = i 'plus'
               %span.hidden-md-down= t 'activerecord.actions.new'
           %td.text-nowrap            

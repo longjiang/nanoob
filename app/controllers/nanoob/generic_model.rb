@@ -36,7 +36,11 @@ module Nanoob
     
     def set_entry
       _ = (params[:id] ? find_entry : build_entry)
-      instance_variable_set(:"@#{object_name false}", _.decorate)
+      instance_variable_set(:"@#{object_name false}", _)
+    end
+    
+    def decorate_entry
+      instance_variable_set(:"@#{object_name false}", get_entry.decorate)
     end
     
     def build_entry

@@ -12,10 +12,10 @@
         requests sent, 
         Progress :
         - progress = compares.eql?(0) ? 0 : (count - compares) * 100 / compares
-        %span.label{class: (progress < 0) ? 'label-danger' : 'label-success'}
+        %span.tag{class: (progress < 0) ? 'tag-danger' : 'tag-success'}
           = "#{progress}%"
         
         , 
         Goals : 
-        %span.label{class: "label-primary"}
+        %span.tag{class: "tag-primary"}
           = "#{count * 100 / 30 / 7}%"

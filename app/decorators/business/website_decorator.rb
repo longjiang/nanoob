@@ -11,7 +11,7 @@ class Business::WebsiteDecorator < ApplicationRecordDecorator
   end
   
   def platform
-    object.platform.humanize
+    object.platform.try(:humanize)
   end
   
   def self.icon

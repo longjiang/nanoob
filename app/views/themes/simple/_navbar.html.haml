@@ -1,0 +1,16 @@
+/ Navigation
+%nav.navbar.navbar-default.navbar-custom.navbar-fixed-top
+  .container-fluid
+    / Brand and toggle get grouped for better mobile display
+    .navbar-header.page-scroll
+      %button.navbar-toggler.hidden-sm-up.pull-xs-right{type: "button", aria: {controls: "menu", expanded: "false", label: "Toggle navigation"}, data: {toggle: "collapse", target: "#menu"}}
+        &#9776;
+      = link_to @website.business.name, root_path, class: "navbar-brand"
+      #menu.collapse.navbar-toggleable-xs
+        %ul.nav.navbar-nav.pull-xs-right
+          %li.nav-item
+            = link_to "Home", root_path, class: "nav-link"
+          %li.nav-item
+            = link_to "About", root_path, class: "nav-link"
+          %li.nav-item
+            = link_to "Contact", root_path, class: "nav-link"

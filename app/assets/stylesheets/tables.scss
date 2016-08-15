@@ -1,0 +1,14 @@
+.table {
+  .thead-default {
+    a {
+      color: $gray;
+      &:hover {
+        color: $link-hover-color;
+      }
+    }
+  }
+}
+
+.filters {
+  margin-bottom: 1rem;
+}

@@ -23,7 +23,7 @@
   
   = f.primary
   
-  = f.submit "create/Update and make a request", class: "btn btn-secondary", name: 'new_request' unless @partner.pending_request
+  = f.submit "#{t(@partner.new_record? ? :create : :update, model: :partner, scope: 'helpers.submit')} #{t(:and_create_request, model: :partner, scope: 'helpers.submit')}", class: "btn btn-secondary", name: 'new_request' unless @partner.pending_request
   
   = f.submit "Update and Send Request ##{@partner.pending_request.id}", class: "btn btn-secondary", name: 'send_request' if @partner.pending_request
   

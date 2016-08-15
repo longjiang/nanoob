@@ -4,10 +4,56 @@ en:
   overview: Overview
   history: History
   
+  helpers:
+    submit:
+      and_create_request: and make a new request
+  
   
 # Forms
   forms:
-    select: Select
+    all: all
+    all_businessess: all businesses
+    all_categories: all categories
+    all_channels: all channels
+    all_owners: all owners
+    all_statuses: all statuses
+    all_states: all states
+    all_websites: all websites
+    filter: filter
+    mine: mine
+    new: new
+    recent: recent
+    select: select
+    
+  backlinks:
+    create:
+      flash: 
+        success_html: Backlink has been successfully created.
+    update:
+      flash:
+        success_html: Backlink has been successfully updated.
+    destroy:
+      flash:
+        success_html: Backlink has been successfully deleted.
+  
+  businesses:
+    create:
+      flash: 
+        success_html: Business has been successfully created.
+    update:
+      flash:
+        success_html: Business has been successfully updated.
+        
+  partners:
+    create:
+      flash: 
+        success_html: Partner has been successfully created.
+    update:
+      flash:
+        success_html: Partner has been successfully updated.
+    destroy:
+      flash:
+        success_html: Partner has been successfully deleted.
     
   requests:
     create:
@@ -16,6 +62,17 @@ en:
     update:
       flash:
         success_html: Request has been successfully updated.
+        
+    websites:
+      create:
+        flash: 
+          success_html: Website has been successfully created.
+      update:
+        flash:
+          success_html: Website has been successfully updated.
+      destroy:
+        flash:
+          success_html: Website has been successfully deleted.
     
 # descriptions
   descriptions:
@@ -24,19 +81,29 @@ en:
     partners: This is the list of our partners who may publish backlinks to our websites.
     partner/requests: List of partnership requests we made to our partners. 
     partner/backlinks: List of actual backlinks published (active or not).
+    blog/posts: Posts published on our network of websites.
     
 # Menu
   menu:
+    
+    blog/posts: Posts
     businesses: Businesses
     business/websites: Websites
     partners: Partners
     partner/requests: Requests
     partner/backlinks: Backlinks
+    
+    blog/post:
+      all: All Posts
+      add_new: Add new
     business:
       all: All Businesses
       add_new: Add new
     business/website:
       all: All Websites
+      add_new: Add new
+    blog/post:
+      all: All posts
       add_new: Add new
     partner:
       all: All Partners
@@ -50,29 +117,46 @@ en:
   
 # ACTIVE RECORD  
   activerecord:
+    
     actions:
       new: Add new
       edit: Edit
+      
     models:
-      user:
-        one: User
-        other: Users
-      partner:
-        one: partner
-        other: partners
-      partner/request:
-        one: request
-        other: requests
-      partner/backlink:
-        one: backlink
-        other: backlinks
+      blog/post:
+        one: post
+        other: posts
       business:
         one: business
         other: businesses
       business/website: 
         one: website
         other: websites
+      partner:
+        one: partner
+        other: partners
+      partner/backlink:
+        one: backlink
+        other: backlinks
+      partner/request:
+        one: request
+        other: requests
+      user:
+        one: User
+        other: Users
+      
     attributes:
+      blog/post:
+        status: Status
+        statuses:
+          draft: Draft
+          published: Published
+          scheduled: Scheduled
+        decorator:
+          statuses:
+            draft: Last updated
+            published: Published
+            scheduled: Scheduled
       business:
         name: Name
         product: Product Line
@@ -86,6 +170,15 @@ en:
         title: Title
         category: Category
         contact: Contact
+      partner/backlink:
+        referrer: Referrer
+        anchor: Anchor
+        link: Link
+        status: Status
+        statuses:
+          active: Active
+          inactive: Inactived
+          unknown: In Progress
       partner/request:
         owner: Owner
         subject: Subject
@@ -95,8 +188,4 @@ en:
         channels:
           email: E-mail
           webform: Web Form
-      partner/backlink:
-        statuses:
-          active: Active
-          inactive: Inactived
-          unknown: In Progress
+      

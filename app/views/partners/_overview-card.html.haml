@@ -23,13 +23,13 @@
       Requests :
       = partner.requests.count
       %span.pull-right
-        = link_to new_partner_request_path(partner_id: partner.id), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+        = link_to new_partner_request_path(partner_id: partner.id), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
           = i 'plus'
           %span.hidden-md-down= t 'activerecord.actions.new'
     %li.list-group-item
       Backlink :
       = partner.backlinks.count
       %span.pull-right
-        = link_to new_partner_backlink_path(partner_id: partner.id), class: 'label label-primary', role: 'button', title: th('activerecord.actions.new') do
+        = link_to new_partner_backlink_path(partner_id: partner.id), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
           = i 'plus'
           %span.hidden-md-down= t 'activerecord.actions.new'
