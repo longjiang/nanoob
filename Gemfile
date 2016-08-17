@@ -45,6 +45,7 @@ gem 'draper', '~> 3.0.0.pre1'
 gem 'select2-rails'
 #gem 'bootsy'
 gem 'bootsy', :git => 'https://github.com/volmer/bootsy.git', :branch => 'bootstrap-4'
+#A Scope & Engine based, clean, powerful, customizable and sophisticated paginator
 gem 'kaminari'
 
 gem 'resque'

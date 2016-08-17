@@ -31,5 +31,25 @@ document.addEventListener 'turbolinks:load', ->
     $.get("/ws/forms/permalink_prefix", website_id: website_id).done (data) ->
       label.text data.permalink_prefix
     
+  $(":file").filestyle({input: false, buttonName: "btn-primary"});
+  
+  $(document).on "upload:start", "form", (event) ->
+    $(this).find("input[type=submit]").attr("disabled", true)
+    $(this).find(".file-loading").removeClass('invisible')
+    
+  $(document).on "upload:complete", "form", (e) ->
+    if(!$(this).find("input.uploading").length) 
+      $(this).find("input[type=submit]").removeAttr("disabled")
+      $(this).find(".file-loading").addClass('invisible')
+      renderImage e.target
+
+  renderImage = (fileField) ->
+    reader = new FileReader
+    reader.onload = (event) ->
+      theUrl = event.target.result
+      $('img.uploaded_image').attr('src', theUrl)
+    
+    reader.readAsDataURL fileField.files[0]
+  
   return
   

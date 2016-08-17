@@ -17,5 +17,6 @@
 //= require bootsy
 //= require turbolinks
 //= require select2
+//= require refile
 
 //= require_tree .

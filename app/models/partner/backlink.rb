@@ -16,7 +16,7 @@ class Partner::Backlink < ApplicationRecord
   belongs_to  :business
   belongs_to  :request, optional: true, class_name: 'Partner::Request',   foreign_key: :partner_request_id
   belongs_to  :owner,                   class_name: 'User',               foreign_key: :user_id
-  belongs_to  :website, optional: true, class_name: "Business::Website",  foreign_key: :business_website_id
+  belongs_to  :website, optional: true, class_name: "Business::Website",  foreign_key: :business_website_id, counter_cache: true
   
   delegate    :title,    to: :partner, prefix: true
   delegate    :name,     to: :business, prefix: true

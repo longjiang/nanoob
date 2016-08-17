@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160814031742) do
+ActiveRecord::Schema.define(version: 20160815093020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,10 +54,12 @@ ActiveRecord::Schema.define(version: 20160814031742) do
 
   create_table "business_websites", force: :cascade do |t|
     t.integer  "business_id"
-    t.integer  "platform",    null: false
-    t.string   "url",         null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "platform",                    null: false
+    t.string   "url",                         null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "backlinks_count", default: 0
+    t.integer  "posts_count",     default: 0
     t.index ["business_id"], name: "index_business_websites_on_business_id", using: :btree
   end
 

@@ -11,6 +11,7 @@ class Business::WebsitesController < CrudController
       @websites = @business.websites
     else
       super
+      @websites = @websites.includes(:business)
     end
   end
   

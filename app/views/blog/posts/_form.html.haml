@@ -29,9 +29,17 @@
   = f.datetime_select :published_at
   
   - if @post.featured_image_id?
-    = image_tag attachment_url(@post, :featured_image, :fill, 100, 100, format: "jpg"), class: 'img-fluid'
+    = attachment_image_tag @post, :featured_image, :fill, 100, 100, format: "jpg", class: 'img-fluid'
     = f.check_box :remove_featured_image
   - else
-    = f.attachment_field :featured_image
+    %fieldset.form-group
+      %label.control-label= han('blog/post', :featured_image)
+      = image_tag 'decoration/placeholders/featured_image_100x100.png', class: 'uploaded_image img-fluid'
+      .file-loading.invisible
+        = i 'spinner fa-pulse'
+        Loading....
+      = f.attachment_field :featured_image, direct: true, class:"filestyle", data: {input:"false"}
   
   = f.primary "save Draft"
+  
+  

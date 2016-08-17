@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+/Applications/Postgres.app/Contents/Versions/9.5/bin/psql -c "drop database nanoob_development;"
+
+/Applications/Postgres.app/Contents/Versions/9.5/bin/psql -c "create database nanoob_development;"
+
+/Applications/Postgres.app/Contents/Versions/9.5/bin/psql nanoob_development < nanoob_development_clean.sql
+
+bundle exec rake db:data_migration:wp[lemarchedurideau]
+
+bundle exec rake db:data_migration:wp[lapoigneedemain]

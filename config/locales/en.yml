@@ -147,6 +147,7 @@ en:
       
     attributes:
       blog/post:
+        featured_image: Featured Image
         status: Status
         statuses:
           draft: Draft

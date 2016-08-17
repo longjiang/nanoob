@@ -15,7 +15,7 @@ class Blog::Post < ApplicationRecord
   validates   :slug,          uniqueness:  { scope: :business_website_id }
   #validates_format_of :slug, :without => /^\d/
   
-  belongs_to :website,  class_name: 'Business::Website', foreign_key: :business_website_id
+  belongs_to :website,  class_name: 'Business::Website', foreign_key: :business_website_id, counter_cache: true
   belongs_to :owner,    class_name: 'User',  foreign_key: :user_id
   
   scope :owner,           -> (user)       { where owner: user.to_i }

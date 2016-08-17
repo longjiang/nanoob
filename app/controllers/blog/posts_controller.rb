@@ -4,11 +4,13 @@ class Blog::PostsController < CrudController
   self.filtering_params = [ :owner, :status, :recent, :business_website_id, :title_contains, :published_after, :published_before  ]
   self.sortable_attrs   = [ :title, :status_date ]
   
-  before_action :find_website
-  before_action :find_business
+  prepend_before_action :find_website
+  prepend_before_action :find_business
   before_action :update_bodies, only: [:create, :update]
   before_action :default_user, only: [:new]
+  before_action :default_website, only: [:new]
   before_action :add_breadcrumbs, except: [:index]
+  
   
   def index
     super
@@ -64,6 +66,10 @@ class Blog::PostsController < CrudController
     @post.owner = current_user unless @post.owner 
   end
   
+  def default_website
+    @post.website = @website unless @post.website
+  end
+  
   def add_breadcrumbs
     if @business.nil?
       add_breadcrumb tmp(:business), businesses_path, icon: Partner::Backlink.decorator_class.icon
@@ -80,7 +86,7 @@ class Blog::PostsController < CrudController
   end
   
   def new_object_path
-    new_blog_post_path(website: @website.try(:id))
+    new_blog_post_path(business_website_id: @website.try(:id))
   end
   
 end

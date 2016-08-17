@@ -33,7 +33,9 @@ Rails.application.routes.draw do
   end
   
   match '/:year/:month/:slug', to: 'blog/public/posts#show', :constraints => DomainConstraint, via: [:get, :post], as: :post
+  get '/page/:page', :constraints => DomainConstraint, to: 'blog/public/posts#index'
   root 'blog/public/posts#index', :constraints => DomainConstraint, via: [:get, :post]
+  
   
   scope '/ws' do
     get '/forms/blog_post_slug_generator', to: 'webservice/forms#blog_post_slug_generator' 
