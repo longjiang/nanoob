@@ -8,7 +8,7 @@ class Partner < ApplicationRecord
   validates :url,           url: true
   validates_format_of :contact_email, with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, allow_nil: true
   validates :webform_url,   url: true,      allow_nil: true
-  validates :user_id,       presence: true
+  validates :owner_id,       presence: true
   
   validates :contact_email, presence: true, if: "pending_request_id.present? && pending_request.email?"
   validates :contact_name,  presence: true, if: "pending_request_id.present? && pending_request.email?"
@@ -16,7 +16,7 @@ class Partner < ApplicationRecord
   
   has_many :requests,   dependent: :destroy
   has_many :backlinks,  dependent: :destroy
-  belongs_to :owner,    class_name: 'User',  foreign_key: :user_id
+  belongs_to :owner,    class_name: 'People::User',  foreign_key: :owner_id
   
   attr_accessor :pending_request_id 
   
@@ -27,7 +27,7 @@ class Partner < ApplicationRecord
   scope :contact,       -> (name)       { where("lower(contact_name) like ?", "%#{name.downcase}%")}
   scope :recent,        -> (days)       { where("created_at > ? ", days.to_i.days.ago) }
   scope :inactive,      -> (days)       { where("requests_count = 0 and backlinks_count = 0 and created_at > ? ", days.to_i.days.ago) }
-  scope :owner,         -> (user)       { where owner: user.to_i }
+  scope :owner,         -> (staff)       { where owner: staff.to_i }
   
   def pending_request
     Partner::Request.find_by_id(pending_request_id) if pending_request_id

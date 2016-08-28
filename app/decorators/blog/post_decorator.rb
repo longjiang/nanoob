@@ -5,6 +5,17 @@ class Blog::PostDecorator < ApplicationRecordDecorator
   STATUS_COLOR_OPTIONS = {default:'muted', draft:'muted', scheduled: 'primary', published:'success'}
   STATUS_ICON_OPTIONS = {default:'thumb-tack', draft:'pencil-square-o', scheduled: 'calendar-check-o', published:'check-circle-o'}
   
+  def categories(params={})
+    return "-" if object.categories.blank?
+    object.categories.map do |category|
+      if params[:category_id].eql?(category.id.to_s)
+        h.link_to category.name, h.filtered_entries_path(category_id: nil), class: 'text-primary'
+      else
+        h.link_to category.name, h.filtered_entries_path(category_id: category.id)
+      end
+    end.join(', ').html_safe
+  end
+  
   def status_with_date
     date = case object.status
     when "published"
@@ -21,6 +32,10 @@ class Blog::PostDecorator < ApplicationRecordDecorator
     else
       :draft
     end 
+  end
+  
+  def published_at
+    time_ago_in_words_or_datetime(object.published_at)
   end
   
   def seo_score_color
@@ -50,6 +65,8 @@ class Blog::PostDecorator < ApplicationRecordDecorator
       ""
     end
   end
+  
+
   
   def self.icon
     'thumb-tack'

@@ -23,7 +23,7 @@ class Blog::Public::PostsController < ApplicationController
   private
   
   def find_website
-    @website ||= Business::Website.find_by_url("#{request.protocol}#{request.host.gsub('.local','').gsub('www.','')}")
+    @website ||= Business::Website.find_by_url("#{request.protocol}#{request.host.gsub('.dev','').gsub('www.','')}")
   end
   
   def layout

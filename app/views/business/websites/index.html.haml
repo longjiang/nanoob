@@ -26,6 +26,10 @@
           = i Blog::Post.decorator_class.icon
           %span.hidden-md-down= tmp 'blog/post'
           
+        %th.text-nowrap.text-xs-center.text-lg-left
+          = i Blog::Category.decorator_class.icon
+          %span.hidden-md-down= tmp 'blog/category'
+          
         %th.text-nowrap 
     %tbody
       - @websites.each do |website|
@@ -50,6 +54,9 @@
             = link_to new_blog_post_path(business_website_id: website.id), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
               = i 'plus'
               %span.hidden-md-down= t 'activerecord.actions.new'
+              
+          %td.text-nowrap.text-xs-center.text-lg-left
+            %span.tag.tag-default= link_to website.categories.size, blog_categories_path(business_website_id: website.id)
           
           %td.text-nowrap            
             = render partial: 'shared/form_actions', locals: {object: website}

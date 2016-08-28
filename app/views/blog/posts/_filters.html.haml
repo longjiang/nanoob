@@ -72,14 +72,25 @@
     = f.hidden_field :published_before, value: params[:published_before]       unless params[:published_before].blank?
     
     = f.select :business_website_id, Business::Website.all.map{|_| [_.decorate.name, _.id ]}, 
-      selected: params[:business_website_id], 
+      selected: @website.try(:id), 
       include_blank: th('forms.all_websites'),
       hide_label: true
     
-    = f.select :owner, User.all.map{|_| [_.decorate.name, _.id ]}, 
+    = f.select :owner, People::User.all.map{|_| [_.decorate.name, _.id ]}, 
       selected: params[:owner], 
       include_blank: th('forms.all_owners'),
       hide_label: true
+      
+    - if @website
+      = f.select :category_id, @website.categories.map{|_| [_.decorate.name, _.id ]}, 
+        selected: params[:category_id], 
+        include_blank: th('forms.all_categories'),
+        hide_label: true
+    - else
+      = f.grouped_collection_select :category_id, Business::Website.has_categories, :categories, :host, :id, :name,
+        selected: params[:category_id],
+        include_blank: th('forms.all_categories'),
+        hide_label: true
       
     = f.text_field :title_contains, value: params[:title_contains], hide_label: true, class: 'form-control-sms', placeholder: han('blog/post', :title)
     

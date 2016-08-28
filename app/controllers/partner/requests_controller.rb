@@ -1,5 +1,5 @@
 class Partner::RequestsController < CrudController
-  self.permitted_attrs = [:partner_id, :business_id, :subject, :body, :body_was, :body_xs, :body_xs_was, :channel, :sent_at, :state, :user_id, :state_updated_by, :bootsy_image_gallery_id]
+  self.permitted_attrs = [:partner_id, :business_id, :subject, :body, :body_was, :body_xs, :body_xs_was, :channel, :sent_at, :state, :owner_id, :state_updated_by, :bootsy_image_gallery_id]
   self.filtering_params = [ :channel, :owner, :state, :recent, :business_id  ]
   
   before_action :find_business
@@ -53,7 +53,7 @@ class Partner::RequestsController < CrudController
   
   def add_menu_items
     @menu.update do |menu|
-      menu.update I18n.t("menu.partner/requests"), partner_requests_path(owner: current_user.id, business_id: current_user.business_id), 'requests', {icon: Partner::Request.decorator_class.icon} do |submenu|
+      menu.update I18n.t("menu.partner/requests"), partner_requests_path(owner: current_user.id, business_id: current_user.business_id, business_website_id: current_user.website_id), 'requests', {icon: Partner::Request.decorator_class.icon} do |submenu|
         submenu.add I18n.t("menu.partner/request.all"), partner_requests_path, {icon: false}
         submenu.add I18n.t("menu.partner/request.add_new"), new_partner_request_path, {icon: false}
       end

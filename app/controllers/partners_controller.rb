@@ -42,7 +42,7 @@ class PartnersController < CrudController
   
   def add_menu_items
     @menu.update do |menu|
-      menu.update I18n.t("menu.partners"), partners_path(owner: current_user.id), 'partners', {icon: Partner.decorator_class.icon} do |submenu|
+      menu.update I18n.t("menu.partners"), partners_path(owner: current_user.id, business_id: current_user.business_id, business_website_id: current_user.website_id), 'partners', {icon: Partner.decorator_class.icon} do |submenu|
         submenu.add I18n.t("menu.partner.all"), partners_path, {icon: false}
         submenu.add I18n.t("menu.partner.add_new"), new_partner_path, {icon: false}
       end

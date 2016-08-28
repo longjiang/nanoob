@@ -5,14 +5,14 @@ class DomainConstraint
     matching_website?(request)
   end
   def self.matching_website? request
-    url = "#{request.protocol}#{request.host.gsub('.local','').gsub('www.','')}"
+    url = "#{request.protocol}#{request.host.gsub('.dev','').gsub('www.','')}"
     Business::Website.find_by_url(url).present?
   end
 end
 
 Rails.application.routes.draw do
   
-  devise_for :users
+  devise_for :users, class_name: "People::User"
   
   mount Bootsy::Engine => '/bootsy', as: 'bootsy'
   
@@ -28,8 +28,9 @@ Rails.application.routes.draw do
     resources :partners, :concerns => :paginatable
     resources :partner_requests, controller: 'partner/requests', :concerns => :paginatable
     resources :partner_backlinks, controller: 'partner/backlinks', :concerns => :paginatable
-    resources :users
     resources :blog_posts, controller: 'blog/posts', :concerns => :paginatable
+    resources :blog_categories, controller: 'blog/categories', :concerns => :paginatable
+    resources :users, controller: 'people/users'
   end
   
   match '/:year/:month/:slug', to: 'blog/public/posts#show', :constraints => DomainConstraint, via: [:get, :post], as: :post
@@ -38,8 +39,11 @@ Rails.application.routes.draw do
   
   
   scope '/ws' do
-    get '/forms/blog_post_slug_generator', to: 'webservice/forms#blog_post_slug_generator' 
-    get '/forms/permalink_prefix', to: 'webservice/forms#permalink_prefix'
+    get '/forms/blog_post_slug_generator',      to: 'webservice/forms#blog_post_slug_generator' 
+    get '/forms/blog_post_permalink_prefix',    to: 'webservice/forms#blog_post_permalink_prefix'
+    get '/forms/blog_category_slug_generator',  to: 'webservice/forms#blog_category_slug_generator' 
+    get '/forms/blog_category_permalink_prefix',to: 'webservice/forms#blog_category_permalink_prefix'
+    get '/forms/blog_post_published_at',        to: 'webservice/forms#blog_post_published_at'
   end
   
   root 'welcome#index'

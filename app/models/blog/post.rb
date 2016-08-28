@@ -9,28 +9,32 @@ class Blog::Post < ApplicationRecord
   
   before_validation :default_status
   before_validation :slugify
+  before_save :default_published_at
   
+  validates   :business_website_id,         presence: true
   validates   :title,         presence: true
   validates   :slug,          presence: true
   validates   :slug,          uniqueness:  { scope: :business_website_id }
   #validates_format_of :slug, :without => /^\d/
   
   belongs_to :website,  class_name: 'Business::Website', foreign_key: :business_website_id, counter_cache: true
-  belongs_to :owner,    class_name: 'User',  foreign_key: :user_id
+  belongs_to :owner,    class_name: 'People::User',  foreign_key: :owner_id, counter_cache: true
+  has_and_belongs_to_many :categories, class_name: 'Blog::Category',  foreign_key: :blog_post_id, association_foreign_key: :blog_category_id , after_add: :increment_count, after_remove: :decrement_count
   
-  scope :owner,           -> (user)       { where owner: user.to_i }
-  scope :recent,          -> (days)       { where("updated_at > ? ", days.to_i.days.ago) }
+  scope :owner,           -> (staff)      { where owner: staff.to_i }
+  scope :recent,          -> (days)       { where("#{self.table_name}.updated_at > ? ", days.to_i.days.ago) }
   scope :business_website_id,    -> (id)  { where business_website_id: id }
   scope :website,         -> (website)    { where business_website_id: website.id }
-  scope :candidates,      -> (slug)       { where("slug like ?", "#{slug}%") } 
+  scope :candidates,      -> (slug)       { where("#{self.table_name}.slug like ?", "#{slug}%") } 
   scope :title_contains,  -> (title)      { where("lower(title) like ?", "%#{title.downcase}%") }
   scope :status,          -> (status)     { where status: status }
-  scope :published_after, -> (date)       { where("published_at > ? ", date) }
-  scope :published_before,-> (date)       { where("published_at < ? ", date) }
+  scope :published_after, -> (date)       { where("#{self.table_name}.published_at > ? ", date) }
+  scope :published_before,-> (date)       { where("#{self.table_name}.published_at < ? ", date) }
+  scope :category_id,     -> (id)         { joins(:categories).where('blog_categories.id = ?', id) }
   
   def self.sort_by_status_date(direction='asc')
     #status=0 means status=:draft (enum is stored as integer)
-    order("case when status=0 then updated_at else COALESCE(published_at, updated_at) end #{direction}")
+    order("case when status=0 then #{self.table_name}.updated_at else COALESCE(#{self.table_name}.published_at, #{self.table_name}.updated_at) end #{direction}")
   end
   
   delegate :username, to: :owner, prefix: true 
@@ -57,11 +61,29 @@ class Blog::Post < ApplicationRecord
     get_meta(:seo_score)
   end
   
+  def author=(user)
+    set_meta(:author_id, user.id)
+  end
+  
+  def author
+    @author ||= get_meta(:author_id).present? ? People::Author.find(get_meta(:author_id)) : People::Author.new
+  end
+  
   def self.slugify(title)
     available_slug title.try(:parameterize)
   end
   
   private
+  
+  def increment_count(category)
+    self.class.increment_counter(:categories_count, self.id)
+    category.class.increment_counter(:posts_count, category.id)
+  end
+  
+  def decrement_count(category)
+    self.class.decrement_counter(:categories_count, self.id)
+    category.class.decrement_counter(:posts_count, category.id)
+  end
   
   def nilify_attributes
     %w( title slug body )
@@ -69,6 +91,10 @@ class Blog::Post < ApplicationRecord
   
   def default_status
     self.status = :draft if status.blank? 
+  end
+  
+  def default_published_at
+    self.published_at = Time.now if published_at.blank? && published?
   end
   
   def slugify

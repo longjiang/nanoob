@@ -4,8 +4,8 @@ module Nanoob::History extend ActiveSupport::Concern
     has_many :histories, as: :archivable, dependent: :destroy
   end
   
-  def add_to_history(change_from, change_to, comment, user=nil)
-    histories.create!(change_from: change_from, change_to: change_to, comment: comment, user_id: user.try(:id))
+  def add_to_history(change_from, change_to, comment, person=nil)
+    histories.create!(change_from: change_from, change_to: change_to, comment: comment, person_id: person.try(:id))
   end
   
   def last_history

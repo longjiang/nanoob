@@ -3,7 +3,7 @@ class CreateHistories < ActiveRecord::Migration[5.0]
     create_table :histories do |t|
       t.string :archivable_type, null: false
       t.integer :archivable_id, null: false
-      t.references :user, foreign_key: true
+      t.references :person, foreign_key: true
       t.timestamp :valid_from, null: false
       t.timestamp :valid_to, null: false
       t.integer :lock_version, default: 0, null: false

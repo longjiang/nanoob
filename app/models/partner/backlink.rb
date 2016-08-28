@@ -13,16 +13,16 @@ class Partner::Backlink < ApplicationRecord
   validates   :anchor,              presence: true,  if: "link.present?"
   
   belongs_to  :partner, counter_cache: true
-  belongs_to  :business
-  belongs_to  :request, optional: true, class_name: 'Partner::Request',   foreign_key: :partner_request_id
-  belongs_to  :owner,                   class_name: 'User',               foreign_key: :user_id
+  belongs_to  :business, counter_cache: true
+  belongs_to  :request, optional: true, class_name: 'Partner::Request',   foreign_key: :partner_request_id, counter_cache: true
+  belongs_to  :owner,                   class_name: 'People::User',               foreign_key: :owner_id
   belongs_to  :website, optional: true, class_name: "Business::Website",  foreign_key: :business_website_id, counter_cache: true
   
   delegate    :title,    to: :partner, prefix: true
   delegate    :name,     to: :business, prefix: true
   delegate    :username, to: :owner, prefix: true
   
-  scope :owner,         -> (user)       { where owner: user.to_i }
+  scope :owner,         -> (staff)       { where owner: staff.to_i }
   scope :status,        -> (status)      { where status: status }
   scope :recent,        -> (days)       { where("updated_at > ? ", days.to_i.days.ago) }
   scope :business_id,   -> (id)         { where business_id: id }

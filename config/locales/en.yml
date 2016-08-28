@@ -54,6 +54,17 @@ en:
     destroy:
       flash:
         success_html: Partner has been successfully deleted.
+        
+  posts:
+    create:
+      flash: 
+        success_html: Post has been successfully created.
+    update:
+      flash:
+        success_html: Post has been successfully updated.
+    destroy:
+      flash:
+        success_html: Post has been successfully deleted.
     
   requests:
     create:
@@ -82,10 +93,12 @@ en:
     partner/requests: List of partnership requests we made to our partners. 
     partner/backlinks: List of actual backlinks published (active or not).
     blog/posts: Posts published on our network of websites.
+    blog/categories: Post categories are scoped to a website. 
     
 # Menu
   menu:
     
+    blog/categories : Categories
     blog/posts: Posts
     businesses: Businesses
     business/websites: Websites
@@ -93,6 +106,8 @@ en:
     partner/requests: Requests
     partner/backlinks: Backlinks
     
+    blog/categories:
+      all: Categories
     blog/post:
       all: All Posts
       add_new: Add new
@@ -123,6 +138,9 @@ en:
       edit: Edit
       
     models:
+      blog/category:
+        one: category
+        other: categories
       blog/post:
         one: post
         other: posts
@@ -141,12 +159,13 @@ en:
       partner/request:
         one: request
         other: requests
-      user:
+      people/user:
         one: User
         other: Users
       
     attributes:
       blog/post:
+        categories: Categories
         featured_image: Featured Image
         status: Status
         statuses:

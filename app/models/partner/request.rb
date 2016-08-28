@@ -11,12 +11,12 @@ class Partner::Request < ApplicationRecord
   validates :state,              presence: true
   validates :partner_id,         presence: true
   validates :business_id,        presence: true
-  validates :user_id,            presence: true
+  validates :owner_id,            presence: true
   
   belongs_to :partner,  counter_cache: true
-  belongs_to :business
-  belongs_to :owner,    class_name: 'User',  foreign_key: :user_id
-  belongs_to :updater,  class_name: 'User',  foreign_key: :state_updated_by
+  belongs_to :business,  counter_cache: true
+  belongs_to :owner,    class_name: 'People::User',  foreign_key: :owner_id
+  belongs_to :updater,  class_name: 'People::User',  foreign_key: :state_updated_by
   
   has_one :backlink,    class_name: 'Partner::Backlink',  foreign_key: :partner_request_id, :dependent => :nullify
   
@@ -25,7 +25,7 @@ class Partner::Request < ApplicationRecord
   delegate :username, to: :owner, prefix: true
   delegate :username, to: :updater, prefix: true
   
-  scope :owner,         -> (user)       { where owner: user.to_i }
+  scope :owner,         -> (staff)       { where owner: staff.to_i }
   scope :after,         -> (date)       { where 'sent_at >= ?', date }
   scope :before,        -> (date)       { where 'sent_at < ?', date }
   scope :channel,       -> (channel)    { where channel: channel }

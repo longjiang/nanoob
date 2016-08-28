@@ -1,4 +1,4 @@
-class UserDecorator < ApplicationRecordDecorator
+class People::UserDecorator < ApplicationRecordDecorator
   delegate_all
   
   def name

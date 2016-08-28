@@ -18,7 +18,6 @@ module Nanoob::Meta extend ActiveSupport::Concern
     
     def save_meta
       if metum && metum.datas_changed? && !(metum.new_record? && metum.meta.blank?)
-        debugger
         self.metum.save!
       end
     end

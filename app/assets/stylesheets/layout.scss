@@ -74,6 +74,42 @@ body.modal-open {
   }
 }
 
+@media screen and (min-width:1200px) {
+  
+  .blog_post_form {
+    
+    .row-offcanvas {
+      position: relative;
+      -webkit-transition: all 0.25s ease-out;
+      -moz-transition: all 0.25s ease-out;
+      transition: all 0.25s ease-out;
+    }
+    
+    .row-offcanvas-right {
+      &.active {
+        .sidebar-offcanvas {
+          right: 0;
+        }
+      }
+    
+      .sidebar-offcanvas {
+        right: -39%;
+        position: absolute;
+        top: -50px;
+        width: 40%;
+        
+        .toggle-button {
+          position: absolute;
+          top: 5px;
+          left:-23px; 
+          z-index:4;
+        }
+      }      
+    }
+    
+  }
+}
+
 
 /* responsive nav stacked liked 3.x */
 @media(max-width:34em) {
