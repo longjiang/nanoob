@@ -37,11 +37,22 @@ class ApplicationRecordDecorator < Draper::Decorator
   end
   
   def time_ago_in_words_or_date(date, threshold=nil)
+    return nil unless date
     threshold = 30.days.ago if 30.days.ago.nil?
     if date < 30.days.ago
       date.strftime(date.year.eql?(Time.now.year) ? short_date_format_without_year : short_date_format)
     else
       h.time_ago_in_words date
+    end
+  end
+  
+  def time_ago_in_words_or_datetime(date, threshold=nil)
+    return nil unless date
+    threshold = 30.days.ago if 30.days.ago.nil?
+    if date < 30.days.ago
+      date.strftime(datetime_format)
+    else
+     "#{date > Time.now ? 'in ' : ''}#{h.time_ago_in_words(date)}#{date < Time.now ? ' ago' : ''}"
     end
   end
   

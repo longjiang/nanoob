@@ -21,14 +21,14 @@
       = partner.owner
     %li.list-group-item
       Requests :
-      = partner.requests.count
+      = partner.requests.size
       %span.pull-right
         = link_to new_partner_request_path(partner_id: partner.id), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
           = i 'plus'
           %span.hidden-md-down= t 'activerecord.actions.new'
     %li.list-group-item
       Backlink :
-      = partner.backlinks.count
+      = partner.backlinks.size
       %span.pull-right
         = link_to new_partner_backlink_path(partner_id: partner.id), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
           = i 'plus'

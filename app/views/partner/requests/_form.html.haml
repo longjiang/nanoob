@@ -62,4 +62,4 @@
   
     = f.select :state, Partner::Request.states.keys.map{|_| [_.humanize, _]}, prompt: "Select State..."
   
-    = f.select :user_id, User.all.map{|_| [_.username, _.id]}, prompt: "Select Owner..."
+    = f.select :owner_id, People::User.all.map{|_| [_.username, _.id]}, prompt: "Select Owner..."

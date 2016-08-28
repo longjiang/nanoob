@@ -17,9 +17,19 @@
             = tm :business
         %th= han 'business/website', :platform
         %th= han 'business/website', :host
+        
         %th.text-nowrap.text-xs-center.text-lg-left
           = i Partner::Backlink.decorator_class.icon
           %span.hidden-md-down= tmp 'partner/backlink'
+          
+        %th.text-nowrap.text-xs-center.text-lg-left
+          = i Blog::Post.decorator_class.icon
+          %span.hidden-md-down= tmp 'blog/post'
+          
+        %th.text-nowrap.text-xs-center.text-lg-left
+          = i Blog::Category.decorator_class.icon
+          %span.hidden-md-down= tmp 'blog/category'
+          
         %th.text-nowrap 
     %tbody
       - @websites.each do |website|
@@ -34,9 +44,19 @@
               = i 'external-link'
             
           %td.text-nowrap.text-xs-center.text-lg-left
-            %span.tag.tag-default= link_to website.backlinks.count, partner_backlinks_path(website_id: website.id)
+            %span.tag.tag-default= link_to website.backlinks.size, partner_backlinks_path(website_id: website.id)
             = link_to new_partner_backlink_path(website_id: website.id), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
               = i 'plus'
               %span.hidden-md-down= t 'activerecord.actions.new'
+              
+          %td.text-nowrap.text-xs-center.text-lg-left
+            %span.tag.tag-default= link_to website.posts.size, blog_posts_path(business_website_id: website.id)
+            = link_to new_blog_post_path(business_website_id: website.id), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
+              = i 'plus'
+              %span.hidden-md-down= t 'activerecord.actions.new'
+              
+          %td.text-nowrap.text-xs-center.text-lg-left
+            %span.tag.tag-default= link_to website.categories.size, blog_categories_path(business_website_id: website.id)
+          
           %td.text-nowrap            
             = render partial: 'shared/form_actions', locals: {object: website}

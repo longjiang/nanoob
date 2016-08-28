@@ -13,7 +13,7 @@ end
 #SEED-USERS = '{"user1":{"e":"admin@example.com","p":"secret"},{"user2":{"e":"user2@example.com","p":"secret"}}'
 users = ENV['SEED_USERS']
 JSON.parse(users).each do |username, params|
-  User.create!(username: username, email: params['e'], password: params['p'], password_confirmation: params['p'])
+  People::User.create!(username: username, email: params['e'], password: params['p'], password_confirmation: params['p'])
 end
 
 # Business

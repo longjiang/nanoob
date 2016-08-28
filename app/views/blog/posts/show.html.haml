@@ -1,3 +1,17 @@
-= @post.title
+= link_to  "EDIT", edit_blog_post_path(@post)
 
-= image_tag attachment_url(@post, :featured_image, :fill, 300, 300) if @post.featured_image_id?
+%h2= @post.title
+
+%ul.nav.nav-tabs{role: "tablist"}
+  %li.nav-item
+    = link_to "body", "#body-html", data: {toggle: "tab"}, role: "tab", class:"nav-link active"
+  %li.nav-item
+    = link_to "Source", "#body-text", data: {toggle: "tab"}, role: "tab", class:"nav-link"
+    
+.tab-content{style: "height:300px; overflow-y: scroll; padding: 10px"}
+  #body-html.tab-pane.fade.in.active{role: "tabpanel"}
+    = @post.body.html_safe
+  #body-text.tab-pane.fade{role: "tabpanel"}
+    = @post.body
+
+= image_tag attachment_url(@post, :featured_image, :fill, 200, 200) if @post.featured_image_id?

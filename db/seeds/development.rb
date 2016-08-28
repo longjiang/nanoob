@@ -6,7 +6,7 @@ Partner::Request.destroy_all
 Business::Product.destroy_all
 Partner.destroy_all
 Business.destroy_all
-User.destroy_all
+Person.destroy_all
 Dashboard::Period.destroy_all
 
 
@@ -20,7 +20,7 @@ Dashboard::Period.destroy_all
   Dashboard::Period.create!(name: params[0], starts_at: params[1], cycle: params[2], cycles_count: params[3])
 end
 # Users
-user1 = User.create!(username: 'admin', email: 'admin@example.com', password: 'secret', password_confirmation: 'secret')
+user1 = People::User.create!(username: 'admin', firstname: 'test', email: 'admin@example.com', password: 'secret', password_confirmation: 'secret')
 
 # Business
 b_name1 = 'Le Marché du Rideau'
@@ -75,7 +75,7 @@ nbPartners = 500
 nbRequests = 900
 
 (1..nbUsers).each do |i|
-  User.create!(username: "user#{i}", email: "user#{i}@example.com", password: 'secret', password_confirmation: 'secret')
+  People::User.create!(username: "user#{i}", email: "user#{i}@example.com", password: 'secret', password_confirmation: 'secret')
 end
 
 (1..nbPartners).each do |i|
@@ -85,7 +85,7 @@ end
                     url: Faker::Internet.url, 
                     created_at: date,
                     updated_at: date,
-                    owner: User.all.sample
+                    owner:  People::User.all.sample
                     )
   if rand(100) > 50
     p.contact_name = Faker::Name.name
@@ -102,12 +102,12 @@ end
 
 
 (1..nbRequests).each do |i|
-  user = User.all.sample
+  staff =  People::User.all.sample
   partner = Partner.all.sample
   r = Partner::Request.new(partner: partner, 
                           business: Business.all.sample, 
-                          owner: user,
-                          updater: user, 
+                          owner: staff,
+                          updater: staff, 
                           subject: Faker::Lorem.sentence(5, true, 30), 
                           body: Faker::Lorem.paragraph(2),
                           channel: Partner::Request.channels.keys.sample)
@@ -129,7 +129,7 @@ end
   end
   if sending
     Timecop.travel sent_at
-    r.updater = User.all.sample
+    r.updater =  People::User.all.sample
     r.send_request
   end
   
@@ -151,7 +151,7 @@ Partner::Request.published.each do |request|
   
   backlink = Partner::Backlink.create(partner: request.partner, 
               business: business,
-              owner: User.all.sample,
+              owner:  People::User.all.sample,
               request: request,
               referrer: referrer_url, 
               anchor: Faker::Hipster.words(rand(3)+1).join(' '), 
@@ -170,3 +170,6 @@ Partner::Request.published.each do |request|
   end
 end
 
+## Authors
+
+People::Author.create!(username: 'chloe', firstname:'Chloé', lastname:'Mercier')

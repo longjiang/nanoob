@@ -1,16 +1,17 @@
 class Blog::Public::PostsController < ApplicationController
   
-  skip_before_filter :authenticate_user!
-  skip_before_filter :init_menu
-  skip_before_filter :menu_activate
-  before_filter      :find_website
-  before_filter      :javascript_file
-  before_filter      :stylesheet_file
+  skip_before_action :authenticate_user!
+  skip_before_action :init_menu
+  skip_before_action :menu_activate
+  before_action      :find_website
+  before_action      :javascript_file
+  before_action      :stylesheet_file
   
   layout :layout
   
   def index
-    @posts = @website.posts.published
+    @posts_unpaginated = @website.posts.published
+    @posts = @posts_unpaginated.page(params[:page])
     render template: "themes/simple/index"
   end
   
@@ -22,7 +23,7 @@ class Blog::Public::PostsController < ApplicationController
   private
   
   def find_website
-    @website ||= Business::Website.find_by_url("#{request.protocol}#{request.host.gsub('.local','').gsub('www.','')}")
+    @website ||= Business::Website.find_by_url("#{request.protocol}#{request.host.gsub('.dev','').gsub('www.','')}")
   end
   
   def layout

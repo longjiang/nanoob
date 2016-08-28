@@ -41,12 +41,11 @@
         
         - if params[:owner].blank? 
           %th.text-nowrap.text-xs-center.text-sm-left
-            = i User.decorator_class.icon
+            = i People::User.decorator_class.icon
             %span.hidden-xs-down
               = han 'blog/post', :owner
         
-        %th.text-nowrap Author
-        %th.text-nowrap Categories
+        %th.text-nowrap= han 'blog/post', :categories
         %th.text-nowrap Tags
         
         
@@ -63,7 +62,7 @@
         
         %th.text-nowrap= i 'comment-o'
         %th.text-nowrap SEO
-        %th
+        %th.text-nowrap
         
     %tbody
       = render partial: 'index-table-tr', collection: @posts, as: :post

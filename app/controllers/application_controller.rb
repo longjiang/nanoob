@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     def init_menu
       @menu = Menu.new do |menu|
         %w(business business/website partner partner/request partner/backlink blog/post).each do |item|
-          menu.add I18n.t("menu.#{item.pluralize}"), send("#{item.pluralize.gsub(/\//, '_')}_path", owner: current_user.id, business_id: current_user.business_id, website_id: current_user.website_id), item.camelize.constantize.model_name.element.pluralize, {icon: item.classify.constantize.decorator_class.icon}
+          menu.add I18n.t("menu.#{item.pluralize}"), send("#{item.pluralize.gsub(/\//, '_')}_path", owner: current_user.id, business_id: current_user.business_id, business_website_id: current_user.website_id), item.camelize.constantize.model_name.element.pluralize, {icon: item.classify.constantize.decorator_class.icon}
         end
       end
     end

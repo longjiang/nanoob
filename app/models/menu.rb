@@ -61,6 +61,7 @@ class Menu
   def activate_by_path(path, items=nil)
     items ||= @items
     items.each do |id, item|
+      #puts "#{id} #{item}"
       if /#{item[:url]}/i =~ path  
         items[id][:options][:active] = true
       elsif item[:children].present?

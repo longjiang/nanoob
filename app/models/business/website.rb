@@ -13,13 +13,18 @@ class Business::Website < ApplicationRecord
   validates :url,          url: true
   validates :theme,        presence: true
   
-  belongs_to  :business
+  belongs_to  :business, counter_cache: true
   has_many    :backlinks, class_name: 'Partner::Backlink', foreign_key: :business_website_id
   has_many    :posts    , class_name: 'Blog::Post', foreign_key: :business_website_id
+  has_many    :categories    , class_name: 'Blog::Category', foreign_key: :business_website_id
+  
+  scope :has_categories , -> { (where "categories_count > 0 ")}
   
   delegate :name, to: :business, prefix: true
   
   before_save :remove_trailing_slash
+  
+  
   
   def remove_trailing_slash
     if url_changed?
@@ -47,6 +52,19 @@ class Business::Website < ApplicationRecord
   
   def theme
     get_meta(:theme) || self.class::THEMES[0]
+  end
+  
+  def owner=(owner)
+    set_meta(:owner, owner)
+  end
+  
+  def owner
+    get_meta(:owner) || People::User.first
+  end
+  
+  # mandatory for grouped_collection_select?
+  def host
+    decorate.host
   end
 
 end

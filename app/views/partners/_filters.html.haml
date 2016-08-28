@@ -51,7 +51,7 @@
         include_blank: th('forms.all_categories'),
         hide_label: true
       
-      = f.select :owner, User.all.map{|_| [_.decorate.name, _.id ]}, 
+      = f.select :owner, People::User.all.map{|_| [_.decorate.name, _.id ]}, 
         selected: params[:owner], 
         include_blank: th('forms.all_owners'),
         hide_label: true

@@ -10,3 +10,6 @@
             Posted by
             = link_to post.owner.username
             = post.published_at
+  .row
+    .col-lg-8.offset-lg-2.col-md-10.offset-md-1
+      = paginate @posts
