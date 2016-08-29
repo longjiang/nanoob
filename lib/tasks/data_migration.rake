@@ -22,6 +22,10 @@ class Datamigration
     find_website
   end
   
+  def last_successful_step
+    website.get_meta(:data_migration_step) || 0
+  end
+  
   def migrate_wp_posts
     statuses_mapping = {'draft' => :draft, 'publish' => :published}
     @ids_mapping = {}
@@ -43,6 +47,7 @@ class Datamigration
       @ids_mapping[wpPost.id.to_s] = post.id
     end
     website.set_meta(:ids_mapping, @ids_mapping)
+    website.set_meta(:data_migration_step, 1)
     website.save!
     puts "====="
     puts "DONE.\n\n"
@@ -81,6 +86,8 @@ class Datamigration
     else
       puts "DONE.\n\n"
     end
+    website.set_meta(:data_migration_step, 2)
+    website.save!
   end
   
   def migrate_wp_categories
@@ -100,6 +107,8 @@ class Datamigration
     end
     puts "====="
     puts "DONE.\n\n"
+    website.set_meta(:data_migration_step, 3)
+    website.save!
   end
 
   private
@@ -157,7 +166,7 @@ class Datamigration
   end
   
   def find_category_or_create_by_name(name)
-    website.categories.find_or_create_by(name: name)
+    website.categories.find_or_create_by(name: name.try(:humanize))
   end
   
 end
@@ -169,9 +178,13 @@ namespace :db do
     task :wp, [:website, :starts_at_step] => :environment do |t, args|
       begin
         dm = Datamigration.new(args[:website])
-        starts_at_step = args[:starts_at_step] ? args[:starts_at_step].to_i : 1
+        if args[:starts_at_step]
+          starts_at_step = args[:starts_at_step].to_i
+        else
+          starts_at_step = dm.last_successful_step
+        end
         dm.migrate_wp_posts if starts_at_step <= 1
-        #dm.migrate_wp_featured_images  if starts_at_step <= 2
+        dm.migrate_wp_featured_images  if starts_at_step <= 2
         dm.migrate_wp_categories  if starts_at_step <= 3
       rescue Exception => e
         puts "Something unexpected happened : #{e}"
