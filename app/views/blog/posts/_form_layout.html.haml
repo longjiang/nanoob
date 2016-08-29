@@ -1,0 +1,11 @@
+/ views/blog/posts/_form_layout.html.haml
+
+.blog_post_form{style: "position:relative"}
+  .row.row-offcanvas.row-offcanvas-right
+    .col-xs-12
+      = render 'form'
+    .hidden-lg-down.col-xs-2.sidebar-offcanvas{role: "contentinfo"}
+      %button.btn.btn-primary-outline.btn-sm.toggle-button{type: "button", data: {toggle: "offcanvas"}}
+        = i 'chevron-left'
+        = i 'info-circle'
+      = render 'form-aside'

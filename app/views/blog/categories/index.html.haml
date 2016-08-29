@@ -1,0 +1,20 @@
+/ views/blog/posts/index.html.haml
+
+- unless @website.nil?
+  - add_breadcrumb @website.business.decorate.name
+  - add_breadcrumb @website.decorate.host
+  
+- content_for :page_title do
+  = i Blog::Category.decorator_class.icon
+  = tmp 'blog/category'
+  %span.tag.tag-info{id: 'categories_count'}= @categories_unpaginated.count
+  
+%p= t 'descriptions.blog/categories'
+
+.row
+  .col-md-12.col-lg-5
+    = render 'list'
+  .col-md-12.col-lg-7
+    .category_flash
+    .category_form
+      = render 'new'

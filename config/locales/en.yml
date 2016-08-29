@@ -1,21 +1,211 @@
 en:
   
+# Generic
+  overview: Overview
+  history: History
+  
+  helpers:
+    submit:
+      and_create_request: and make a new request
+  
+  
+# Forms
+  forms:
+    all: all
+    all_businessess: all businesses
+    all_categories: all categories
+    all_channels: all channels
+    all_owners: all owners
+    all_statuses: all statuses
+    all_states: all states
+    all_websites: all websites
+    filter: filter
+    mine: mine
+    new: new
+    recent: recent
+    select: select
+    
+  backlinks:
+    create:
+      flash: 
+        success_html: Backlink has been successfully created.
+    update:
+      flash:
+        success_html: Backlink has been successfully updated.
+    destroy:
+      flash:
+        success_html: Backlink has been successfully deleted.
+  
+  businesses:
+    create:
+      flash: 
+        success_html: Business has been successfully created.
+    update:
+      flash:
+        success_html: Business has been successfully updated.
+        
+  partners:
+    create:
+      flash: 
+        success_html: Partner has been successfully created.
+    update:
+      flash:
+        success_html: Partner has been successfully updated.
+    destroy:
+      flash:
+        success_html: Partner has been successfully deleted.
+        
+  posts:
+    create:
+      flash: 
+        success_html: Post has been successfully created.
+    update:
+      flash:
+        success_html: Post has been successfully updated.
+    destroy:
+      flash:
+        success_html: Post has been successfully deleted.
+    
+  requests:
+    create:
+      flash: 
+        success_html: Request has been successfully created.
+    update:
+      flash:
+        success_html: Request has been successfully updated.
+        
+    websites:
+      create:
+        flash: 
+          success_html: Website has been successfully created.
+      update:
+        flash:
+          success_html: Website has been successfully updated.
+      destroy:
+        flash:
+          success_html: Website has been successfully deleted.
+    
+# descriptions
+  descriptions:
+    businesses: This is the list of the products we are working on.
+    business/websites: This is the list of our websites.
+    partners: This is the list of our partners who may publish backlinks to our websites.
+    partner/requests: List of partnership requests we made to our partners. 
+    partner/backlinks: List of actual backlinks published (active or not).
+    blog/posts: Posts published on our network of websites.
+    blog/categories: Post categories are scoped to a website. 
+    
+# Menu
+  menu:
+    
+    blog/categories : Categories
+    blog/posts: Posts
+    businesses: Businesses
+    business/websites: Websites
+    partners: Partners
+    partner/requests: Requests
+    partner/backlinks: Backlinks
+    
+    blog/categories:
+      all: Categories
+    blog/post:
+      all: All Posts
+      add_new: Add new
+    business:
+      all: All Businesses
+      add_new: Add new
+    business/website:
+      all: All Websites
+      add_new: Add new
+    blog/post:
+      all: All posts
+      add_new: Add new
+    partner:
+      all: All Partners
+      add_new: Add new
+    partner/request:
+      all: All Requests
+      add_new: Add new
+    partner/backlink:
+      all: All Backlinks
+      add_new: Add new
+  
 # ACTIVE RECORD  
   activerecord:
+    
     actions:
-      new: add new
+      new: Add new
+      edit: Edit
+      
     models:
+      blog/category:
+        one: category
+        other: categories
+      blog/post:
+        one: post
+        other: posts
       business:
         one: business
         other: businesses
       business/website: 
         one: website
         other: websites
+      partner:
+        one: partner
+        other: partners
+      partner/backlink:
+        one: backlink
+        other: backlinks
+      partner/request:
+        one: request
+        other: requests
+      people/user:
+        one: User
+        other: Users
+      
     attributes:
+      blog/post:
+        categories: Categories
+        featured_image: Featured Image
+        status: Status
+        statuses:
+          draft: Draft
+          published: Published
+          scheduled: Scheduled
+        decorator:
+          statuses:
+            draft: Last updated
+            published: Published
+            scheduled: Scheduled
       business:
         name: Name
-        product_line: Product line
+        product: Product Line
         language: Language
+        business_product_id: Product Line
       business/website:
         platform: Platform
         url: Url
+        host: Host
+      partner:
+        title: Title
+        category: Category
+        contact: Contact
+      partner/backlink:
+        referrer: Referrer
+        anchor: Anchor
+        link: Link
+        status: Status
+        statuses:
+          active: Active
+          inactive: Inactived
+          unknown: In Progress
+      partner/request:
+        owner: Owner
+        subject: Subject
+        state: Status
+        body: Body
+        body_xs: Body
+        channels:
+          email: E-mail
+          webform: Web Form
+      

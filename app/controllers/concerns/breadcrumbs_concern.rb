@@ -1,0 +1,3 @@
+require_relative 'breadcrumbs/action_controller'
+module Breadcrumbs
+end

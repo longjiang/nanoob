@@ -1,0 +1,27 @@
+
+
+%tr{class: post.draft? ? 'text text-muted' : ''}
+  %th.text-nowrap.text-xs-center{scope: "row"}= post.id
+  
+  %td= image_tag attachment_url(post, :featured_image, :fill, 20, 20, format: "jpg") if post.featured_image_id?
+  
+  - if @website.nil?
+    %td.text-nowrap= link_to post.website.decorate.host, filtered_entries_path(business_website_id: post.website.id)
+  
+  %td.text-nowrap= post.decorate.title
+  
+  - if params[:owner].blank?
+    %td.text-nowrap= post.decorate.owner_username
+  
+  %td.text-nowrap=  post.decorate.categories(params)
+  %td -
+  %td.text-nowrap
+    %span{class: "text-#{post.decorate.status_color}"}
+      = i post.decorate.status_icon
+      = post.decorate.status_with_date
+  %td= post.comments_count
+  %td.text-nowrap
+    %span{class: "text-#{post.decorate.seo_score_color}"}
+      = i 'circle'
+  %td.text-nowrap
+    = render partial: 'shared/form_actions', locals: {object: post} 

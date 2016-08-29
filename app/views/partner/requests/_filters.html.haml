@@ -1,0 +1,62 @@
+/ views/partner/requests/_filters.html.haml
+
+.filters
+
+  %ul.list-inline
+  
+    %li.list-inline-item
+
+      - if params.slice(*Partner::RequestsController.filtering_params).blank?
+        %span.text-primary= th 'forms.all'
+      - else
+        = link_to partner_requests_path do
+          = th 'forms.all'
+          %span.tag.tag-default= Partner::Request.count
+    
+    %li.list-inline-item
+    
+      - if params[:owner] && params[:owner].to_i.eql?(current_user.id)
+        %span.text-primary= th 'forms.mine'
+        = link_to filtered_entries_path(owner: nil) do
+          = i 'times-circle-o'
+      - else
+        = link_to filtered_entries_path(owner: current_user.id) do
+          = th 'forms.mine'
+          %span.tag.tag-default= @requests_not_owner_filtered.owner(current_user.id).count
+    
+    %li.list-inline-item
+    
+      - unless params[:recent].blank?
+        %span.text-primary= th 'forms.recent'
+        = link_to filtered_entries_path(recent: nil) do
+          = i 'times-circle-o'
+      - else
+        = link_to filtered_entries_path(recent: 10) do
+          = th 'forms.recent'
+          %span.tag.tag-default= @requests_unpaginated.recent(10).count
+
+  = bootstrap_form_tag url: partner_requests_path, method: :get, layout: :inline do |f|
+    = f.hidden_field :owner, value: params[:owner]        unless params[:owner].blank?
+    = f.hidden_field :recent, value: params[:recent]       unless params[:recent].blank?
+ 
+    = f.select :business_id, Business.all.map{|_| [_.name, _.id]}, 
+      selected: params[:business_id], 
+      include_blank: th('forms.all_businessess'),
+      hide_label: true
+    
+    = f.select :channel, Partner::Request.channels.keys.map{|_| [_.humanize, _]}, 
+      selected: params[:channel], 
+      include_blank: th('forms.all_channels'),
+      hide_label: true
+    
+    = f.select :owner, People::User.all.map{|_| [_.decorate.name, _.id ]}, 
+      selected: params[:owner], 
+      include_blank: th('forms.all_owners'),
+      hide_label: true
+    
+    = f.select :state, Partner::Request.states.keys.map{|_| [_.humanize, _]}, 
+      selected: params[:state], 
+      include_blank: th('forms.all_states'),
+      hide_label: true
+    
+    = f.submit th('forms.filter')

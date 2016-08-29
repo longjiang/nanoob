@@ -1,6 +1,8 @@
 / views/business/websites/edit.html.haml
 
-%h1
-  Edit
-  
-= render 'form'
+- content_for :page_title do
+  = t 'activerecord.actions.edit'
+  = tm 'business/website'
+
+= render 'shared/form_layout'
+

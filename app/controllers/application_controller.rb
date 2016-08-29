@@ -7,6 +7,14 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :init_menu, unless: :devise_controller?
+  before_action :add_menu_items, unless: :devise_controller?
+  before_action :menu_activate, unless: :devise_controller?
+  
+  around_action :set_time_zone
+  
+  include ApplicationHelper
+  include Breadcrumbs::ActionController
+  include IndexAddnewConcern
   
   protected
 
@@ -16,9 +24,27 @@ class ApplicationController < ActionController::Base
     
     def init_menu
       @menu = Menu.new do |menu|
-        menu.add "Businesses", businesses_path do |submenu|
-          submenu.add "Websites", business_websites_path
+        %w(business business/website partner partner/request partner/backlink blog/post).each do |item|
+          menu.add I18n.t("menu.#{item.pluralize}"), send("#{item.pluralize.gsub(/\//, '_')}_path", owner: current_user.id, business_id: current_user.business_id, business_website_id: current_user.website_id), item.camelize.constantize.model_name.element.pluralize, {icon: item.classify.constantize.decorator_class.icon}
         end
       end
     end
+    
+    def menu_activate
+      @menu.activate path: request.fullpath
+    end
+    
+    def add_menu_items
+    end
+    
+    def add_breadcrumbs
+    end
+    
+  private
+
+    def set_time_zone(&block)
+      time_zone = current_user.try(:time_zone) || 'UTC'
+      Time.use_zone(time_zone, &block)
+    end  
+    
 end

@@ -1,0 +1,4 @@
+$('tbody').html('#{j render(partial: 'index-table-tr', collection: @partners, as: :partner)}');
+$('#pagination').html('#{j(paginate(@partners, :remote => true).to_s)}');
+$('#pagination-bottom').html('#{j(paginate(@partners, :remote => true).to_s)}');
+$('tbody').removeClass('loading');

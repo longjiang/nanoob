@@ -1,0 +1,42 @@
+/ views/partner/backlinks/_form.html.haml
+
+= bootstrap_form_for(@backlink) do |f|
+
+  - if @business
+    = f.hidden_field :business_id, value: @business.id
+  - else
+    - businesses = Business.order('name desc')
+    - businesses = businesses.where(id: @request.business_id) if @request
+    = f.select :business_id, businesses.map{|_| [_.name, _.id]}, 
+    prompt: "#{t('forms.select')} #{tm(:business)}..."
+    
+  - if @partner
+    = f.hidden_field :partner_id, value: @partner.id
+  - else 
+    - partners = Partner.order('title desc')
+    - partners = partners.where(id: @request.partner_id) if @request
+    = f.select :partner_id, partners.map{|_| [_.title, _.id]}, 
+    prompt: "#{t('forms.select')} #{tm(:partner)}..."
+  
+  - if @prequest
+    = f.hidden_field :partner_request_id, value: @prequest.id
+  - else
+    - requests = Partner::Request.order('sent_at desc').where(state: [:sent, :accepted, :submitted, :published])
+    - requests = requests.where(partner_id: @partner.id) if @partner
+    - requests = requests.where(business_id: @business.id) if @business
+    = f.select :partner_request_id, requests.map{|_| ["##{_.id} (#{_.decorate.sent_at}) #{_.decorate.subject(:md)}".html_safe, _.id]}, 
+      prompt: "#{t('forms.select')} #{tm(:'partner/request')}..."
+
+  = f.url_field :referrer, placeholder: han('partner/backlink', :referrer)
+
+  = f.text_field :anchor, placeholder: han('partner/backlink', :anchor)
+  
+  = f.url_field :link, placeholder: han('partner/backlink', :link)
+  = f.errors_on :website, hide_attribute_name: true
+
+  = f.select :status, Partner::Backlink.statuses.keys.map{|_| [_.humanize, _]}, 
+    prompt: "#{t('forms.select')} #{han('partner/backlink', :status)}..."
+    
+  = f.hidden_field :user_id, value: @backlink.try(:user_id) || current_user.id
+
+  = f.primary

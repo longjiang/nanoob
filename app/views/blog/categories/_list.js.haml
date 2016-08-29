@@ -1,0 +1,4 @@
+$('tbody').html('#{j render(partial: 'row', collection: @categories, as: :category)}');
+$('#pagination').html('#{j(paginate(@categories, :remote => true).to_s)}');
+$('#pagination-bottom').html('#{j(paginate(@categories, :remote => true).to_s)}');
+$('tbody').removeClass('loading');

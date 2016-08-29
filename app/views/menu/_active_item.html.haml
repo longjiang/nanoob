@@ -1,5 +1,7 @@
-%li.active
-  = link_to url, options[:html_options] do
+%li.nav-item
+  = link_to url, options.delete(:html_options) {{class: 'nav-link active'}} do
+    = i options[:icon]
+    &nbsp;
     = body
     %span.sr-only (current) 
   = options[:submenu]

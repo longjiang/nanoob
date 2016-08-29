@@ -20,4 +20,10 @@
 .ruby-gemset
 
 coverage
+
 rdoc
+
+dump.rdb
+
+.env
+/*.sql

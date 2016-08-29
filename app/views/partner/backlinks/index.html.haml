@@ -1,0 +1,45 @@
+/ views/partner/backlinks/index.html.haml
+
+= render partial: 'partner/shared/index-header', locals: {relation: 'backlink'}
+
+.pull-right
+  = paginate @backlinks
+  
+= render 'filters'
+
+.table-responsive
+  %table.table.table-sm.table-hover
+    %thead.thead-default
+      %tr
+        
+        %th.text-nowrap.text-xs-center #
+        
+        - if @business.nil?
+          %th.text-nowrap.text-xs-center.text-sm-left
+            = i Business.decorator_class.icon
+            %span.hidden-xs-down= tm :business
+            
+        %th.text-nowrap.text-xs-center.text-sm-left
+          = i Partner.decorator_class.icon
+          %span.hidden-xs-down= tmp :partner
+        
+        %th.text-nowrap.text-xs-center.text-sm-left
+          = i Partner::Request.decorator_class.icon
+          %span.hidden-xs-down= tmp 'partner/request'
+          
+        %th.text-nowrap Referrer
+        %th.text-nowrap Anchor
+        %th.text-nowrap Link
+        
+        - if params[:owner].blank? 
+          %th.text-nowrap.text-xs-center.text-sm-left
+            = i People::User.decorator_class.icon
+            %span.hidden-xs-down
+              = han 'partner/request', :owner
+            
+        %th.text-nowrap Status
+        %th.text-nowrap 
+    %tbody
+      = render partial: 'index-table-tr', collection: @backlinks, as: :backlink
+            
+= paginate @backlinks

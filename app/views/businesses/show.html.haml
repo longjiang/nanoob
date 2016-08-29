@@ -1,14 +1,56 @@
-%h1= @business.name
+= link_to edit_business_path(@business), 
+  class: 'btn btn-primary pull-right', 
+  role: 'button', 
+  title: th('activerecord.actions.edit') do
+  = i 'pencil'
+  = t 'activerecord.actions.edit'
 
-%ul
-  %li
-    %b Product Line
-    = @business.product_line
-  %li
-    %b Language
-    = @business.language
+%h1
+  = @business.name
+%p
+  = @business.product_name.humanize
+  = @business.flag
+  
+%h2
+  = i 'bar-chart'
+  = 'Statistiques'
     
-%p= link_to "edit", edit_business_path(@business)
+%h2
+  = i Business::Website.decorator_class.icon
+  = "Websites"
+  
+%h2
+  = i Partner::Request.decorator_class.icon
+  = "Requests" 
+  = @business.requests.size
 
-%p= link_to "Businesses", businesses_path
+.table-responsive
+  %table.table.table-sm.table-hover
+    %thead.thead-default
+      %tr
+        %th.text-nowrap Categorie
+        - Partner::Request.states.keys.each do |state|
+          %th= state.humanize
+        %th.text-nowrap Total
+    %tbody
+      - Partner.categories.keys.each do |category|
+        %tr
+          %th{scope: "row"}= category.humanize
+          - total = 0
+          - Partner::Request.states.each do |state, state_id|
+            - nb = Partner.joins(:requests).where('partner_requests.state = ?', state_id).where(category: category).where('partner_requests.business_id = ?', @business.id).count
+            - total += nb
+            %td.text-nowrap= nb
+          %td
+            = total
+      
+      %tr
+        %td.text-nowrap Total
+        - Partner::Request.states.each do |state, state_id|
+          %td.text-nowrap= Partner::Request.where(state: state).where(business: @business).count
+        %td.text-nowrap 
+  
+%h2
+  = i Partner::Backlink.decorator_class.icon
+  = "Backlink" 
     

@@ -1,0 +1,12 @@
+/ views/partner/shared/_index_header.html.haml
+
+- unless @business.nil?
+  - add_breadcrumb @business.decorate.name
+  
+- content_for :page_title do
+  = i "Partner::#{relation.capitalize}".constantize.decorator_class.icon
+  = tmp "partner/#{relation}"
+  %span.tag.tag-info
+    = instance_variable_get("@#{relation.pluralize}_unpaginated").count
+
+%p= t "descriptions.partner/#{relation.pluralize}"

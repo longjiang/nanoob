@@ -1,0 +1,8 @@
+/ views/partner/requests/edit.html.haml
+
+- content_for :page_title do
+  = t 'activerecord.actions.edit'
+  = tm 'partner/request'
+  = "##{@request.id}"
+
+= render 'shared/form_layout'

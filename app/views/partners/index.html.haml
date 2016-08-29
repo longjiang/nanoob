@@ -1,0 +1,61 @@
+/ views/partners/index.html.haml
+          
+- content_for :page_title do
+  = i Partner.decorator_class.icon
+  = tmp :partner
+  %span.tag.tag-info= @partners_unsliced.count
+  
+%p= t 'descriptions.partners'
+
+
+#pagination.pull-right.hidden-xs-down
+  = paginate @partners, remote: true
+
+= render 'filters'
+
+.table-responsive
+  %table.table.table-sm.table-hover.loading
+    %thead.thead-default
+      %tr
+        %th.text-nowrap.text-xs-center #
+        
+        %th.text-nowrap
+          = link_to sorted_entries_path(title: asc?(:title) ? :desc : :asc) do
+            = han :partner, :title
+          - unless params[:sort_by_title].blank?
+            = i 'sort-alpha-asc' if asc? :title
+            = i 'sort-alpha-desc' if desc? :title
+          - unless params[:starts_with].blank?
+            = link_to filtered_entries_path(starts_with: nil) do
+              %i.fa.fa-filter.text-primary
+        
+        %th.text-nowrap= han :partner, :category
+        
+        %th.text-nowrap
+          = han :partner, :contact
+          - unless params[:contact].blank?
+            = link_to filtered_entries_path(contact: nil) do
+              %i.fa.fa-filter.text-primary
+        
+        %th.text-nowrap.text-xs-center.text-lg-left
+          = i Partner::Request.decorator_class.icon
+          %span.hidden-md-down= tmp 'partner/request'
+        
+        %th.text-nowrap.text-xs-center.text-lg-left
+          = i Partner::Backlink.decorator_class.icon
+          %span.hidden-md-down= tmp 'partner/backlink'
+          
+        - if params[:owner].blank? 
+          %th.text-nowrap.text-xs-center.text-sm-left
+            = i People::User.decorator_class.icon
+            %span.hidden-xs-down
+              = han :partner, :owner
+        
+        %th.text-nowrap= han :partner, :created_at
+        
+        %th.text-nowrap 
+    %tbody
+      = render partial: 'index-table-tr', collection: @partners, as: :partner
+ 
+#pagination-bottom.text-xs-center          
+  = paginate @partners, remote: true

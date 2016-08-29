@@ -1,0 +1,9 @@
+/ views/partner/requests/_card.html.haml
+
+.card.card-block
+  %h4.card-title= link_to request.decorate.name, partner_request_path(request)
+  %p.card-text
+    %span{class: "text-#{request.decorate.state_color}"}= request.decorate.i_state
+  %p.card-text
+    Last Updated : 
+    = request.decorate.state_updated_at

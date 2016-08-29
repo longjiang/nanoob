@@ -2,11 +2,10 @@ language: ruby
 rvm:
 - 2.3.0
 bundler_args: "--without production:heroku"
-services:
-- postgresql
 before_script:
 - psql -c 'create database nanoob_test;' -U postgres
 addons:
+  postgresql: "9.4"
   code_climate:
     repo_token: ab666feb941eed422ae52f2c62ae0c85d95094d5dfcdc12861038ac6bfac6ba3
 deploy:

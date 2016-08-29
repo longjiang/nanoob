@@ -1,0 +1,39 @@
+/ views/partners/show.html.haml
+
+= link_to edit_partner_path(@partner), 
+  class: 'btn btn-primary pull-right', 
+  role: 'button', 
+  title: th('activerecord.actions.edit') do
+  = i 'pencil'
+  = t 'activerecord.actions.edit'
+
+%h1= @partner.decorate.name
+
+.row
+  
+  .col-lg-3.col-md-4.col-sm-4
+    = render partial: 'overview-card', locals: {partner: @partner}
+  
+  - %w(requests backlinks).each do |relation|
+    - collection = @partner.send(relation)
+    - if collection.any?
+      - collection.each do |object|
+        .col-lg-3.col-md-4.col-sm-4
+          = render partial: "partner/#{relation}/card", locals: {relation.singularize.to_sym => object}
+   
+%hr
+       
+.row
+
+  .col-xs-12
+    = link_to new_partner_request_path(partner_id: @partner.id), class: 'btn btn-primary', role: 'button', title: th('activerecord.actions.new') do
+      = i 'plus'
+      = t 'activerecord.actions.new' 
+      = tm 'partner/request'
+      
+      
+    = link_to new_partner_backlink_path(partner_id: @partner.id), class: 'btn btn-primary', role: 'button', title: th('activerecord.actions.new') do
+      = i 'plus'
+      = t 'activerecord.actions.new'
+      = tm 'partner/backlink'
+

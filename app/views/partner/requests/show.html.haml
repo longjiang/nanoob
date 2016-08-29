@@ -1,0 +1,46 @@
+/ views/partner/requests/show.html.haml
+
+- if @request.draft?
+  = link_to edit_partner_request_path(@request), 
+    class: 'btn btn-primary pull-right', 
+    role: 'button', 
+    title: th('activerecord.actions.edit') do
+    = i 'pencil'
+    = t 'activerecord.actions.edit'
+
+- content_for :page_title do
+  = @request.name
+
+.row
+  
+  .col-md-6
+    = render partial: 'overview-card', locals: {request: @request}
+    
+  / .col-md-6
+  /   .card.card-block
+  /     %h4.card-title= t :overview
+  /     %ul.list-group.list-group-flush
+  /       %li.list-group-item
+  /         = @request.subject
+  /       %li.list-group-item
+  /         = @request.body.html_safe
+    
+  - if @request.backlink.present?
+    .col-md-6
+      = render partial: 'partner/backlinks/card', locals: {backlink: @request.backlink}
+      
+.row
+  .col-md-12
+    .card.card-block
+      %h4.card-title= t :history
+      %ul.list-group.list-group-flush
+        - @request.histories.each_with_index do | history, idx |
+          %li.list-group-item
+            %span.tag-pill.tag-info.pull-xs-left= idx
+            .row
+              .col-md-3
+                = history.user.try(:username)
+                = history.decorate.valid_from
+              .col-md-3
+                = history.comment
+      
