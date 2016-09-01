@@ -51,7 +51,7 @@ gem 'kaminari'
 gem 'resque'
 gem 'resque_mailer', :git => 'https://github.com/SecondBureau/resque_mailer.git', :branch => 'rails5'
 gem 'sinatra', github: 'sinatra/sinatra', branch: 'master'
-gem "rack-protection", github: "sinatra/rack-protection"
+gem "rack-protection", github: "sinatra/sinatra"
 
 # Attachments
 gem 'refile', github: 'refile/refile', require: 'refile/rails'
