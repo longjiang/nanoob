@@ -1,0 +1,4 @@
+$('tbody').html('#{j render(partial: 'index-table-tr', collection: @pages, as: :page)}');
+$('#pagination').html('#{j(paginate(@pages, :remote => true).to_s)}');
+$('#pagination-bottom').html('#{j(paginate(@pages, :remote => true).to_s)}');
+$('tbody').removeClass('loading');

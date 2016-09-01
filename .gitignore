@@ -27,3 +27,5 @@ dump.rdb
 
 .env
 /*.sql
+
+.DS_Store

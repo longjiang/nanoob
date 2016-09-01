@@ -46,7 +46,21 @@ document.addEventListener 'turbolinks:load', ->
     $('#show_published_at_select').show()
     $('#published_at_select').hide()
     
-  $('#update_published_at_select').click (event) -> 
+  $('.edit_blog_page #update_published_at_select, .new_blog_page #update_published_at_select').click (event) -> 
+    event.preventDefault() 
+    $('#blog_page_publish_now').val(false)
+    $('#show_published_at_select').hide()
+    $('#published_at_select').hide()
+    $('.published_at_value').html loading_placeholder()
+    attrs = []
+    for i in [1..5]
+      attrs.push $('#blog_page_published_at_' + i + 'i').val()
+    $.get("/ws/forms/blog_page_published_at", date: attrs.join(','), time_zone: 'Beijing').done (data) ->
+      $('.published_at_value').text(data.date)
+      $('#show_published_at_select').show()
+  
+  
+  $('.edit_blog_post #update_published_at_select, .new_blog_post #update_published_at_select').click (event) -> 
     event.preventDefault() 
     $('#blog_post_publish_now').val(false)
     $('#show_published_at_select').hide()
@@ -68,6 +82,18 @@ document.addEventListener 'turbolinks:load', ->
   
   timer = undefined
   delay = 600
+  
+  $('.new_blog_page #blog_page_title').on 'input', ->
+    attr = $(this).val()
+    window.clearTimeout timer
+    timer = window.setTimeout(( ->
+      updateSlug 'page', attr
+      ), delay)
+    
+  $('#blog_page_business_website_id').on 'change', ->
+    updateSlugPrefix 'page'
+    attr = $('#blog_page_title').val()
+    updateSlug 'page', attr
   
   $('.new_blog_post #blog_post_title').on 'input', ->
     attr = $(this).val()

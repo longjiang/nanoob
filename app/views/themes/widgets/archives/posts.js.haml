@@ -1,0 +1,2 @@
+$("#collapse#{@year}#{@month}").html('#{j render(partial: 'themes/widgets/archives/post', collection: @posts, as: :post)}');
+$("#linkto#{@year}#{@month}").attr('href', "#collapse#{@year}#{@month}").removeAttr('data-remote');

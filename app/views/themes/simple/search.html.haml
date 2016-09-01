@@ -1,6 +1,12 @@
 .container
   .row
     .col-lg-8.offset-lg-2.col-md-10.offset-md-1
+      %h1="Résultats de la recherche pour #{@page_title}"
+      
+      %p= "Vous recherchez l'offre #{@title} au meilleur prix ? Ne cherchez plus ! La Poignée de main avec son immense catalogue de produits et des prix au plus bas aujourd'hui #{Time.now.strftime('%A %e %B %Y')}, est là pour vous."
+
+  .row
+    .col-lg-8.offset-lg-2.col-md-10.offset-md-1
       - @posts.each do |post|
         .post-preview
           = link_to post_path(slug: post.slug, year: post.year, month: post.month) do
@@ -13,7 +19,3 @@
   .row
     .col-lg-8.offset-lg-2.col-md-10.offset-md-1
       = paginate @posts
-      
-  .row
-    .col-lg-8.offset-lg-2.col-md-10.offset-md-1
-      = render 'themes/widgets/archives'

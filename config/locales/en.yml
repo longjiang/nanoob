@@ -55,6 +55,17 @@ en:
       flash:
         success_html: Partner has been successfully deleted.
         
+  pages:
+    create:
+      flash: 
+        success_html: Page has been successfully created.
+    update:
+      flash:
+        success_html: Page has been successfully updated.
+    destroy:
+      flash:
+        success_html: Page has been successfully deleted.
+        
   posts:
     create:
       flash: 
@@ -92,6 +103,7 @@ en:
     partners: This is the list of our partners who may publish backlinks to our websites.
     partner/requests: List of partnership requests we made to our partners. 
     partner/backlinks: List of actual backlinks published (active or not).
+    blog/pages: Static pages published on our network of websites.
     blog/posts: Posts published on our network of websites.
     blog/categories: Post categories are scoped to a website. 
     
@@ -99,6 +111,7 @@ en:
   menu:
     
     blog/categories : Categories
+    blog/pages: Pages
     blog/posts: Posts
     businesses: Businesses
     business/websites: Websites
@@ -108,6 +121,9 @@ en:
     
     blog/categories:
       all: Categories
+    blog/page:
+      all: All Pages
+      add_new: Add new
     blog/post:
       all: All Posts
       add_new: Add new
@@ -141,6 +157,9 @@ en:
       blog/category:
         one: category
         other: categories
+      blog/page:
+        one: page
+        other: pages
       blog/post:
         one: post
         other: posts
@@ -164,6 +183,19 @@ en:
         other: Users
       
     attributes:
+      blog/page:
+        categories: Categories
+        featured_image: Featured Image
+        status: Status
+        statuses:
+          draft: Draft
+          published: Published
+          scheduled: Scheduled
+        decorator:
+          statuses:
+            draft: Last updated
+            published: Published
+            scheduled: Scheduled
       blog/post:
         categories: Categories
         featured_image: Featured Image

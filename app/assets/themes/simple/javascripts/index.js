@@ -10,3 +10,5 @@
 //= require ./contact_me.js
 
 //= require ./clean-blog.min
+
+//= require ./../../widgets/widgets

@@ -1,5 +1,17 @@
 class Webservice::FormsController < ApplicationController
   
+  def blog_page_slug_generator
+    slug = Blog::Page.slugify(params[:attr])
+    render json: {"slug": slug}
+  end
+  
+  def blog_page_permalink_prefix
+    website = Business::Website.find(params[:website_id])
+    page = Blog::Page.new
+    page.website = website
+    render json: {"permalink_prefix": page.decorate.permalink_prefix}
+  end
+  
   def blog_post_slug_generator
     slug = Blog::Post.slugify(params[:attr])
     render json: {"slug": slug}
@@ -23,6 +35,11 @@ class Webservice::FormsController < ApplicationController
     category = Blog::Category.new
     category.website = website
     render json: {"permalink_prefix": category.decorate.permalink_prefix}
+  end
+  
+  def blog_page_published_at
+    year,month,day,hour,minute = params[:date].split(',').map{|i| i.to_i}
+    render json: {"date": Blog::Page.new(published_at: Time.new(year,month,day,hour,minute)).decorate.published_at}
   end
   
   def blog_post_published_at

@@ -1,0 +1,77 @@
+/ views/blog/pages/_form.html.haml
+
+= bootstrap_form_for(@page) do |f|
+
+  / = f.alert_message 'errors'
+
+  .row
+  
+    .col-md-8.col-xl-9
+  
+      = f.hidden_field :owner_id
+
+      - if @website
+        = f.hidden_field :business_website_id, value: @website.id
+      - else 
+        - websites = Business::Website.order('url desc')
+        = f.select :business_website_id, websites.map{|_| [_.decorate.host, _.id]}, 
+        prompt: "#{t('forms.select')} #{tm('business/website')}..."
+
+      = f.text_field :title
+    
+      = f.text_field :slug, prepend: @page.decorate.permalink_prefix, append: ".html", label: "Permalink"
+  
+      = f.hidden_field :body_xs_was, value: @page.body_xs
+  
+      = f.hidden_field :body_was, value: @page.body
+  
+      .hidden-sm-up= f.text_area :body_xs, placeholder: "Body"
+  
+      %fieldset.form-group.bootsy.hidden-xs-down{class: @page.decorate.body_xs_if_error_class }
+        %label.control-label{for: :partner_request_body}= han('blog/page', :body)
+        = f.bootsy_area :body, class: 'form-control', placeholder: "Body"
+        %span.help-block= @page.decorate.errors[:body_xs].join(', ') if @page.decorate.has_errors(:body_xs)
+  
+    .col-md-4.col-xl-3
+    
+      .card
+        .card-header
+          Publish
+          .pull-right.toggle-card
+            =link_to i('chevron-up'), '#toggle-status', data: {toggle: 'collapse'}, class: 'text text-primary'
+        .collapse.in.toggle-chevron{id: 'toggle-status'}
+          .card-block
+            %p
+              = han('blog/page', :status) 
+              \:
+              %span{class: "text-#{@page.decorate.status_color}"}
+                = i @page.decorate.status_icon
+                = @page.decorate.status
+            %p
+              = han('blog/page', :publication)
+              \:
+              %span.published_at_value
+                - if @page.published_at
+                  = @page.decorate.published_at
+                - else
+                  Now
+              
+              = f.hidden_field :publish_now, value: true unless @page.published_at
+                
+              %button.btn.btn-secondary.btn-sm{id: 'show_published_at_select'} Modify
+              #published_at_select
+                = f.datetime_select :published_at, {hide_label: true, order: [:day, :month, :year, :hour, :minute]}, {class: 'form-control-sm'}
+                %button.btn.btn-secondary.btn-sm{id: 'update_published_at_select'} OK
+                = link_to 'Cancel', '#', id: 'hide_published_at_select'
+            
+          .card-block
+            - if @page.new_record?
+              = f.primary 'Save draft'
+              = f.submit 'Publish', name: 'publish', class: "btn btn-secondary pull-right"
+            - else
+              = f.primary "Update"
+              - if @page.published?
+                = f.submit "Unpublish", name: 'unpublish', class: "btn btn-secondary pull-right"
+              - else
+                = f.submit "Publish", name: 'publish', class: "btn btn-secondary pull-right"
+      

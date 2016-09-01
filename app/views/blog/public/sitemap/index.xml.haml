@@ -1,0 +1,9 @@
+!!! XML
+
+<?xml-stylesheet type="text/xsl" href="/sitemap-index.xsl"?>
+
+%sitemapindex{xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9", 'xmlns:xsi' => "http://www.w3.org/2001/XMLSchema-instance", 'xsi:schemaLocation' => "http://www.sitemaps.org/schemas/sitemap/0.9  http://www.sitemaps.org/schemas/sitemap/0.9/siteindex.xsd"}
+  - @sitemaps.each do |sitemap, lastmod|
+    %sitemap
+      %loc #{@blog_root_path}/sitemap/#{sitemap}.xml
+      %lastmod= lastmod.strftime('%Y-%m-%d')

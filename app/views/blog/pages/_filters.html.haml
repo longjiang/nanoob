@@ -1,0 +1,97 @@
+/ views/blog/pages/_filters.html.haml
+
+.filters
+
+  %ul.list-inline
+  
+    %li.list-inline-item
+
+      - if params.slice(*Blog::PagesController.filtering_params).blank?
+        %span.text-primary= th 'forms.all'
+      - else
+        = link_to blog_pages_path do
+          = th 'forms.all'
+          %span.tag.tag-default= Blog::Page.count
+          
+    %li.list-inline-item
+    
+      - if params[:owner] && params[:owner].to_i.eql?(current_user.id)
+        %span.text-primary= th 'forms.mine'
+        = link_to filtered_entries_path(owner: nil) do
+          = i 'times-circle-o'
+      - else
+        = link_to filtered_entries_path(owner: current_user.id) do
+          = th 'forms.mine'
+          %span.tag.tag-default= @pages_not_owner_filtered.owner(current_user.id).count
+    
+    %li.list-inline-item
+      
+      - unless params[:recent].blank?
+        %span.text-primary= th 'forms.recent'
+        = link_to filtered_entries_path(recent: nil) do
+          = i 'times-circle-o'
+      - else
+        = link_to filtered_entries_path(recent: 10) do
+          = th 'forms.recent'
+          %span.tag.tag-default= @pages_unpaginated.recent(10).count
+  
+    - filters = [{ count: @pages_not_status_filtered.published.published_before(Time.now).count, 
+      filter: params[:published_before], 
+      cond: params[:published_before].blank?,
+      value: :published,
+      path_cond: {status: :published, published_after: nil, published_before: Time.now}},
+      { count: @pages_not_status_filtered.published.published_after(Time.now).count, 
+      filter: params[:published_after], 
+      cond: params[:published_after].blank?,
+      value: :scheduled,
+      path_cond: {status: :published, published_after: Time.now,  published_before: nil}},
+      { count: @pages_not_status_filtered.draft.count, 
+      filter: params[:status].eql?('draft'), 
+      cond: !params[:status].eql?('draft'),
+      value: :draft,
+      path_cond: {status: :draft, published_after: nil,  published_before: nil}}]
+  
+    - filters.each do |filter|
+      - if filter[:count]>0 || filter[:filter]
+        %li.list-inline-item
+          - unless filter[:cond]
+            %span.text-primary= hen 'blog/page', :status, filter[:value]
+            = link_to filtered_entries_path(status: nil, published_after: nil, published_before: nil) do
+              = i 'times-circle-o'
+          - else
+            = link_to filtered_entries_path(filter[:path_cond]) do
+              = hen 'blog/page', :status, filter[:value]
+            %span.tag.tag-default= filter[:count]
+
+
+  = bootstrap_form_tag url: blog_pages_path, method: :get, layout: :inline do |f|
+    = f.hidden_field :owner, value: params[:owner]        unless params[:owner].blank?
+    = f.hidden_field :recent, value: params[:recent]       unless params[:recent].blank?
+    = f.hidden_field :status, value: params[:status]       unless params[:status].blank?
+    = f.hidden_field :published_after, value: params[:published_after]       unless params[:published_after].blank?
+    = f.hidden_field :published_before, value: params[:published_before]       unless params[:published_before].blank?
+    
+    = f.select :business_website_id, Business::Website.all.map{|_| [_.decorate.name, _.id ]}, 
+      selected: @website.try(:id), 
+      include_blank: th('forms.all_websites'),
+      hide_label: true
+    
+    = f.select :owner, People::User.all.map{|_| [_.decorate.name, _.id ]}, 
+      selected: params[:owner], 
+      include_blank: th('forms.all_owners'),
+      hide_label: true
+      
+    - if @website
+      = f.select :category_id, @website.categories.map{|_| [_.decorate.name, _.id ]}, 
+        selected: params[:category_id], 
+        include_blank: th('forms.all_categories'),
+        hide_label: true
+    - else
+      = f.grouped_collection_select :category_id, Business::Website.has_categories, :categories, :host, :id, :name,
+        selected: params[:category_id],
+        include_blank: th('forms.all_categories'),
+        hide_label: true
+      
+    = f.text_field :title_contains, value: params[:title_contains], hide_label: true, class: 'form-control-sms', placeholder: han('blog/page', :title)
+    
+    = f.submit th('forms.filter')
