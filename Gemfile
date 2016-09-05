@@ -64,7 +64,7 @@ gem 'devise'
 
 # activerecord
 gem "validate_url"
-gem "mysql2"
+#gem "mysql2"
 gem 'iconv'
 
 # state machine
