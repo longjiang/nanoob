@@ -28,10 +28,6 @@ form {
     }
   }
 
-  body.bootsy_text_area  a {
-   color: red; 
-  }
-
   .has-error {
     span.help-block, label.control-label {
       color: $brand-danger;
@@ -50,5 +46,25 @@ form {
   
   .toggle-card {
     cursor: pointer;
+  }
+}
+
+.form-control.bootsy_text_area  {
+  a {
+    color: $brand-primary; 
+    &[rel~="internal"] {
+      &:after {
+        content: "\f08e";
+        font-family: FontAwesome;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: inherit;
+        padding-left: 0.2em;
+        color: $brand-danger;
+      }
+    }
+    &:hover {
+      color: darken($brand-primary, 15%);
+    }
   }
 }
