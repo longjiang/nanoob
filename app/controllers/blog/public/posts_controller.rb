@@ -28,7 +28,6 @@ class Blog::Public::PostsController < Blog::Public::ApplicationController
   end
   
   def archives
-    sleep 3
     @year = params[:year]
     @month = params[:month]
     if @month
