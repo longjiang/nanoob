@@ -5,7 +5,7 @@
   - add_breadcrumb @website.decorate.host
   
 - content_for :page_title do
-  = i Blog::Category.decorator_class.icon
+  = i Blog::Taxonomies::Category.decorator_class.icon
   = tmp 'blog/category'
   %span.tag.tag-info{id: 'categories_count'}= @categories_unpaginated.count
   

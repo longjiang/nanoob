@@ -105,28 +105,28 @@ en:
     partner/backlinks: List of actual backlinks published (active or not).
     blog/pages: Static pages published on our network of websites.
     blog/posts: Posts published on our network of websites.
-    blog/categories: Post categories are scoped to a website. 
+    blog/taxonomies/categories: Post categories are scoped to a website. 
     
 # Menu
   menu:
     
-    blog/categories : Categories
     blog/pages: Pages
     blog/posts: Posts
+    blog/taxonomies/categories : Categories
     businesses: Businesses
     business/websites: Websites
     partners: Partners
     partner/requests: Requests
     partner/backlinks: Backlinks
     
-    blog/categories:
-      all: Categories
     blog/page:
       all: All Pages
       add_new: Add new
     blog/post:
       all: All Posts
       add_new: Add new
+    blog/taxonomies/categories:
+      all: Categories
     business:
       all: All Businesses
       add_new: Add new

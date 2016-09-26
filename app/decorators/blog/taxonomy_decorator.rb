@@ -1,4 +1,4 @@
-class Blog::CategoryDecorator < ApplicationRecordDecorator
+class Blog::TaxonomyDecorator < ApplicationRecordDecorator
   delegate_all
   
   def name_with_tag
@@ -9,12 +9,6 @@ class Blog::CategoryDecorator < ApplicationRecordDecorator
     'list'
   end
   
-  def permalink_prefix
-    if object.website.present?
-      "#{object.website.url}/category/"
-    else
-      ""
-    end
-  end
+
   
 end

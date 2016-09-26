@@ -2,9 +2,9 @@
   %th.text-nowrap.text-xs-center{scope: "row"}= category.id
   - if @website.nil?
     %td.text-nowrap= link_to category.website.host, filtered_entries_path(business_website_id: category.website.id)
-  %td= link_to category.name, edit_blog_category_path(category, hide_website_col: @website.nil? ? nil : true), remote: true
+  %td= link_to category.name, edit_blog_taxonomies_category_path(category, hide_website_col: @website.nil? ? nil : true), remote: true
   %td= link_to category.posts.size, blog_posts_path(category_id: category.id)
   %td
     - if category.posts.size.eql?(0)
-      = link_to blog_category_path(category, hide_website_col: @website.nil? ? nil : true), method: :delete, data: { confirm: 'Are you sure?' }, remote: true do
+      = link_to blog_taxonomies_category_path(category, hide_website_col: @website.nil? ? nil : true), method: :delete, data: { confirm: 'Are you sure?' }, remote: true do
         = i 'trash-o'

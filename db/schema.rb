@@ -10,28 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160830135133) do
+ActiveRecord::Schema.define(version: 20160926022617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "blog_categories", force: :cascade do |t|
-    t.integer  "business_website_id"
-    t.integer  "parent_id"
-    t.string   "name"
-    t.string   "slug"
-    t.integer  "posts_count",         default: 0
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.index ["business_website_id"], name: "index_blog_categories_on_business_website_id", using: :btree
-  end
-
-  create_table "blog_categories_posts", id: false, force: :cascade do |t|
-    t.integer "blog_category_id", null: false
-    t.integer "blog_post_id",     null: false
-    t.index ["blog_category_id", "blog_post_id"], name: "index_blog_categories_posts_on_category_id_and_post_id", unique: true, using: :btree
-    t.index ["blog_post_id"], name: "index_blog_categories_posts_on_blog_post_id", using: :btree
-  end
 
   create_table "blog_posts", force: :cascade do |t|
     t.integer  "business_website_id"
@@ -51,6 +33,25 @@ ActiveRecord::Schema.define(version: 20160830135133) do
     t.string   "type"
     t.index ["business_website_id"], name: "index_blog_posts_on_business_website_id", using: :btree
     t.index ["slug"], name: "index_blog_posts_on_slug", using: :btree
+  end
+
+  create_table "blog_posts_taxonomies", id: false, force: :cascade do |t|
+    t.integer "blog_taxonomy_id", null: false
+    t.integer "blog_post_id",     null: false
+    t.index ["blog_post_id"], name: "index_blog_posts_taxonomies_on_blog_post_id", using: :btree
+    t.index ["blog_taxonomy_id", "blog_post_id"], name: "index_blog_categories_posts_on_category_id_and_post_id", unique: true, using: :btree
+  end
+
+  create_table "blog_taxonomies", force: :cascade do |t|
+    t.integer  "business_website_id"
+    t.integer  "parent_id"
+    t.string   "name"
+    t.string   "slug"
+    t.integer  "posts_count",         default: 0
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.string   "type"
+    t.index ["business_website_id"], name: "index_blog_taxonomies_on_business_website_id", using: :btree
   end
 
   create_table "bootsy_image_galleries", force: :cascade do |t|
@@ -202,12 +203,12 @@ ActiveRecord::Schema.define(version: 20160830135133) do
     t.index ["username"], name: "index_people_on_username", unique: true, using: :btree
   end
 
-  add_foreign_key "blog_categories", "blog_categories", column: "parent_id"
-  add_foreign_key "blog_categories", "business_websites"
   add_foreign_key "blog_posts", "business_websites"
   add_foreign_key "blog_posts", "people", column: "editor_id"
   add_foreign_key "blog_posts", "people", column: "owner_id"
   add_foreign_key "blog_posts", "people", column: "writer_id"
+  add_foreign_key "blog_taxonomies", "blog_taxonomies", column: "parent_id"
+  add_foreign_key "blog_taxonomies", "business_websites"
   add_foreign_key "business_websites", "businesses"
   add_foreign_key "businesses", "business_products"
   add_foreign_key "histories", "people"

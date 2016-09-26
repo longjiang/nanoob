@@ -1,8 +1,6 @@
-class Blog::Category < ApplicationRecord
+class Blog::Taxonomy < ApplicationRecord
   
   belongs_to :website, class_name: 'Business::Website', foreign_key: :business_website_id, counter_cache: true
-  belongs_to :parent, optional: true, class_name: 'Blog::Category'
-  has_many :children, class_name: 'Blog::Category', foreign_key: :parent_id
   has_and_belongs_to_many :posts, class_name: 'Blog::Post',  foreign_key: :blog_category_id, association_foreign_key: :blog_post_id, after_add: :increment_count, after_remove: :decrement_count
   
   before_validation :humanize

@@ -16,31 +16,7 @@ class Blog::Public::PostsController < Blog::Public::ApplicationController
     @post = Blog::Post.website(@website).find_by_slug!(params[:slug])
     render template: "themes/simple/show"
   end
-  
-  def search
-    @keywords = params[:keywords]
-    @couleur = params[:couleur]
-    @material = params[:material]
-    @location = params[:location]
-    @posts_unpaginated = @website.posts.published.where('lower(title) like ?', "%#{@keywords.downcase.gsub('-', ' ')}%")
-    @posts = @posts_unpaginated.page(params[:page])
-    render template: "themes/simple/search"
-  end
-  
-  def archives
-    @year = params[:year]
-    @month = params[:month]
-    if @month
-      starts_at = Time.new(@year, @month, 1)
-      ends_at = starts_at.end_of_month
-      @posts = @website.posts.published.where('published_at >= ? and published_at <= ?', starts_at, ends_at)
-      render template: 'themes/widgets/archives/posts'
-    else
-      @archives = @website.posts.published.where('extract(year from published_at) = ?', @year).group('extract(month from published_at)').count.map{|a,b| {month: a.to_i, count: b}}
-      render template: 'themes/widgets/archives/months'
-    end
-  end
-  
+
   private
   
   def layout

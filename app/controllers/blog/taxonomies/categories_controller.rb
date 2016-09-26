@@ -1,14 +1,6 @@
-class Blog::CategoriesController < CrudController
+class Blog::Taxonomies::CategoriesController < Blog::TaxonomiesController
   
-  self.permitted_attrs = [:business_website_id, :name, :slug, :hide_website_col]
-  self.filtering_params = [:business_website_id ]
-  self.sortable_attrs   = [ :name, :posts_count ]
-  
-  before_action :find_website
   before_action :find_category, except: [:destroy, :show]
-  skip_before_action :decorate_entry
-  skip_before_action :entry, only: [:show]
-
   
   def index
     categories
@@ -18,7 +10,7 @@ class Blog::CategoriesController < CrudController
     super do |format, updated|
       categories
       if updated 
-        @category = Blog::Category.new(website: @website)
+        @category = Blog::Taxonomies::Category.new(website: @website)
         format.js { render 'updated' }
       else
         @flash_danger = "Category not updated"
@@ -64,7 +56,7 @@ class Blog::CategoriesController < CrudController
       menu.update I18n.t("menu.blog/posts"), blog_posts_path(owner: current_user.id, business_id: current_user.business_id, business_website_id: current_user.website_id), 'posts', {icon: Blog::Post.decorator_class.icon} do |submenu|
         submenu.add I18n.t("menu.blog/post.all"), blog_posts_path, {icon: false}
         submenu.add I18n.t("menu.blog/post.add_new"), new_blog_post_path(business_website_id: current_user.website_id), {icon: false}
-        submenu.add I18n.t("menu.blog/categories.all"), blog_categories_path(business_website_id: @website ? @website.id : current_user.website_id), {icon: false}
+        submenu.add I18n.t("menu.blog/taxonomies/categories.all"), blog_taxonomies_categories_path(business_website_id: @website ? @website.id : current_user.website_id), {icon: false}
       end
     end
   end
@@ -89,7 +81,7 @@ class Blog::CategoriesController < CrudController
     @category = if params[:id].present?
       set_entry
     else
-      Blog::Category.new(website: @website)
+      Blog::Taxonomies::Category.new(website: @website)
     end
   end
   

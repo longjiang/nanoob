@@ -17,4 +17,6 @@ class Blog::Public::ApplicationController < ApplicationController
     @website ||= Business::Website.find_by_url("#{request.protocol}#{request.host.gsub('.dev','').gsub('www.','')}")
   end
   
+
+  
 end

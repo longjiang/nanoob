@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     resources :partner_backlinks, controller: 'partner/backlinks', :concerns => :paginatable
     resources :blog_posts, controller: 'blog/posts', :concerns => :paginatable
     resources :blog_pages, controller: 'blog/pages', :concerns => :paginatable
-    resources :blog_categories, controller: 'blog/categories', :concerns => :paginatable
+    resources :blog_taxonomies_categories, controller: 'blog/taxonomies/categories', :concerns => :paginatable
     resources :users, controller: 'people/users'
   end
 

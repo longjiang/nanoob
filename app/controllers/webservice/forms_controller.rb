@@ -26,13 +26,13 @@ class Webservice::FormsController < ApplicationController
   
   def blog_category_slug_generator
     website = Business::Website.find(params[:website_id])
-    slug = Blog::Category.slugify(website, params[:attr])
+    slug = Blog::Taxonomies::Category.slugify(website, params[:attr])
     render json: {"slug": slug}
   end
   
   def blog_category_permalink_prefix
     website = Business::Website.find(params[:website_id])
-    category = Blog::Category.new
+    category = Blog::Taxonomies::Category.new
     category.website = website
     render json: {"permalink_prefix": category.decorate.permalink_prefix}
   end

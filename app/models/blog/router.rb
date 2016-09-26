@@ -3,6 +3,7 @@ class Blog::Router
   class Route
     attr_accessor :method, :path, :constraints, :to, :via, :default, :as
     def initialize(method, path, to=nil, default=nil, via=nil)
+      to = "blog/public/#{to}" unless to.blank?
       @method   = method
       @path     = path
       @to       = to
@@ -35,37 +36,47 @@ class Blog::Router
     @routes = []
     sitemaps
     miscellaneous
+    tags
+    categories
   end
 
   def sitemaps
-    self.routes << Route.new(:get, '/sitemap.xml',                    'blog/public/sitemap#index',       {:format => 'xml'})
-    self.routes << Route.new(:get, '/sitemap/posts.xml',              'blog/public/sitemap#posts',       {:format => 'xml'})
-    self.routes << Route.new(:get, '/sitemap/categories.xml',         'blog/public/sitemap#categories',  {:format => 'xml'})
-    self.routes << Route.new(:get, '/sitemap/search/:dimensions.xml', 'blog/public/sitemap#search',      {:format => 'xml'})
-    self.routes << Route.new(:get, '/sitemap-index.xsl',              'blog/public/sitemap#index',       {:format => 'xsl'})
-    self.routes << Route.new(:get, '/sitemap.xsl',                    'blog/public/sitemap#feed',        {:format => 'xsl'})
+    self.routes << Route.new(:get, '/sitemap.xml',                    'sitemap#index',       {:format => 'xml'})
+    self.routes << Route.new(:get, '/sitemap/posts.xml',              'sitemap#posts',       {:format => 'xml'})
+    self.routes << Route.new(:get, '/sitemap/categories.xml',         'sitemap#categories',  {:format => 'xml'})
+    self.routes << Route.new(:get, '/sitemap/search/:dimensions.xml', 'sitemap#search',      {:format => 'xml'})
+    self.routes << Route.new(:get, '/sitemap-index.xsl',              'sitemap#index',       {:format => 'xsl'})
+    self.routes << Route.new(:get, '/sitemap.xsl',                    'sitemap#feed',        {:format => 'xsl'})
   end
   
   def miscellaneous
-    self.routes << Route.new(:get,    '/s-:keywords,:location,:dimensions',  'blog/public/posts#search')
-    self.routes << Route.new(:get,    '/page/:page',                         'blog/public/posts#index')
+    self.routes << Route.new(:get,    '/s-:keywords,:location,:dimensions',  'search#index')
+    self.routes << Route.new(:get,    '/page/:page',                         'posts#index')
     
-    self.routes << Route.new(:get,    '/s-:keywords-couleur-:couleur-en-:material,:location',  'blog/public/posts#search')
-    self.routes << Route.new(:get,    '/s-:keywords-couleur-:couleur,:location',  'blog/public/posts#search')
-    self.routes << Route.new(:get,    '/s-:keywords-en-:material,:location',  'blog/public/posts#search')
-    self.routes << Route.new(:get,    '/s-:keywords-couleur-:couleur',  'blog/public/posts#search')
-    self.routes << Route.new(:get,    '/s-:keywords,:location',  'blog/public/posts#search')
-    self.routes << Route.new(:get,    '/s-:keywords-en-:material',  'blog/public/posts#search')
+    self.routes << Route.new(:get,    '/s-:keywords-couleur-:couleur-en-:material,:location',  'search#index')
+    self.routes << Route.new(:get,    '/s-:keywords-couleur-:couleur,:location',  'search#index')
+    self.routes << Route.new(:get,    '/s-:keywords-en-:material,:location',  'search#index')
+    self.routes << Route.new(:get,    '/s-:keywords-couleur-:couleur',  'search#index')
+    self.routes << Route.new(:get,    '/s-:keywords,:location',  'search#index')
+    self.routes << Route.new(:get,    '/s-:keywords-en-:material',  'search#index')
 
-    r = Route.new(:root,   'blog/public/posts#index')
+    r = Route.new(:root,   'posts#index')
     r.via = [:get, :post]
     self.routes << r
     
-    r = Route.new(:match,  '/:year/:month/:slug', 'blog/public/posts#show')
+    r = Route.new(:match,  '/:year/:month/:slug', 'posts#show')
     r.via = [:get, :post]
     r.as = :post
     self.routes << r
     
+  end
+  
+  def tags
+    self.routes << Route.new(:get, '/tag/:slug(/page/:page)', 'tags#index')
+  end
+  
+  def categories
+    self.routes << Route.new(:get, '/category/:slug(/page/:page)', 'categories#index')
   end
   
   def self.load
@@ -75,7 +86,7 @@ class Blog::Router
       end
       
       scope '/widgets' do
-        get '/posts/:website_id(/:year)(/:month)', to: 'blog/public/posts#archives', as: :archives
+        get '/posts/:website_id(/:year)(/:month)', to: 'blog/public/widgets#archives', as: :archives
       end
       
     end
