@@ -5,16 +5,16 @@
   - add_breadcrumb @website.decorate.host
   
 - content_for :page_title do
-  = i Blog::Taxonomies::Category.decorator_class.icon
-  = tmp 'blog/taxonomies/category'
-  %span.tag.tag-info{id: 'categories_count'}= @categories_unpaginated.count
+  = i Blog::Taxonomies::Tag.decorator_class.icon
+  = tmp 'blog/taxonomies/tag'
+  %span.tag.tag-info{id: 'tags_count'}= @tags_unpaginated.count
   
-%p= t 'descriptions.blog/taxonomies/categories'
+%p= t 'descriptions.blog/taxonomies/tags'
 
 .row
   .col-md-12.col-lg-5
     = render 'list'
   .col-md-12.col-lg-7
-    .category_flash
-    .category_form
+    .tag_flash
+    .tag_form
       = render 'new'

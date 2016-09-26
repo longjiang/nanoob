@@ -16,6 +16,17 @@ class Blog::PostDecorator < ApplicationRecordDecorator
     end.join(', ').html_safe
   end
   
+  def tags(params={})
+    return "-" if object.tags.blank?
+    object.tags.map do |tag|
+      if params[:tag_id].eql?(tag.id.to_s)
+        h.link_to tag.name, h.filtered_entries_path(tag_id: nil), class: 'text-primary'
+      else
+        h.link_to tag.name, h.filtered_entries_path(tag_id: tag.id)
+      end
+    end.join(', ').html_safe
+  end
+  
   def status_with_date
     date = case object.status
     when "published"
@@ -66,7 +77,9 @@ class Blog::PostDecorator < ApplicationRecordDecorator
     end
   end
   
-
+  def public_url
+    "#{permalink_prefix}#{object.slug}"
+  end
   
   def self.icon
     'thumb-tack'

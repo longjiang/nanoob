@@ -1,11 +1,11 @@
 class Blog::Taxonomies::TagDecorator < Blog::TaxonomyDecorator
   
-  def permalink_prefix
-    if object.website.present?
-      "#{object.website.url}/tag/"
-    else
-      ""
-    end
+  def taxonomy_slug
+    'tag'
+  end
+  
+  def self.icon
+    'tag'
   end
   
 end

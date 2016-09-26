@@ -1,13 +1,13 @@
-/ views/blog/taxonomies/categories/_edit.html.haml
+/ views/blog/taxonomies/tags/_edit.html.haml
 .card
 
   .card-block
-    %h4.card-title Edit Category
+    %h4.card-title Edit Tag
     
     = render 'form'
     
     .pull-xs-right 
-      = link_to blog_taxonomies_categories_path(business_website_id: @website.try(:id)), 
+      = link_to blog_taxonomies_tags_path(business_website_id: @website.try(:id)), 
         class: 'btn btn-secondary pull-right', 
         role: 'button', 
         title: th('activerecord.actions.new') do

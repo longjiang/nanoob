@@ -7,14 +7,15 @@ module PostsConcern
     
     prepend_before_action :find_website
     prepend_before_action :find_business
+    before_action :create_tags, only: [:create, :update]
     before_action :update_bodies, only: [:create, :update]
     before_action :default_user, only: [:new]
     before_action :default_website, only: [:new]
     before_action :add_breadcrumbs, except: [:index]
     before_action :nilify_published_at, only: [:create, :update]
     
-    self.permitted_attrs = [:business_website_id, :owner_id, :title, :slug, :body, :body_was, :body_xs, :body_xs_was, :published_at, :featured_image, :remove_featured_image, {:category_ids => []}]
-    self.filtering_params = [ :owner, :status, :recent, :business_website_id, :title_contains, :published_after, :published_before, :category_id  ]
+    self.permitted_attrs = [:business_website_id, :owner_id, :title, :slug, :body, :body_was, :body_xs, :body_xs_was, :published_at, :featured_image, :remove_featured_image, {:category_ids => []}, {:tag_ids => []}]
+    self.filtering_params = [ :owner, :status, :recent, :business_website_id, :title_contains, :published_after, :published_before, :category_id, :tag_id ]
     self.sortable_attrs   = [ :title, :status_date ]
     
   end
@@ -83,6 +84,19 @@ module PostsConcern
     else
       add_breadcrumb @website.decorate.host, business_website_path(@website)
     end
+  end
+  
+  def create_tags
+    tag_ids = []
+    model_params['tag_ids'].each do |tag_id|
+      if tag_id.to_i.to_s.eql?(tag_id)
+        tag_ids << tag_id
+      else
+        tag = @website.tags.create(name: tag_id)
+        tag_ids << tag.id
+      end
+    end
+    params['blog_post']['tag_ids'] = tag_ids
   end
 
   

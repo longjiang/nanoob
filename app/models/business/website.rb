@@ -13,18 +13,18 @@ class Business::Website < ApplicationRecord
   validates :url,          url: true
   validates :theme,        presence: true
   
-  belongs_to  :business, counter_cache: true
-  has_many    :backlinks, class_name: 'Partner::Backlink', foreign_key: :business_website_id
-  has_many    :posts    , class_name: 'Blog::Post', foreign_key: :business_website_id
-  has_many    :categories    , class_name: 'Blog::Taxonomies::Category', foreign_key: :business_website_id
+  belongs_to  :business    , counter_cache: true
+  has_many    :backlinks   , class_name: 'Partner::Backlink', foreign_key: :business_website_id
+  has_many    :posts       , class_name: 'Blog::Post', foreign_key: :business_website_id
+  has_many    :categories  , class_name: 'Blog::Taxonomies::Category', foreign_key: :business_website_id
+  has_many    :tags        , class_name: 'Blog::Taxonomies::Tag', foreign_key: :business_website_id
   
   scope :has_categories , -> { (where "categories_count > 0 ")}
+  scope :has_tags , -> { (where "tags_count > 0 ")}
   
   delegate :name, to: :business, prefix: true
   
   before_save :remove_trailing_slash
-  
-  
   
   def remove_trailing_slash
     if url_changed?
@@ -60,6 +60,26 @@ class Business::Website < ApplicationRecord
   
   def owner
     get_meta(:owner) || People::User.first
+  end
+  
+  def add_unknown_category(slug)
+    categories = unknown_categories
+    categories << slug
+    set_meta(:unknown_categories, categories.uniq) 
+  end
+  
+  def unknown_categories
+    get_meta(:unknown_categories) || []
+  end
+  
+  def add_unknown_tag(slug)
+    tags = unknown_tags
+    tags << slug
+    set_meta(:unknown_tags, tags.uniq) 
+  end
+  
+  def unknown_tags
+    get_meta(:unknown_tags) || []
   end
   
   # mandatory for grouped_collection_select?

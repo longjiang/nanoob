@@ -91,6 +91,17 @@
         selected: params[:category_id],
         include_blank: th('forms.all_categories'),
         hide_label: true
+        
+    - if @website
+      = f.select :tag_id, @website.tags.map{|_| [_.decorate.name, _.id ]}, 
+        selected: params[:tag_id], 
+        include_blank: th('forms.all_tags'),
+        hide_label: true
+    - else
+      = f.grouped_collection_select :tag_id, Business::Website.has_tags, :tags, :host, :id, :name,
+        selected: params[:tag_id],
+        include_blank: th('forms.all_tags'),
+        hide_label: true
       
     = f.text_field :title_contains, value: params[:title_contains], hide_label: true, class: 'form-control-sms', placeholder: han('blog/post', :title)
     

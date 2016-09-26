@@ -60,7 +60,7 @@ class Blog::Router
     self.routes << Route.new(:get,    '/s-:keywords,:location',  'search#index')
     self.routes << Route.new(:get,    '/s-:keywords-en-:material',  'search#index')
 
-    r = Route.new(:root,   'posts#index')
+    r = Route.new(:root, 'blog/public/posts#index')
     r.via = [:get, :post]
     self.routes << r
     
@@ -72,11 +72,15 @@ class Blog::Router
   end
   
   def tags
-    self.routes << Route.new(:get, '/tag/:slug(/page/:page)', 'tags#index')
+    r = Route.new(:get, '/tag/:slug(/page/:page)', 'tags#index')
+    r.as = :tag
+    self.routes << r
   end
   
   def categories
-    self.routes << Route.new(:get, '/category/:slug(/page/:page)', 'categories#index')
+    r = Route.new(:get, '/category/:slug(/page/:page)', 'categories#index')
+    r.as = :category
+    self.routes << r
   end
   
   def self.load

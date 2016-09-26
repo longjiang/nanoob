@@ -1,0 +1,12 @@
+/ views/blog/tags/_filters.html.haml
+
+.filters
+
+  = bootstrap_form_tag url: blog_taxonomies_tags_path, method: :get, layout: :inline do |f|
+  
+    = f.select :business_website_id, Business::Website.all.map{|_| [_.decorate.name, _.id ]}, 
+      selected: @website.try(:id), 
+      include_blank: th('forms.all_websites'),
+      hide_label: true
+      
+    = f.submit th('forms.filter')

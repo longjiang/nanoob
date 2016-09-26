@@ -6,14 +6,12 @@ class Blog::PostsController < CrudController
     super
     @posts = @posts.includes(:owner).includes(:metum)
     @posts = @posts.includes(:categories) unless params[:category_id]
+    @posts = @posts.includes(:tags) unless params[:tag_id]
     @posts = @posts.includes(:website) unless @website
     @posts_unpaginated = @posts
     @posts = @posts.page(params[:page])
     @posts_not_status_filtered = Blog::Post.sort(params.slice(*sortable_params)).filter(params.slice(*filtering_params - [:status, :published_after, :published_before]))
     @posts_not_owner_filtered = Blog::Post.sort(params.slice(*sortable_params)).filter(params.slice(*filtering_params - [:owner]))
-    
-    
-    
   end
   
   private
@@ -34,6 +32,7 @@ class Blog::PostsController < CrudController
         submenu.add I18n.t("menu.blog/post.all"), blog_posts_path, {icon: false}
         submenu.add I18n.t("menu.blog/post.add_new"), new_blog_post_path(business_website_id: current_user.website_id), {icon: false}
         submenu.add I18n.t("menu.blog/taxonomies/categories.all"), blog_taxonomies_categories_path(business_website_id: @website ? @website.id : current_user.website_id), {icon: false}
+        submenu.add I18n.t("menu.blog/taxonomies/tags.all"), blog_taxonomies_tags_path(business_website_id: @website ? @website.id : current_user.website_id), {icon: false}
       end
     end
   end

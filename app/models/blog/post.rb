@@ -19,7 +19,8 @@ class Blog::Post < ApplicationRecord
   
   belongs_to :website,  class_name: 'Business::Website', foreign_key: :business_website_id, counter_cache: true
   belongs_to :owner,    class_name: 'People::User',  foreign_key: :owner_id, counter_cache: true
-  has_and_belongs_to_many :categories, class_name: 'Blog::Taxonomies::Category',  foreign_key: :blog_post_id, association_foreign_key: :blog_taxonomy_id , after_add: :increment_count, after_remove: :decrement_count
+  has_and_belongs_to_many :categories,  class_name: 'Blog::Taxonomies::Category',   foreign_key: :blog_post_id, association_foreign_key: :blog_taxonomy_id , after_add: :increment_category_count, after_remove: :decrement_category_count
+  has_and_belongs_to_many :tags,        class_name: 'Blog::Taxonomies::Tag',        foreign_key: :blog_post_id, association_foreign_key: :blog_taxonomy_id , after_add: :increment_tag_count, after_remove: :decrement_tag_count
   
   scope :owner,           -> (staff)      { where owner: staff.to_i }
   scope :recent,          -> (days)       { where("#{self.table_name}.updated_at > ? ", days.to_i.days.ago) }
@@ -30,8 +31,10 @@ class Blog::Post < ApplicationRecord
   scope :status,          -> (status)     { where status: status }
   scope :published_after, -> (date)       { where("#{self.table_name}.published_at > ? ", date) }
   scope :published_before,-> (date)       { where("#{self.table_name}.published_at < ? ", date) }
-  scope :category_id,     -> (id)         { joins(:categories).where('blog_categories.id = ?', id) }
-  
+  scope :category_id,     -> (id)         { joins(:categories).where('blog_taxonomies.id = ?', id) }
+  scope :tag_id,          -> (id)         { joins(:tags).where('blog_taxonomies.id = ?', id) }
+ 
+ 
   def self.sort_by_status_date(direction='asc')
     #status=0 means status=:draft (enum is stored as integer)
     order("case when status=0 then #{self.table_name}.updated_at else COALESCE(#{self.table_name}.published_at, #{self.table_name}.updated_at) end #{direction}")
@@ -69,20 +72,28 @@ class Blog::Post < ApplicationRecord
     @author ||= get_meta(:author_id).present? ? People::Author.find(get_meta(:author_id)) : People::Author.new
   end
   
-  def self.slugify(title)
+  def self.slugify(title, website)
     available_slug title.try(:parameterize)
   end
   
   private
   
-  def increment_count(category)
+  def increment_category_count(category)
     self.class.increment_counter(:categories_count, self.id)
     category.class.increment_counter(:posts_count, category.id)
   end
   
-  def decrement_count(category)
+  def decrement_category_count(category)
     self.class.decrement_counter(:categories_count, self.id)
     category.class.decrement_counter(:posts_count, category.id)
+  end
+  
+  def increment_tag_count(tag)
+    tag.class.increment_counter(:posts_count, tag.id)
+  end
+  
+  def decrement_tag_count(tag)
+    tag.class.decrement_counter(:posts_count, tag.id)
   end
   
   def nilify_attributes

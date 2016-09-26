@@ -1,21 +1,23 @@
-window.updateSlugPrefix = (object) ->
-  website_id = $('#blog_' + object + '_business_website_id').val()
-  label = $("label[for='blog_" + object + "_slug'] + div > span:first-child")
+window.updateSlugPrefix = (options) ->
+  website_id  = options['website_id']
+  label       = $('#' + options['target']).parent().find('span:first-child')
   label.html loading_placeholder()
   if parseInt(website_id)>0
-    $.get("/ws/forms/blog_" + object + "_permalink_prefix", website_id: website_id).done (data) ->
+    $.get("/ws/forms/blog_permalink_prefix", website_id: website_id, klass: options['klass']).done (data) ->
       label.text data.permalink_prefix
 
-window.updateSlug = (object, attr) ->
-  website_id = $('#blog_' + object + '_business_website_id').val()
-  if attr != ''
+window.updateSlug = (options) ->
+  website_id  = options['website_id']
+  label       = options['label']
+  slug        = $('#' + options['target'])
+  if label != ''
     if parseInt(website_id)>0
-      $('#blog_' + object + '_slug').val '...'
-      $.get('/ws/forms/blog_' + object + '_slug_generator', website_id: website_id, attr: attr).done (data) ->
-        $('#blog_' + object + '_slug').val data.slug 
+      slug.val '...'
+      $.get('/ws/forms/blog_slug_generator', website_id: website_id, label: label, klass: options['klass']).done (data) ->
+        slug.val data.slug 
     else
-      $('#blog_' + object + '_slug').val ''
-      $('#blog_' + object + '_slug').attr('placeholder', 'select website')
+      slug.val ''
+      slug.attr('placeholder', 'select website')
       
 window.loading_placeholder = () ->
   '<i class="fa fa-spinner fa-pulse" aria-hidden="true"></i>'
@@ -28,6 +30,10 @@ document.addEventListener 'turbolinks:load', ->
   $('#partner_request_partner_id').select2 theme: "bootstrap" if $('#partner_request_partner_id').is('select')
   $('#partner_backlink_partner_id').select2 theme: "bootstrap" if $('#partner_backlink_partner_id').is('select')
   $('#partner_backlink_partner_request_id').select2 theme: "bootstrap" if $('#partner_backlink_partner_request_id').is('select')
+  if $('#blog_post_tag_ids').is('select')
+    $('#blog_post_tag_ids').select2 
+      theme: "bootstrap" 
+      tags: true
   
   Bootsy.init()
   
@@ -83,41 +89,27 @@ document.addEventListener 'turbolinks:load', ->
   timer = undefined
   delay = 600
   
-  $('.new_blog_page #blog_page_title').on 'input', ->
-    attr = $(this).val()
+  $("input[updateslug]").on 'input', ->
+    website_id = if $('select[updateslug]').length then $('select[updateslug]').val() else $("input[id$='business_website_id']").val()
+    options = 
+      target:   $(this).attr('updateslug')
+      klass:    $(this).data('klass')
+      label:    $(this).val()
+      website_id: website_id
     window.clearTimeout timer
     timer = window.setTimeout(( ->
-      updateSlug 'page', attr
+      updateSlug options
       ), delay)
-    
-  $('#blog_page_business_website_id').on 'change', ->
-    updateSlugPrefix 'page'
-    attr = $('#blog_page_title').val()
-    updateSlug 'page', attr
   
-  $('.new_blog_post #blog_post_title').on 'input', ->
-    attr = $(this).val()
-    window.clearTimeout timer
-    timer = window.setTimeout(( ->
-      updateSlug 'post', attr
-      ), delay)
+  $('select[updateslug]').on 'change', ->
+    options = 
+      target:   $(this).attr('updateslug')
+      klass:    $(this).data('klass')
+      label:    $("input[updateslug]").val()
+      website_id: $(this).val()
+    updateSlugPrefix options
+    updateSlug options
     
-  $('#blog_post_business_website_id').on 'change', ->
-    updateSlugPrefix 'post'
-    attr = $('#blog_post_title').val()
-    updateSlug 'post', attr
-      
-  $('.new_blog_category #blog_category_name').on 'input', ->
-    attr = $(this).val()
-    window.clearTimeout timer
-    timer = window.setTimeout(( ->
-      updateSlug 'category', attr
-      ), delay)
-      
-  $('#blog_category_business_website_id').on 'change', ->
-    updateSlugPrefix 'category', $(this).val()
-    attr = $('.new_blog_category #blog_category_name').val()
-    updateSlug 'category', attr
     
   $(":file").filestyle({input: false, buttonName: "btn-primary"});
   

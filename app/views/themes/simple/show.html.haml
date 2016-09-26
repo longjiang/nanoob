@@ -1,3 +1,9 @@
 %h1= @post.title
 
 = @post.body.html_safe
+
+.categories
+  - if @post.categories.any?
+    Categories : 
+    - @post.categories.each do |c|
+      = link_to c.name, category_path(slug: c.slug)

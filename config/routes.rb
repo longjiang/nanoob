@@ -21,18 +21,16 @@ Rails.application.routes.draw do
     resources :blog_posts, controller: 'blog/posts', :concerns => :paginatable
     resources :blog_pages, controller: 'blog/pages', :concerns => :paginatable
     resources :blog_taxonomies_categories, controller: 'blog/taxonomies/categories', :concerns => :paginatable
+    resources :blog_taxonomies_tags, controller: 'blog/taxonomies/tags', :concerns => :paginatable
     resources :users, controller: 'people/users'
   end
 
   Blog::Router.load
   
   scope '/ws' do
-    get '/forms/blog_page_slug_generator',      to: 'webservice/forms#blog_page_slug_generator' 
-    get '/forms/blog_page_permalink_prefix',    to: 'webservice/forms#blog_page_permalink_prefix'
-    get '/forms/blog_post_slug_generator',      to: 'webservice/forms#blog_post_slug_generator' 
-    get '/forms/blog_post_permalink_prefix',    to: 'webservice/forms#blog_post_permalink_prefix'
-    get '/forms/blog_category_slug_generator',  to: 'webservice/forms#blog_category_slug_generator' 
-    get '/forms/blog_category_permalink_prefix',to: 'webservice/forms#blog_category_permalink_prefix'
+    get '/forms/blog_slug_generator',           to: 'webservice/forms#blog_slug_generator' 
+    get '/forms/blog_permalink_prefix',         to: 'webservice/forms#blog_permalink_prefix'
+   
     get '/forms/blog_post_published_at',        to: 'webservice/forms#blog_post_published_at'
     get '/forms/blog_page_published_at',        to: 'webservice/forms#blog_page_published_at'
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160926022617) do
+ActiveRecord::Schema.define(version: 20160926131542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20160926022617) do
     t.integer "blog_taxonomy_id", null: false
     t.integer "blog_post_id",     null: false
     t.index ["blog_post_id"], name: "index_blog_posts_taxonomies_on_blog_post_id", using: :btree
-    t.index ["blog_taxonomy_id", "blog_post_id"], name: "index_blog_categories_posts_on_category_id_and_post_id", unique: true, using: :btree
+    t.index ["blog_taxonomy_id", "blog_post_id"], name: "index_blog_posts_taxonomies_on_post_id_and_taxonomy_id", unique: true, using: :btree
   end
 
   create_table "blog_taxonomies", force: :cascade do |t|
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20160926022617) do
     t.integer  "categories_count", default: 0
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.integer  "tags_count"
     t.index ["business_id"], name: "index_business_websites_on_business_id", using: :btree
   end
 

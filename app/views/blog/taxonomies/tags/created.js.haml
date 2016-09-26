@@ -1,0 +1,6 @@
+= render 'list'
+$('#tags_count').html('#{@tags_unpaginated.count}');
+$('#blog_tag_name').val('');
+$('#blog_tag_slug').val('');
+$('<div></div>').addClass('alert alert-info').html('Tag Created').appendTo($('.tag_flash')).fadeOut(3000);
+

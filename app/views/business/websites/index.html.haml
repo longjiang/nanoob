@@ -28,7 +28,11 @@
           
         %th.text-nowrap.text-xs-center.text-lg-left
           = i Blog::Taxonomies::Category.decorator_class.icon
-          %span.hidden-md-down= tmp 'blog/category'
+          %span.hidden-md-down= tmp 'blog/taxonomies/category'
+          
+        %th.text-nowrap.text-xs-center.text-lg-left
+          = i Blog::Taxonomies::Tag.decorator_class.icon
+          %span.hidden-md-down= tmp 'blog/taxonomies/tag'
           
         %th.text-nowrap 
     %tbody
@@ -57,6 +61,9 @@
               
           %td.text-nowrap.text-xs-center.text-lg-left
             %span.tag.tag-default= link_to website.categories.size, blog_taxonomies_categories_path(business_website_id: website.id)
+            
+          %td.text-nowrap.text-xs-center.text-lg-left
+            %span.tag.tag-default= link_to website.tags.size, blog_taxonomies_tags_path(business_website_id: website.id)
           
           %td.text-nowrap            
             = render partial: 'shared/form_actions', locals: {object: website}

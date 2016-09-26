@@ -1,3 +1,7 @@
+.select2-container--bootstrap {
+  color: #000;
+}
+
 form {
     label.required:after {
     content:" *";
@@ -14,9 +18,7 @@ form {
     margin-top: 10px;
   }
 
-  .select2-container--bootstrap {
-    color: #000;
-  }
+
 
   fieldset.bootsy {
     border: solid 1px grey;

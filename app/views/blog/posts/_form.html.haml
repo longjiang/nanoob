@@ -15,9 +15,10 @@
       - else 
         - websites = Business::Website.order('url desc')
         = f.select :business_website_id, websites.map{|_| [_.decorate.host, _.id]}, 
-        prompt: "#{t('forms.select')} #{tm('business/website')}..."
+        {prompt: "#{t('forms.select')} #{tm('business/website')}..."},
+        { updateslug: 'blog_post_slug', data: {klass: 'Post'} }
 
-      = f.text_field :title
+      = f.text_field :title, updateslug: 'blog_post_slug', data: {klass: 'Post'}
     
       = f.text_field :slug, prepend: @post.decorate.permalink_prefix, append: ".html", label: "Permalink"
   
@@ -76,6 +77,7 @@
                 = f.submit "Publish", name: 'publish', class: "btn btn-secondary pull-right"
       
       - if @post.website
+      
         .card
           .card-header
             Categories
@@ -83,7 +85,17 @@
               =link_to i('chevron-up'), '#toggle-categories', data: {toggle: 'collapse'}, class: 'text text-primary'
           .card-block.collapse.in.toggle-chevron{id: 'toggle-categories'}
             .div{style: "height: 200px;overflow-y: scroll;"}
-              = f.collection_check_boxes :category_ids, @post.website.categories.order('posts_count desc, name asc'), :id, :name_with_tag, hide_label: true 
+              = f.collection_check_boxes :category_ids, @post.website.categories.order('posts_count desc, name asc'), :id, :name_with_tag, hide_label: true
+              
+        .card
+          .card-header
+            Tags
+            .pull-right.toggle-card
+              =link_to i('chevron-up'), '#toggle-tags', data: {toggle: 'collapse'}, class: 'text text-primary'
+          .card-block.collapse.in.toggle-chevron{id: 'toggle-tags'}
+            .div
+              = f.collection_select :tag_ids, @post.website.tags.order('posts_count desc, name asc'), :id, :name, {hide_label: true}, {multiple: true}
+            
       
       
       .card

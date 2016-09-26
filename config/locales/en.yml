@@ -18,6 +18,7 @@ en:
     all_owners: all owners
     all_statuses: all statuses
     all_states: all states
+    all_tags: all tags
     all_websites: all websites
     filter: filter
     mine: mine
@@ -106,6 +107,7 @@ en:
     blog/pages: Static pages published on our network of websites.
     blog/posts: Posts published on our network of websites.
     blog/taxonomies/categories: Post categories are scoped to a website. 
+    blog/taxonomies/tags: Post tags are scoped to a website. 
     
 # Menu
   menu:
@@ -127,6 +129,8 @@ en:
       add_new: Add new
     blog/taxonomies/categories:
       all: Categories
+    blog/taxonomies/tags:
+      all: Tags
     business:
       all: All Businesses
       add_new: Add new
@@ -154,15 +158,18 @@ en:
       edit: Edit
       
     models:
-      blog/category:
-        one: category
-        other: categories
       blog/page:
         one: page
         other: pages
       blog/post:
         one: post
         other: posts
+      blog/taxonomies/category:
+        one: category
+        other: categories
+      blog/taxonomies/tag:
+        one: tag
+        other: tags
       business:
         one: business
         other: businesses

@@ -5,9 +5,9 @@
   - else 
     - websites = Business::Website.order('url desc')
     = f.select :business_website_id, websites.map{|_| [_.decorate.host, _.id]}, 
-    prompt: "#{t('forms.select')} #{tm('business/website')}..."
+    {prompt: "#{t('forms.select')} #{tm('business/website')}..."}, { updateslug: 'blog_taxonomies_category_slug', data: {klass: 'Taxonomies::Category'} }
 
-  = f.text_field :name
+  = f.text_field :name, updateslug: 'blog_taxonomies_category_slug', data: {klass: 'Taxonomies::Category'}
 
   = f.text_field :slug, prepend: @category.decorate.permalink_prefix, label: "Permalink"
 

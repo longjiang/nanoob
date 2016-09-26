@@ -1,19 +1,19 @@
-class Blog::Taxonomies::CategoriesController < Blog::TaxonomiesController
+class Blog::Taxonomies::TagsController < Blog::TaxonomiesController
   
-  before_action :find_category, except: [:destroy, :show]
+  before_action :find_tag, except: [:destroy, :show]
   
   def index
-    categories
+    tags
   end
   
   def update
     super do |format, updated|
-      categories
+      tags
       if updated 
-        @category = Blog::Taxonomies::Category.new(website: @website)
+        @category = Blog::Taxonomies::Tag.new(website: @website)
         format.js { render 'updated' }
       else
-        @flash_danger = "Category not updated"
+        @flash_danger = "Tag not updated"
         format.js { render 'edit' }
       end
     end
@@ -21,11 +21,11 @@ class Blog::Taxonomies::CategoriesController < Blog::TaxonomiesController
   
   def create
     super do |format, created|
-      categories
+      tags
       if created 
          format.js { render 'created' }
       else
-        @flash_danger = "Category not created"
+        @flash_danger = "Tag not created"
         format.js { render 'new' }
       end
     end
@@ -33,7 +33,7 @@ class Blog::Taxonomies::CategoriesController < Blog::TaxonomiesController
   
   def destroy
     super do |format, destroyed|
-      categories
+      tags
       if destroyed
         format.js { render 'destroyed' }
       else
@@ -46,8 +46,9 @@ class Blog::Taxonomies::CategoriesController < Blog::TaxonomiesController
   
   def show
     # after destroy pagination links to show action 
-    categories
+    tags
   end
+
   
   private
     
@@ -57,35 +58,35 @@ class Blog::Taxonomies::CategoriesController < Blog::TaxonomiesController
     
     @website = if params[:business_website_id].present?
       Business::Website.find_by_id(params[:business_website_id])
-    elsif has_model_params? && params[:blog_taxonomies_category].delete(:hide_website_col)
+    elsif has_model_params? && params[:blog_taxonomies_tag].delete(:hide_website_col)
       Business::Website.find_by_id(model_params[:business_website_id])
     elsif params.delete(:hide_website_col)
-      find_category
-      @category.website
+      find_tag
+      @tag.website
     elsif  action_name.eql?("edit")
       @show_website_col = true
-      find_category
-      @category.website
+      find_tag
+      @tag.website
     end
   end
   
-  def find_category
-    @category = if params[:id].present?
+  def find_tag
+    @tag = if params[:id].present?
       set_entry
     else
-      Blog::Taxonomies::Category.new(website: @website)
+      Blog::Taxonomies::Tag.new(website: @website)
     end
   end
   
-  def categories
+  def tags
     if @website
-      @categories = @website.categories.order(:name)
+      @tags = @website.tags.order(:name)
     else
       entries
-      @categories = @categories.includes(:website)
+      @tags = @tags.includes(:website)
     end 
-    @categories_unpaginated = @categories 
-    @categories = @categories.page(params[:page])
+    @tags_unpaginated = @tags 
+    @tags = @tags.page(params[:page])
   end
   
   
