@@ -31,8 +31,8 @@ Rails.application.routes.draw do
     get '/forms/blog_slug_generator',           to: 'webservice/forms#blog_slug_generator' 
     get '/forms/blog_permalink_prefix',         to: 'webservice/forms#blog_permalink_prefix'
    
-    get '/forms/blog_post_published_at',        to: 'webservice/forms#blog_post_published_at'
-    get '/forms/blog_page_published_at',        to: 'webservice/forms#blog_page_published_at'
+    get '/forms/blog_contents_post_published_at',        to: 'webservice/forms#blog_contents_post_published_at'
+    get '/forms/blog_contents_page_published_at',        to: 'webservice/forms#blog_contents_page_published_at'
   end
   
   root 'welcome#index'

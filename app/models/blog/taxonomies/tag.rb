@@ -1,7 +1,7 @@
 class Blog::Taxonomies::Tag < Blog::Taxonomy
   
   belongs_to :website, class_name: 'Business::Website', foreign_key: :business_website_id, counter_cache: true
-  has_and_belongs_to_many :posts, class_name: 'Blog::Contents::Post',  foreign_key: :blog_taxonomy_id, association_foreign_key: :blog_post_id, after_add: :increment_count, after_remove: :decrement_count
+  has_and_belongs_to_many :posts, class_name: 'Blog::Contents::Post',  foreign_key: :blog_taxonomy_id, association_foreign_key: :blog_content_id, after_add: :increment_count, after_remove: :decrement_count
   
   private
   

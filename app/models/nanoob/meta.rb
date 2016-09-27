@@ -1,5 +1,9 @@
 module Nanoob::Meta extend ActiveSupport::Concern
+  
   included do
+    
+    extend         ClassMethods
+    
     before_save :save_meta
     has_one :metum, as: :metaable, dependent: :destroy
     
@@ -23,4 +27,15 @@ module Nanoob::Meta extend ActiveSupport::Concern
     end
     
   end
+  
+  module ClassMethods
+    
+    def has_meta(*args)
+      args.each do |arg|
+        define_method :"#{arg.to_s}", -> { get_meta(arg) }
+        define_method :"#{arg.to_s}=", -> (val) { set_meta(arg, val) } 
+      end
+    end
+  end
+  
 end

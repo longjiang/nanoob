@@ -1,4 +1,4 @@
-class Blog::Public::TagsController < Blog::Public::PostsController
+class Blog::Public::TagsController < Blog::Public::ContentsController
   
   def index
     @tag = @website.tags.find_by_slug(params[:slug])

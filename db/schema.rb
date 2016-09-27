@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160926235215) do
+ActiveRecord::Schema.define(version: 20160927004845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,13 +33,14 @@ ActiveRecord::Schema.define(version: 20160926235215) do
     t.string   "type"
     t.index ["business_website_id"], name: "index_blog_contents_on_business_website_id", using: :btree
     t.index ["slug"], name: "index_blog_contents_on_slug", using: :btree
+    t.index ["type"], name: "index_blog_contents_on_type", using: :btree
   end
 
-  create_table "blog_posts_taxonomies", id: false, force: :cascade do |t|
+  create_table "blog_contents_taxonomies", id: false, force: :cascade do |t|
     t.integer "blog_taxonomy_id", null: false
-    t.integer "blog_post_id",     null: false
-    t.index ["blog_post_id"], name: "index_blog_posts_taxonomies_on_blog_post_id", using: :btree
-    t.index ["blog_taxonomy_id", "blog_post_id"], name: "index_blog_posts_taxonomies_on_post_id_and_taxonomy_id", unique: true, using: :btree
+    t.integer "blog_content_id",  null: false
+    t.index ["blog_content_id"], name: "index_blog_contents_taxonomies_on_blog_content_id", using: :btree
+    t.index ["blog_taxonomy_id", "blog_content_id"], name: "index_blog_contents_taxonomies_on_content_id_and_taxonomy_id", unique: true, using: :btree
   end
 
   create_table "blog_taxonomies", force: :cascade do |t|
@@ -52,6 +53,7 @@ ActiveRecord::Schema.define(version: 20160926235215) do
     t.datetime "updated_at",                      null: false
     t.string   "type"
     t.index ["business_website_id"], name: "index_blog_taxonomies_on_business_website_id", using: :btree
+    t.index ["type"], name: "index_blog_taxonomies_on_type", using: :btree
   end
 
   create_table "bootsy_image_galleries", force: :cascade do |t|
@@ -83,8 +85,8 @@ ActiveRecord::Schema.define(version: 20160926235215) do
     t.integer  "categories_count", default: 0
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
-    t.integer  "tags_count"
-    t.integer  "pages_count"
+    t.integer  "tags_count",       default: 0
+    t.integer  "pages_count",      default: 0
     t.index ["business_id"], name: "index_business_websites_on_business_id", using: :btree
   end
 
@@ -200,7 +202,7 @@ ActiveRecord::Schema.define(version: 20160926235215) do
     t.integer  "posts_count",            default: 0
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.integer  "pages_count"
+    t.integer  "pages_count",            default: 0
     t.index ["email"], name: "index_people_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
     t.index ["username"], name: "index_people_on_username", unique: true, using: :btree

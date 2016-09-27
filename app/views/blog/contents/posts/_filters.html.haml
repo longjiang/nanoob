@@ -1,4 +1,4 @@
-/ views/blog/posts/_filters.html.haml
+/ views/blog/contents/posts/_filters.html.haml
 
 .filters
 
@@ -6,12 +6,12 @@
   
     %li.list-inline-item
 
-      - if params.slice(*Blog::PostsController.filtering_params).blank?
+      - if params.slice(*Blog::Contents::PostsController.filtering_params).blank?
         %span.text-primary= th 'forms.all'
       - else
-        = link_to blog_posts_path do
+        = link_to blog_contents_posts_path do
           = th 'forms.all'
-          %span.tag.tag-default= Blog::Post.count
+          %span.tag.tag-default= Blog::Contents::Post.count
           
     %li.list-inline-item
     
@@ -55,16 +55,16 @@
       - if filter[:count]>0 || filter[:filter]
         %li.list-inline-item
           - unless filter[:cond]
-            %span.text-primary= hen 'blog/post', :status, filter[:value]
+            %span.text-primary= hen 'blog/contents/post', :status, filter[:value]
             = link_to filtered_entries_path(status: nil, published_after: nil, published_before: nil) do
               = i 'times-circle-o'
           - else
             = link_to filtered_entries_path(filter[:path_cond]) do
-              = hen 'blog/post', :status, filter[:value]
+              = hen 'blog/contents/post', :status, filter[:value]
             %span.tag.tag-default= filter[:count]
 
 
-  = bootstrap_form_tag url: blog_posts_path, method: :get, layout: :inline do |f|
+  = bootstrap_form_tag url: blog_contents_posts_path, method: :get, layout: :inline do |f|
     = f.hidden_field :owner, value: params[:owner]        unless params[:owner].blank?
     = f.hidden_field :recent, value: params[:recent]       unless params[:recent].blank?
     = f.hidden_field :status, value: params[:status]       unless params[:status].blank?
@@ -103,6 +103,6 @@
         include_blank: th('forms.all_tags'),
         hide_label: true
       
-    = f.text_field :title_contains, value: params[:title_contains], hide_label: true, class: 'form-control-sms', placeholder: han('blog/post', :title)
+    = f.text_field :title_contains, value: params[:title_contains], hide_label: true, class: 'form-control-sms', placeholder: han('blog/contents/post', :title)
     
     = f.submit th('forms.filter')

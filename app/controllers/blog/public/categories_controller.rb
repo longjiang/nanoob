@@ -1,4 +1,4 @@
-class Blog::Public::CategoriesController < Blog::Public::PostsController
+class Blog::Public::CategoriesController < Blog::Public::ContentsController
   
   def index
     @category = @website.categories.find_by_slug(params[:slug])

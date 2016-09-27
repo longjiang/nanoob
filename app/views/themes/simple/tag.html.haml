@@ -1,6 +1,9 @@
 .container
   .row
     .col-lg-8.offset-lg-2.col-md-10.offset-md-1
+      %h1="Archives pour: #{@tag.decorate.name}"
+  .row
+    .col-lg-8.offset-lg-2.col-md-10.offset-md-1
       - @posts.each do |post|
         .post-preview
           = link_to post_path(slug: post.slug, year: post.year, month: post.month) do
@@ -13,7 +16,3 @@
   .row
     .col-lg-8.offset-lg-2.col-md-10.offset-md-1
       = paginate @posts
-      
-  .row
-    .col-lg-8.offset-lg-2.col-md-10.offset-md-1
-      = render 'blog/public/widgets/archives'

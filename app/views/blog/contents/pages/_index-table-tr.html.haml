@@ -13,13 +13,10 @@
   - if params[:owner].blank?
     %td.text-nowrap= page.decorate.owner_username
   
-  %td.text-nowrap=  page.decorate.categories(params)
-  %td -
   %td.text-nowrap
     %span{class: "text-#{page.decorate.status_color}"}
       = i page.decorate.status_icon
       = page.decorate.status_with_date
-  %td= page.comments_count
   %td.text-nowrap
     %span{class: "text-#{page.decorate.seo_score_color}"}
       = i 'circle'

@@ -16,9 +16,9 @@
         - websites = Business::Website.order('url desc')
         = f.select :business_website_id, websites.map{|_| [_.decorate.host, _.id]}, 
        { prompt: "#{t('forms.select')} #{tm('business/website')}..."},
-       { updateslug: 'blog_page_slug', data: {klass: 'Page'} }
+       { updateslug: 'blog_contents_page_slug', data: {klass: 'Contents::Page'} }
 
-      = f.text_field :title, updateslug: 'blog_page_slug', data: {klass: 'Page'}
+      = f.text_field :title, updateslug: 'blog_contents_page_slug', data: {klass: 'Contents::Page'}
     
       = f.text_field :slug, prepend: @page.decorate.permalink_prefix, append: ".html", label: "Permalink"
   

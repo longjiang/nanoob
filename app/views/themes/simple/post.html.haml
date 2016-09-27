@@ -1,0 +1,15 @@
+%h1= @post.title
+
+= @post.body.html_safe
+
+.categories
+  - if @post.categories.any?
+    Categories : 
+    - @post.categories.each do |c|
+      = link_to c.name, category_path(slug: c.slug)
+      
+.tags
+  - if @post.tags.any?
+    Tags : 
+    - @post.tags.each do |t|
+      = link_to t.name, tag_path(slug: t.slug)

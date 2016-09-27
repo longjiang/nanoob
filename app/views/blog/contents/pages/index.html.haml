@@ -1,15 +1,15 @@
-/ views/blog/pages/index.html.haml
+/ views/blog/contents/pages/index.html.haml
 
 - unless @website.nil?
   - add_breadcrumb @website.business.decorate.name
   - add_breadcrumb @website.decorate.host
   
 - content_for :page_title do
-  = i Blog::Post.decorator_class.icon
-  = tmp 'blog/page'
+  = i Blog::Contents::Post.decorator_class.icon
+  = tmp 'blog/contents/page'
   %span.tag.tag-info= @pages_unpaginated.count
   
-%p= t 'descriptions.blog/pages'
+%p= t 'descriptions.blog/contents/pages'
 
 #pagination.pull-right.hidden-xs-down
   = paginate @pages, remote: true
@@ -31,7 +31,7 @@
         
         %th.text-nowrap
           = link_to sorted_entries_path(title: asc?(:title) ? :desc : :asc) do
-            = han 'blog/page', :title
+            = han 'blog/contents/page', :title
           - unless params[:sort_by_title].blank?
             = i 'sort-alpha-asc' if asc? :title
             = i 'sort-alpha-desc' if desc? :title
@@ -43,15 +43,12 @@
           %th.text-nowrap.text-xs-center.text-sm-left
             = i People::User.decorator_class.icon
             %span.hidden-xs-down
-              = han 'blog/page', :owner
-        
-        %th.text-nowrap= han 'blog/page', :categories
-        %th.text-nowrap Tags
+              = han 'blog/contents/page', :owner
         
         
         %th.text-nowrap
           = link_to sorted_entries_path(status_date: asc?(:status_date) ? :desc : :asc) do
-            = han 'blog/page', :status
+            = han 'blog/contents/page', :status
           - unless params[:sort_by_status_date].blank?
             = i 'sort-alpha-asc' if asc? :status_date
             = i 'sort-alpha-desc' if desc? :status_date
@@ -59,8 +56,6 @@
             = link_to filtered_entries_path(status: nil, published_after: nil, published_before: nil) do
               %i.fa.fa-filter.text-primary
         
-        
-        %th.text-nowrap= i 'comment-o'
         %th.text-nowrap SEO
         %th.text-nowrap
         

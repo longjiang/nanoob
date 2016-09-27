@@ -226,6 +226,9 @@ en:
         platform: Platform
         url: Url
         host: Host
+        title: Title
+        baseline: Baseline
+        owner: Owner
       partner:
         title: Title
         category: Category

@@ -13,4 +13,14 @@
   
   = f.url_field :url, placeholder: 'https://'
   
+  = f.text_field :title
+  
+  = f.text_field :baseline
+  
+  = f.select :owner_id, People::User.all.map{|p| [p.username, p.id]}, prompt: "#{t('forms.select')} #{han('business/website', :owner).downcase}..."
+  
+  = f.select :author_id, People::Author.all.map{|p| [p.username, p.id]}, prompt: "#{t('forms.select')} #{han('business/website', :owner).downcase}..."
+  
+  = f.select :theme, Business::Website::THEMES, prompt: "#{t('forms.select')} #{han('business/website', :theme).downcase}..."
+  
   = f.primary

@@ -30,8 +30,8 @@ document.addEventListener 'turbolinks:load', ->
   $('#partner_request_partner_id').select2 theme: "bootstrap" if $('#partner_request_partner_id').is('select')
   $('#partner_backlink_partner_id').select2 theme: "bootstrap" if $('#partner_backlink_partner_id').is('select')
   $('#partner_backlink_partner_request_id').select2 theme: "bootstrap" if $('#partner_backlink_partner_request_id').is('select')
-  if $('#blog_post_tag_ids').is('select')
-    $('#blog_post_tag_ids').select2 
+  if $('#blog_contents_post_tag_ids').is('select')
+    $('#blog_contents_post_tag_ids').select2 
       theme: "bootstrap" 
       tags: true
   
@@ -66,16 +66,16 @@ document.addEventListener 'turbolinks:load', ->
       $('#show_published_at_select').show()
   
   
-  $('.edit_blog_post #update_published_at_select, .new_blog_post #update_published_at_select').click (event) -> 
+  $('.edit_blog_contents_post #update_published_at_select, .new_blog_contents_post #update_published_at_select').click (event) -> 
     event.preventDefault() 
-    $('#blog_post_publish_now').val(false)
+    $('#blog_contents_post_publish_now').val(false)
     $('#show_published_at_select').hide()
     $('#published_at_select').hide()
     $('.published_at_value').html loading_placeholder()
     attrs = []
     for i in [1..5]
-      attrs.push $('#blog_post_published_at_' + i + 'i').val()
-    $.get("/ws/forms/blog_post_published_at", date: attrs.join(','), time_zone: 'Beijing').done (data) ->
+      attrs.push $('#blog_contents_post_published_at_' + i + 'i').val()
+    $.get("/ws/forms/blog_contents_post_published_at", date: attrs.join(','), time_zone: 'Beijing').done (data) ->
       $('.published_at_value').text(data.date)
       $('#show_published_at_select').show()
     

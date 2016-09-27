@@ -3,7 +3,6 @@ class Blog::Contents::PagesController < Blog::ContentsController
   def index
     super
     @pages = @pages.includes(:owner).includes(:metum)
-    @pages = @pages.includes(:categories) unless params[:category_id]
     @pages = @pages.includes(:website) unless @website
     @pages_unpaginated = @pages
     @pages = @pages.page(params[:page])
@@ -14,13 +13,13 @@ class Blog::Contents::PagesController < Blog::ContentsController
   private
   
   def update_bodies
-    p = params[:blog_page]
+    p = params[:blog_contents_page]
     p[:body]    = p[:body_xs] unless p[:body_xs].eql?(p.delete(:body_xs_was))
     p[:body_xs] = p[:body]    unless p[:body].eql?(p.delete(:body_was)) 
   end
   
   def nilify_published_at
-    (1..5).each {|i| params[:blog_page].delete("published_at(#{i}i)")} if params[:blog_page].delete(:publish_now)
+    (1..5).each {|i| params[:blog_contents_page].delete("published_at(#{i}i)")} if params[:blog_contents_page].delete(:publish_now)
   end
   
   def add_menu_items

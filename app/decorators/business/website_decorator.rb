@@ -14,6 +14,10 @@ class Business::WebsiteDecorator < ApplicationRecordDecorator
     object.platform.try(:humanize)
   end
   
+  def title
+    object.title.blank? ? object.business.name : object.title
+  end
+  
   def self.icon
     'globe'
   end

@@ -1,4 +1,4 @@
-class Blog::Public::SearchController < Blog::Public::PostsController
+class Blog::Public::SearchController < Blog::Public::ContentsController
   
   def index
     @keywords = params[:keywords]

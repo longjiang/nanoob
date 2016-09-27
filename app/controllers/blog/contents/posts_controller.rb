@@ -15,13 +15,13 @@ class Blog::Contents::PostsController < Blog::ContentsController
   private
   
   def update_bodies
-    p = params[:blog_post]
+    p = params[:blog_contents_post]
     p[:body]    = p[:body_xs] unless p[:body_xs].eql?(p.delete(:body_xs_was))
     p[:body_xs] = p[:body]    unless p[:body].eql?(p.delete(:body_was)) 
   end
   
   def nilify_published_at
-    (1..5).each {|i| params[:blog_post].delete("published_at(#{i}i)")} if params[:blog_post].delete(:publish_now)
+    (1..5).each {|i| params[:blog_contents_post].delete("published_at(#{i}i)")} if params[:blog_contents_post].delete(:publish_now)
   end
   
   def add_menu_items

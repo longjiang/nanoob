@@ -1,6 +1,6 @@
 class Business::WebsitesController < CrudController
   
-  self.permitted_attrs = [:platform, :url, :business_id]
+  self.permitted_attrs = [:platform, :url, :business_id, :title, :baseline, :theme, :owner]
   
   before_action :find_business
   before_action :add_breadcrumbs

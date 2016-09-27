@@ -87,16 +87,18 @@ module ContentsConcern
   end
   
   def create_tags
-    tag_ids = []
-    model_params['tag_ids'].each do |tag_id|
-      if tag_id.to_i.to_s.eql?(tag_id)
-        tag_ids << tag_id
-      else
-        tag = @website.tags.create(name: tag_id)
-        tag_ids << tag.id
+    if model_params['tag_ids']
+      tag_ids = []
+      model_params['tag_ids'].each do |tag_id|
+        if tag_id.to_i.to_s.eql?(tag_id)
+          tag_ids << tag_id
+        else
+          tag = @website.tags.create(name: tag_id)
+          tag_ids << tag.id
+        end
       end
+      params['blog_contents_post']['tag_ids'] = tag_ids
     end
-    params['blog_post']['tag_ids'] = tag_ids
   end
 
   
