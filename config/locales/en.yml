@@ -104,27 +104,28 @@ en:
     partners: This is the list of our partners who may publish backlinks to our websites.
     partner/requests: List of partnership requests we made to our partners. 
     partner/backlinks: List of actual backlinks published (active or not).
-    blog/pages: Static pages published on our network of websites.
-    blog/posts: Posts published on our network of websites.
+    blog/contents/pages: Static pages published on our network of websites.
+    blog/contents/posts: Posts published on our network of websites.
     blog/taxonomies/categories: Post categories are scoped to a website. 
     blog/taxonomies/tags: Post tags are scoped to a website. 
     
 # Menu
   menu:
     
-    blog/pages: Pages
-    blog/posts: Posts
+    blog/contents/pages: Pages
+    blog/contents/posts: Posts
     blog/taxonomies/categories : Categories
+    blog/taxonomies/tags : Tags
     businesses: Businesses
     business/websites: Websites
     partners: Partners
     partner/requests: Requests
     partner/backlinks: Backlinks
     
-    blog/page:
+    blog/contents/page:
       all: All Pages
       add_new: Add new
-    blog/post:
+    blog/contents/post:
       all: All Posts
       add_new: Add new
     blog/taxonomies/categories:
@@ -158,10 +159,10 @@ en:
       edit: Edit
       
     models:
-      blog/page:
+      blog/contents/page:
         one: page
         other: pages
-      blog/post:
+      blog/contents/post:
         one: post
         other: posts
       blog/taxonomies/category:
@@ -190,7 +191,7 @@ en:
         other: Users
       
     attributes:
-      blog/page:
+      blog/contents/page:
         categories: Categories
         featured_image: Featured Image
         status: Status
@@ -203,7 +204,7 @@ en:
             draft: Last updated
             published: Published
             scheduled: Scheduled
-      blog/post:
+      blog/contents/post:
         categories: Categories
         featured_image: Featured Image
         status: Status

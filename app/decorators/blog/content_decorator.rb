@@ -1,4 +1,4 @@
-class Blog::PostDecorator < ApplicationRecordDecorator
+class Blog::ContentDecorator < ApplicationRecordDecorator
   delegate_all
 
   SEO_SCORE_COLOR_OPTIONS = {default: 'muted', ok: 'success', ko: 'danger'}
@@ -34,7 +34,7 @@ class Blog::PostDecorator < ApplicationRecordDecorator
     else
       object.updated_at
     end
-    "#{h.t(status, scope: 'activerecord.attributes.blog/post.decorator.statuses')} #{time_ago_in_words_or_date date}"
+    "#{h.t(status, scope: 'activerecord.attributes.blog/contents/post.decorator.statuses')} #{time_ago_in_words_or_date date}"
   end
   
   def status
@@ -69,20 +69,10 @@ class Blog::PostDecorator < ApplicationRecordDecorator
     "has-error" if object.errors && object.errors[:body_xs].present?
   end
   
-  def permalink_prefix
-    if object.website.present?
-      "#{object.website.url}/#{object.year}/#{object.month}/"
-    else
-      ""
-    end
-  end
-  
   def public_url
     "#{permalink_prefix}#{object.slug}"
   end
   
-  def self.icon
-    'thumb-tack'
-  end
+
 
 end

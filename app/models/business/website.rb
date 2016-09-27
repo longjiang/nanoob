@@ -15,7 +15,7 @@ class Business::Website < ApplicationRecord
   
   belongs_to  :business    , counter_cache: true
   has_many    :backlinks   , class_name: 'Partner::Backlink', foreign_key: :business_website_id
-  has_many    :posts       , class_name: 'Blog::Post', foreign_key: :business_website_id
+  has_many    :posts       , class_name: 'Blog::Contents::Post', foreign_key: :business_website_id
   has_many    :categories  , class_name: 'Blog::Taxonomies::Category', foreign_key: :business_website_id
   has_many    :tags        , class_name: 'Blog::Taxonomies::Tag', foreign_key: :business_website_id
   

@@ -9,7 +9,7 @@
     %td.text-nowrap= link_to post.website.decorate.host, filtered_entries_path(business_website_id: post.website.id)
   
   %td.text-nowrap
-    = link_to post.decorate.title, edit_blog_post_path(post)
+    = link_to post.decorate.title, edit_blog_contents_post_path(post)
     = link_to post.decorate.public_url do
       = i 'external-link'
   

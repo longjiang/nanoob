@@ -1,4 +1,4 @@
-class Blog::PageDecorator < Blog::PostDecorator
+class Blog::Contents::PageDecorator < Blog::ContentDecorator
   
   def permalink_prefix
     if object.website.present?

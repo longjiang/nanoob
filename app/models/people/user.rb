@@ -60,7 +60,7 @@ class People::User < Person
   
   def set_website
     unless website_manual || website_updated_at > 5.days.ago
-      website = Blog::Post.where(owner_id: id).where('created_at > ?', 10.days.ago).group(:business_website_id).count.sort_by{|id, count| count}
+      website = Blog::Contents::Post.where(owner_id: id).where('created_at > ?', 10.days.ago).group(:business_website_id).count.sort_by{|id, count| count}
       unless website.blank?
         self.website_id = website.try(:last).try(:first)
         self.website_updated_at

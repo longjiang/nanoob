@@ -7,7 +7,7 @@
     = link_to tag.decorate.public_url do
       = i 'external-link'
   %td
-    = link_to tag.posts.size, blog_posts_path(tag_id: tag.id)
+    = link_to tag.posts.size, blog_contents_posts_path(tag_id: tag.id)
     
   %td
     - if tag.posts.size.eql?(0)

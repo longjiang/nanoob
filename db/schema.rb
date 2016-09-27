@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160926131542) do
+ActiveRecord::Schema.define(version: 20160926235215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "blog_posts", force: :cascade do |t|
+  create_table "blog_contents", force: :cascade do |t|
     t.integer  "business_website_id"
     t.integer  "owner_id"
     t.integer  "editor_id"
@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 20160926131542) do
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.string   "type"
-    t.index ["business_website_id"], name: "index_blog_posts_on_business_website_id", using: :btree
-    t.index ["slug"], name: "index_blog_posts_on_slug", using: :btree
+    t.index ["business_website_id"], name: "index_blog_contents_on_business_website_id", using: :btree
+    t.index ["slug"], name: "index_blog_contents_on_slug", using: :btree
   end
 
   create_table "blog_posts_taxonomies", id: false, force: :cascade do |t|
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(version: 20160926131542) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.integer  "tags_count"
+    t.integer  "pages_count"
     t.index ["business_id"], name: "index_business_websites_on_business_id", using: :btree
   end
 
@@ -199,15 +200,16 @@ ActiveRecord::Schema.define(version: 20160926131542) do
     t.integer  "posts_count",            default: 0
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "pages_count"
     t.index ["email"], name: "index_people_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
     t.index ["username"], name: "index_people_on_username", unique: true, using: :btree
   end
 
-  add_foreign_key "blog_posts", "business_websites"
-  add_foreign_key "blog_posts", "people", column: "editor_id"
-  add_foreign_key "blog_posts", "people", column: "owner_id"
-  add_foreign_key "blog_posts", "people", column: "writer_id"
+  add_foreign_key "blog_contents", "business_websites"
+  add_foreign_key "blog_contents", "people", column: "editor_id"
+  add_foreign_key "blog_contents", "people", column: "owner_id"
+  add_foreign_key "blog_contents", "people", column: "writer_id"
   add_foreign_key "blog_taxonomies", "blog_taxonomies", column: "parent_id"
   add_foreign_key "blog_taxonomies", "business_websites"
   add_foreign_key "business_websites", "businesses"

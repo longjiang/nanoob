@@ -13,7 +13,7 @@ class Blog::Public::PostsController < Blog::Public::ApplicationController
   end
   
   def show
-    @post = Blog::Post.website(@website).find_by_slug!(params[:slug])
+    @post = Blog::Contents::Post.website(@website).find_by_slug!(params[:slug])
     render template: "themes/simple/show"
   end
 

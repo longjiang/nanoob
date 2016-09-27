@@ -1,4 +1,4 @@
-module PostsConcern
+module ContentsConcern
   extend ActiveSupport::Concern
 
   included do

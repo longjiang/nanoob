@@ -23,8 +23,8 @@
           %span.hidden-md-down= tmp 'partner/backlink'
           
         %th.text-nowrap.text-xs-center.text-lg-left
-          = i Blog::Post.decorator_class.icon
-          %span.hidden-md-down= tmp 'blog/post'
+          = i Blog::Contents::Post.decorator_class.icon
+          %span.hidden-md-down= tmp 'blog/contents/post'
           
         %th.text-nowrap.text-xs-center.text-lg-left
           = i Blog::Taxonomies::Category.decorator_class.icon
@@ -54,8 +54,8 @@
               %span.hidden-md-down= t 'activerecord.actions.new'
               
           %td.text-nowrap.text-xs-center.text-lg-left
-            %span.tag.tag-default= link_to website.posts.size, blog_posts_path(business_website_id: website.id)
-            = link_to new_blog_post_path(business_website_id: website.id), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
+            %span.tag.tag-default= link_to website.posts.size, blog_contents_posts_path(business_website_id: website.id)
+            = link_to new_blog_contents_post_path(business_website_id: website.id), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
               = i 'plus'
               %span.hidden-md-down= t 'activerecord.actions.new'
               

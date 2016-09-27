@@ -15,12 +15,12 @@ class Webservice::FormsController < ApplicationController
   
   def blog_page_published_at
     year,month,day,hour,minute = params[:date].split(',').map{|i| i.to_i}
-    render json: {"date": Blog::Page.new(published_at: Time.new(year,month,day,hour,minute)).decorate.published_at}
+    render json: {"date": Blog::Contents::Page.new(published_at: Time.new(year,month,day,hour,minute)).decorate.published_at}
   end
   
   def blog_post_published_at
     year,month,day,hour,minute = params[:date].split(',').map{|i| i.to_i}
-    render json: {"date": Blog::Post.new(published_at: Time.new(year,month,day,hour,minute)).decorate.published_at}
+    render json: {"date": Blog::Contents::Post.new(published_at: Time.new(year,month,day,hour,minute)).decorate.published_at}
   end
   
   private

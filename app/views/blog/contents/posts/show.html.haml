@@ -1,6 +1,6 @@
-= link_to  "EDIT", edit_blog_page_path(@page)
+= link_to  "EDIT", edit_blog_contents_post_path(@post)
 
-%h2= @page.title
+%h2= @post.title
 
 %ul.nav.nav-tabs{role: "tablist"}
   %li.nav-item
@@ -10,8 +10,8 @@
     
 .tab-content{style: "height:300px; overflow-y: scroll; padding: 10px"}
   #body-html.tab-pane.fade.in.active{role: "tabpanel"}
-    = @page.body.html_safe
+    = @post.body.html_safe
   #body-text.tab-pane.fade{role: "tabpanel"}
-    = @page.body
+    = @post.body
 
-= image_tag attachment_url(@page, :featured_image, :fill, 200, 200) if @page.featured_image_id?
+= image_tag attachment_url(@post, :featured_image, :fill, 200, 200) if @post.featured_image_id?

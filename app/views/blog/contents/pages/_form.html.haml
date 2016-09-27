@@ -1,4 +1,4 @@
-/ views/blog/pages/_form.html.haml
+/ views/blog/contents/pages/_form.html.haml
 
 = bootstrap_form_for(@page) do |f|
 
@@ -29,7 +29,7 @@
       .hidden-sm-up= f.text_area :body_xs, placeholder: "Body"
   
       %fieldset.form-group.bootsy.hidden-xs-down{class: @page.decorate.body_xs_if_error_class }
-        %label.control-label{for: :partner_request_body}= han('blog/page', :body)
+        %label.control-label{for: :partner_request_body}= han('blog/contents/page', :body)
         = f.bootsy_area :body, class: 'form-control', placeholder: "Body"
         %span.help-block= @page.decorate.errors[:body_xs].join(', ') if @page.decorate.has_errors(:body_xs)
   
@@ -43,13 +43,13 @@
         .collapse.in.toggle-chevron{id: 'toggle-status'}
           .card-block
             %p
-              = han('blog/page', :status) 
+              = han('blog/contents/page', :status) 
               \:
               %span{class: "text-#{@page.decorate.status_color}"}
                 = i @page.decorate.status_icon
                 = @page.decorate.status
             %p
-              = han('blog/page', :publication)
+              = han('blog/contents/page', :publication)
               \:
               %span.published_at_value
                 - if @page.published_at

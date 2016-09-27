@@ -1,4 +1,4 @@
-class Blog::Post < ApplicationRecord
+class Blog::Content < ApplicationRecord
   
   include Nanoob::Meta
   #include Bootsy::Container
@@ -16,12 +16,7 @@ class Blog::Post < ApplicationRecord
   validates   :slug,          presence: true
   validates   :slug,          uniqueness:  { scope: :business_website_id }
   #validates_format_of :slug, :without => /^\d/
-  
-  belongs_to :website,  class_name: 'Business::Website', foreign_key: :business_website_id, counter_cache: true
-  belongs_to :owner,    class_name: 'People::User',  foreign_key: :owner_id, counter_cache: true
-  has_and_belongs_to_many :categories,  class_name: 'Blog::Taxonomies::Category',   foreign_key: :blog_post_id, association_foreign_key: :blog_taxonomy_id , after_add: :increment_category_count, after_remove: :decrement_category_count
-  has_and_belongs_to_many :tags,        class_name: 'Blog::Taxonomies::Tag',        foreign_key: :blog_post_id, association_foreign_key: :blog_taxonomy_id , after_add: :increment_tag_count, after_remove: :decrement_tag_count
-  
+    
   scope :owner,           -> (staff)      { where owner: staff.to_i }
   scope :recent,          -> (days)       { where("#{self.table_name}.updated_at > ? ", days.to_i.days.ago) }
   scope :business_website_id,    -> (id)  { where business_website_id: id }
@@ -131,6 +126,7 @@ class Blog::Post < ApplicationRecord
     end
     slug
   end
+  
   
   
 end
