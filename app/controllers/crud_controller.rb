@@ -9,8 +9,9 @@ class CrudController < ApplicationController
   self.sortable_attrs = []
   
   before_action :entry, only: [:show, :new, :edit, :update, :destroy]
+  before_action :authorize
   before_action :decorate_entry, only: [:show]
-  
+
   def index
     entries
   end
@@ -176,6 +177,20 @@ class CrudController < ApplicationController
   def error_messages
     escaped = entry.errors.full_messages.map { |m| ERB::Util.html_escape(m) }
     escaped.join('<br/>').html_safe
+  end
+  
+  def authorize
+    action = action_name.to_sym
+    action = :list if action.eql?(:index)
+    action = :read if action.eql?(:show)
+    action = :create if action.eql?(:new)
+    action = :update if action.eql?(:edit)
+    action = :delete if action.eql?(:destroy)
+    if entry=get_entry
+      authorize! action, entry
+    else
+      authorize! action, model_class
+    end
   end
 
 end

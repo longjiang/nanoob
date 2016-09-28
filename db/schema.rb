@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160927004845) do
+ActiveRecord::Schema.define(version: 20160927090915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20160927004845) do
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.string   "type"
+    t.integer  "optimizer_id"
     t.index ["business_website_id"], name: "index_blog_contents_on_business_website_id", using: :btree
     t.index ["slug"], name: "index_blog_contents_on_slug", using: :btree
     t.index ["type"], name: "index_blog_contents_on_type", using: :btree
@@ -203,6 +204,9 @@ ActiveRecord::Schema.define(version: 20160927004845) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.integer  "pages_count",            default: 0
+    t.integer  "edited_posts_count",     default: 0
+    t.integer  "written_posts_count",    default: 0
+    t.integer  "optimized_posts_count",  default: 0
     t.index ["email"], name: "index_people_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
     t.index ["username"], name: "index_people_on_username", unique: true, using: :btree

@@ -1,10 +1,10 @@
-class People::UserDecorator < PeopleDecorator
+class People::AuthorDecorator < PeopleDecorator
   
   def name
     object.username.humanize
   end
   
   def self.icon
-    'user'
+    'paw'
   end
 end

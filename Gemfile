@@ -62,6 +62,9 @@ gem 'php-serialize'
 # Authentication
 gem 'devise'
 
+# Authorization
+gem 'access-granted', '~> 1.1.0'
+
 # activerecord
 gem "validate_url"
 #gem "mysql2"

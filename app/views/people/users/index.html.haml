@@ -1,0 +1,64 @@
+/ views/people/users/index.html.haml
+
+- content_for :page_title do
+  = i People::User.decorator_class.icon
+  = tmp 'people/user'
+  
+%p= t 'descriptions.people/users'
+
+.table-responsive
+  %table.table.table-sm.table-hover
+    %thead.thead-default
+      %tr
+        %th.text-nowrap.text-xs-center #
+        
+        %th.text-nowrap Username
+        
+        %th.text-nowrap.text-xs-center.text-lg-left
+          = i Partner::Request.decorator_class.icon
+          %span.hidden-md-down= tmp 'partner/request'
+          
+        %th.text-nowrap.text-xs-center.text-lg-left
+          = i Partner::Request.decorator_class.icon
+          %span.hidden-md-down= tmp 'partner/request'
+        
+        %th.text-nowrap.text-xs-center.text-lg-left
+          = i Partner::Backlink.decorator_class.icon
+          %span.hidden-md-down= tmp 'partner/backlink'
+          
+        %th.text-nowrap.text-xs-center.text-lg-left
+          = i Partner.decorator_class.icon
+          %span.hidden-md-down= tmp 'partner'
+          
+        %th.text-nowrap.text-xs-center.text-lg-left
+          = i Blog::Contents::Post.decorator_class.icon
+          %span.hidden-md-down= tmp 'blog/contents/post'
+          
+        %th.text-nowrap.text-xs-center.text-lg-left
+          = i Blog::Contents::Post.decorator_class.icon
+          %span.hidden-md-down= tmp 'blog/contents/page'
+          
+        %th.text-nowrap 
+    
+    %tbody
+      - @users.each do |user|
+      
+        %tr
+          %th.text-nowrap.text-xs-center{scope: "row"}= user.id
+          
+          %td.text-nowrap= user.decorate.name
+          
+          %td.text-nowrap= user.requests.size
+          
+          %td.text-nowrap= user.updated_requests.size
+          
+          %td.text-nowrap= user.backlinks.size
+          
+          %td.text-nowrap= user.partners.size
+          
+          %td.text-nowrap= user.posts.size
+          
+          %td.text-nowrap= user.pages.size
+          
+          %td.text-nowrap            
+            = render partial: 'shared/form_actions', locals: {object: user}

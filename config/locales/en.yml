@@ -104,6 +104,8 @@ en:
     partners: This is the list of our partners who may publish backlinks to our websites.
     partner/requests: List of partnership requests we made to our partners. 
     partner/backlinks: List of actual backlinks published (active or not).
+    people/users: List of people with access to back office.
+    people/authors: List of virtual people who signed the posts.
     blog/contents/pages: Static pages published on our network of websites.
     blog/contents/posts: Posts published on our network of websites.
     blog/taxonomies/categories: Post categories are scoped to a website. 
@@ -118,6 +120,8 @@ en:
     blog/taxonomies/tags : Tags
     businesses: Businesses
     business/websites: Websites
+    people: People
+    people/users: Users
     partners: Partners
     partner/requests: Requests
     partner/backlinks: Backlinks
@@ -140,6 +144,12 @@ en:
       add_new: Add new
     blog/post:
       all: All posts
+      add_new: Add new
+    people/author:
+      all: Authors
+      add_new: Add new
+    people/user:
+      all: All Users
       add_new: Add new
     partner:
       all: All Partners
@@ -177,6 +187,12 @@ en:
       business/website: 
         one: website
         other: websites
+      people/author:
+        one: author
+        other: authors
+      people/user:
+        one: user
+        other: users
       partner:
         one: partner
         other: partners

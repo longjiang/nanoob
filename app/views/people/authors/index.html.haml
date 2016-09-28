@@ -1,0 +1,28 @@
+/ views/people/authors/index.html.haml
+
+- content_for :page_title do
+  = i People::Author.decorator_class.icon
+  = tmp 'people/author'
+  
+%p= t 'descriptions.people/authors'
+
+.table-responsive
+  %table.table.table-sm.table-hover
+    %thead.thead-default
+      %tr
+        %th.text-nowrap.text-xs-center #
+        
+        %th.text-nowrap Username
+          
+        %th.text-nowrap 
+    
+    %tbody
+      - @authors.each do |author|
+      
+        %tr
+          %th.text-nowrap.text-xs-center{scope: "row"}= author.id
+          
+          %td.text-nowrap= author.decorate.name
+          
+          %td.text-nowrap            
+            = render partial: 'shared/form_actions', locals: {object: author}

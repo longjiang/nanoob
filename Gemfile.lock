@@ -69,6 +69,7 @@ GEM
   remote: https://rails-assets.org/
   specs:
     aasm (4.11.1)
+    access-granted (1.1.0)
     actioncable (5.0.0.1)
       actionpack (= 5.0.0.1)
       nio4r (~> 1.2)
@@ -246,7 +247,7 @@ GEM
     mimemagic (0.3.2)
     mini_magick (4.5.1)
     mini_portile2 (2.1.0)
-    minitest (5.9.0)
+    minitest (5.9.1)
     mono_logger (1.1.0)
     multi_json (1.12.1)
     mustermann (1.0.0.beta2)
@@ -423,6 +424,7 @@ PLATFORMS
 
 DEPENDENCIES
   aasm
+  access-granted (~> 1.1.0)
   bootstrap (~> 4.0.0.alpha3.1)
   bootstrap_form!
   bootsy!

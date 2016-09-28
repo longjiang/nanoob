@@ -78,6 +78,20 @@ nbRequests = 900
   People::User.create!(username: "user#{i}", email: "user#{i}@example.com", password: 'secret', password_confirmation: 'secret')
 end
 
+People::User.create!(username: 'writer1', email: 'writer1@example.com', password: 'secret')
+People::User.create!(username: 'writer2', email: 'writer2@example.com', password: 'secret')
+People::User.create!(username: 'writer3', email: 'writer3@example.com', password: 'secret')
+People::User.create!(username: 'editor1', email: 'editor1@example.com', password: 'secret')
+People::User.create!(username: 'editor2', email: 'editor2@example.com', password: 'secret')
+People::User.create!(username: 'editor3', email: 'editor3@example.com', password: 'secret')
+People::User.create!(username: 'owner1', email: 'owner1@example.com', password: 'secret')
+People::User.create!(username: 'owner2', email: 'owner2@example.com', password: 'secret')
+People::User.create!(username: 'owner3', email: 'owner3@example.com', password: 'secret')
+People::User.create!(username: 'optimizer1', email: 'optimizer1@example.com', password: 'secret')
+People::User.create!(username: 'optimizer2', email: 'optimizer2@example.com', password: 'secret')
+People::User.create!(username: 'optimizer3', email: 'optimizer3@example.com', password: 'secret')
+
+
 (1..nbPartners).each do |i|
   date = Faker::Time.between(DateTime.now - 60, DateTime.now - 10)
   p = Partner.new(title: Faker::Hipster.words(rand(3)+1).join(' ').humanize, 

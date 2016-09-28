@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
   include Breadcrumbs::ActionController
   include IndexAddnewConcern
   
+  rescue_from "AccessGranted::AccessDenied" do |exception|
+    redirect_to root_path, alert: "You don't have permission to access this page.", status: 303
+  end
+  
   protected
 
     def configure_permitted_parameters
@@ -24,7 +28,7 @@ class ApplicationController < ActionController::Base
     
     def init_menu
       @menu = Menu.new do |menu|
-        %w(business business/website partner partner/request partner/backlink blog/contents/post blog/contents/page).each do |item|
+        %w(people/user business business/website partner partner/request partner/backlink blog/contents/post blog/contents/page).each do |item|
           menu.add I18n.t("menu.#{item.pluralize}"), send("#{item.pluralize.gsub(/\//, '_')}_path", owner: current_user.id, business_id: current_user.business_id, business_website_id: current_user.website_id), item.camelize.constantize.model_name.element.pluralize, {icon: item.classify.constantize.decorator_class.icon}
         end
       end

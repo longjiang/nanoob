@@ -18,11 +18,17 @@ Rails.application.routes.draw do
     resources :partners, :concerns => :paginatable
     resources :partner_requests, controller: 'partner/requests', :concerns => :paginatable
     resources :partner_backlinks, controller: 'partner/backlinks', :concerns => :paginatable
+    
+    #STI
     resources :blog_contents_posts, controller: 'blog/contents/posts', :concerns => :paginatable
     resources :blog_contents_pages, controller: 'blog/contents/pages', :concerns => :paginatable
+    
     resources :blog_taxonomies_categories, controller: 'blog/taxonomies/categories', :concerns => :paginatable
     resources :blog_taxonomies_tags, controller: 'blog/taxonomies/tags', :concerns => :paginatable
-    resources :users, controller: 'people/users'
+    
+    resources :people_users, controller: 'people/users', :concerns => :paginatable
+    resources :people_authors, controller: 'people/authors', :concerns => :paginatable
+    
   end
 
   Blog::Router.load

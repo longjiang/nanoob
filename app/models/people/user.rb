@@ -6,12 +6,18 @@ class People::User < Person
   
   #validates_inclusion_of :time_zone, in: ActiveSupport::TimeZone.zones.map { |m| m.name }, message: 'is not a valid Time Zone'
   
-  has_many :requests,         foreign_key: :owner_id
-  has_many :updated_requests, foreign_key: :state_updated_by
-  has_many :backlinks,        foreign_key: :owner_id
+  ROLES = %w(admin editor blogger)
+  
+  has_many :requests,         class_name: 'Partner::Request',   foreign_key: :owner_id
+  has_many :updated_requests, class_name: 'Partner::Request',   foreign_key: :state_updated_by
+  has_many :backlinks,        class_name: 'Partner::Backlink',  foreign_key: :owner_id
   has_many :partners,         foreign_key: :owner_id
   has_many :histories
-  has_many :posts,            foreign_key: :owner_id
+  has_many :posts,            class_name: 'Blog::Contents::Post', foreign_key: :owner_id
+  has_many :edited_posts,     class_name: 'Blog::Contents::Post', foreign_key: :editor_id
+  has_many :written_posts,    class_name: 'Blog::Contents::Post', foreign_key: :writer_id
+  has_many :optimized_posts,  class_name: 'Blog::Contents::Post', foreign_key: :optimizer_id
+  has_many :pages,            class_name: 'Blog::Contents::Page', foreign_key: :owner_id
   
   store_attributes :preferences do
     time_zone String, default: 'Beijing'
@@ -24,6 +30,21 @@ class People::User < Person
     website_updated_at DateTime, default: 1.year.ago
     requests_weekly_goal Integer, default: 25
     requests_overview Array, default: [:seven_last_days, :this_week, :last_week]
+  end
+  
+  def add_role role
+    if ROLES.include?(role.to_s) && !roles.include?(role)
+      self.roles = roles << role
+    end
+  end
+  
+  def remove_role role
+    self.roles = roles - [role.to_s]
+  end
+  
+  def has_role? role
+    role = [role] unless role.is_a? Array
+    (role & roles.map{|r| r.to_sym}).any?
   end
 
   def after_database_authentication

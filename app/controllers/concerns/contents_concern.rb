@@ -14,7 +14,7 @@ module ContentsConcern
     before_action :add_breadcrumbs, except: [:index]
     before_action :nilify_published_at, only: [:create, :update]
     
-    self.permitted_attrs = [:business_website_id, :owner_id, :title, :slug, :body, :body_was, :body_xs, :body_xs_was, :published_at, :featured_image, :remove_featured_image, {:category_ids => []}, {:tag_ids => []}]
+    self.permitted_attrs = [:business_website_id, :owner_id, :editor_id, :optimized_id, :writer_id, :title, :slug, :body, :body_was, :body_xs, :body_xs_was, :published_at, :featured_image, :remove_featured_image, {:category_ids => []}, {:tag_ids => []}]
     self.filtering_params = [ :owner, :status, :recent, :business_website_id, :title_contains, :published_after, :published_before, :category_id, :tag_id ]
     self.sortable_attrs   = [ :title, :status_date ]
     
@@ -24,8 +24,15 @@ module ContentsConcern
   
   def create
     super do |format, created|
-      if created && params[:publish].present?
-        entry.published!
+      if created
+        if params[:submit_for_review].present?
+          authorize! :submit, entry
+          entry.submitted!
+        end
+        if params[:publish].present?
+          authorize! :publish, entry
+          entry.published!
+        end
       end
     end
   end
@@ -33,8 +40,22 @@ module ContentsConcern
   def update
     super do |format, updated|
       if updated  
-        entry.draft! if params[:unpublish].present?
-        entry.published! if params[:publish].present?
+        if params[:submit_for_review].present?
+          authorize! :submit, entry
+          entry.submitted! 
+        end
+        if params[:publish].present?
+          authorize! :publish, entry
+          entry.published! 
+        end
+        if params[:refuse].present?
+          authorize! :refuse, entry
+          entry.draft!
+        end
+        if params[:unpublish].present?
+          authorize! :unpublish, entry
+          entry.draft!
+        end
       end
     end
   end

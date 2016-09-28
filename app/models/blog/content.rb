@@ -5,7 +5,7 @@ class Blog::Content < ApplicationRecord
   
   attachment :featured_image, type: :image
   
-  enum status: [:draft, :published]
+  enum status: [:draft, :published, :submitted]
   
   before_validation :default_status
   before_validation :slugify
