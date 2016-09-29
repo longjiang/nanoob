@@ -29,3 +29,5 @@ dump.rdb
 /*.sql
 
 .DS_Store
+
+*.dump

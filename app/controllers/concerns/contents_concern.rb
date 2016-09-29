@@ -5,17 +5,21 @@ module ContentsConcern
     extend         ClassMethods
     helper         HelperMethods
     
+    
     prepend_before_action :find_website
     prepend_before_action :find_business
+    
     before_action :create_tags, only: [:create, :update]
     before_action :update_bodies, only: [:create, :update]
-    before_action :default_user, only: [:new]
+    before_action :default_users, only: [:new]
+    before_action :default_status, only: [:new]
     before_action :default_website, only: [:new]
     before_action :add_breadcrumbs, except: [:index]
-    before_action :nilify_published_at, only: [:create, :update]
     
-    self.permitted_attrs = [:business_website_id, :owner_id, :editor_id, :optimized_id, :writer_id, :title, :slug, :body, :body_was, :body_xs, :body_xs_was, :published_at, :featured_image, :remove_featured_image, {:category_ids => []}, {:tag_ids => []}]
-    self.filtering_params = [ :owner, :status, :recent, :business_website_id, :title_contains, :published_after, :published_before, :category_id, :tag_id ]
+    prepend_before_action :nilify_published_at, only: [:create, :update]
+    
+    self.permitted_attrs = [:business_website_id, :owner_id, :editor_id, :optimizer_id, :writer_id, :title, :slug, :body, :body_was, :body_xs, :body_xs_was, :published_at, :featured_image, :remove_featured_image, {:category_ids => []}, {:tag_ids => []}]
+    self.filtering_params = [ :owner, :editor, :writer, :optimizer, :mine, :status, :recent, :business_website_id, :title_contains, :published_after, :published_before, :category_id, :tag_id ]
     self.sortable_attrs   = [ :title, :status_date ]
     
   end
@@ -86,12 +90,19 @@ module ContentsConcern
     end
   end
   
-  def default_user
+  def default_users
     entry.owner = current_user unless entry.owner 
+    entry.writer = current_user unless entry.writer
+    entry.editor = current_user unless entry.editor
+    entry.optimizer = current_user unless entry.optimizer   
   end
   
   def default_website
     entry.website = @website unless entry.website
+  end
+  
+  def default_status
+    entry.status = :draft unless entry.status
   end
   
   def add_breadcrumbs

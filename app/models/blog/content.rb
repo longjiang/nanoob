@@ -18,6 +18,10 @@ class Blog::Content < ApplicationRecord
   #validates_format_of :slug, :without => /^\d/
     
   scope :owner,           -> (staff)      { where owner: staff.to_i }
+  scope :editor,          -> (staff)      { where editor: staff.to_i }
+  scope :writer,          -> (staff)      { where writer: staff.to_i }
+  scope :optimizer,       -> (staff)      { where optimizer: staff.to_i }
+  scope :mine,            -> (staff)      { where "owner_id = ? or editor_id = ? or writer_id = ? or optimizer_id = ?", staff.to_i, staff.to_i, staff.to_i, staff.to_i}
   scope :recent,          -> (days)       { where("#{self.table_name}.updated_at > ? ", days.to_i.days.ago) }
   scope :business_website_id,    -> (id)  { where business_website_id: id }
   scope :website,         -> (website)    { where business_website_id: website.id }
@@ -32,10 +36,11 @@ class Blog::Content < ApplicationRecord
  
   def self.sort_by_status_date(direction='asc')
     #status=0 means status=:draft (enum is stored as integer)
-    order("case when status=0 then #{self.table_name}.updated_at else COALESCE(#{self.table_name}.published_at, #{self.table_name}.updated_at) end #{direction}")
+    order("case when status in (0,2) then #{self.table_name}.updated_at else COALESCE(#{self.table_name}.published_at, #{self.table_name}.updated_at) end #{direction}")
   end
   
-  delegate :username, to: :owner, prefix: true 
+  delegate :username, to: :owner, prefix: true
+
   
   attr_writer :body_xs
 

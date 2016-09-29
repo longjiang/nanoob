@@ -2,8 +2,9 @@ class Blog::ContentDecorator < ApplicationRecordDecorator
   delegate_all
 
   SEO_SCORE_COLOR_OPTIONS = {default: 'muted', ok: 'success', ko: 'danger'}
-  STATUS_COLOR_OPTIONS = {default:'muted', draft:'muted', scheduled: 'primary', published:'success'}
-  STATUS_ICON_OPTIONS = {default:'thumb-tack', draft:'pencil-square-o', scheduled: 'calendar-check-o', published:'check-circle-o'}
+  STATUS_COLOR_OPTIONS = {default:'muted', draft:'muted', submitted: 'primary', scheduled: 'success', published:'success'}
+  STATUS_ICON_OPTIONS = {default:'thumb-tack', draft:'pencil-square-o', submitted: 'pencil-square-o', scheduled: 'calendar-check-o', published:'check-circle-o'}
+  USER_TYPE_ICON_OPTIONS = {default:'', owner:'user', editor:'legal', optimizer:'graduation-cap', writer:'pencil'}
   
   def categories(params={})
     return "-" if object.categories.blank?
@@ -27,19 +28,26 @@ class Blog::ContentDecorator < ApplicationRecordDecorator
     end.join(', ').html_safe
   end
   
-  def status_with_date
+  def status_with_date(threshold=nil)
     date = case object.status
     when "published"
       object.published_at
     else
       object.updated_at
     end
-    "#{h.t(status, scope: 'activerecord.attributes.blog/contents/post.decorator.statuses')} #{time_ago_in_words_or_date date}"
+    threshold = 30.days.ago if threshold.nil?
+    if date < threshold
+      h.t(status, scope: 'activerecord.attributes.blog/contents/post.decorator.statuses.with_date', date: date.strftime(date.year.eql?(Time.now.year) ? short_date_format_without_year : short_date_format))
+    else
+      h.t(status, scope: 'activerecord.attributes.blog/contents/post.decorator.statuses.with_date_in_words', date: h.time_ago_in_words(date))
+    end
   end
   
   def status
     if object.published?
       object.published_at > Time.now ? :scheduled : :published
+    elsif object.submitted?
+      :submitted
     else
       :draft
     end 
@@ -73,6 +81,11 @@ class Blog::ContentDecorator < ApplicationRecordDecorator
     "#{permalink_prefix}#{object.slug}"
   end
   
+  
+  
+  def self.user_icon(user_type)
+    option USER_TYPE_ICON_OPTIONS, user_type
+  end
 
 
 end

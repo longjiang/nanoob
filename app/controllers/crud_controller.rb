@@ -7,6 +7,7 @@ class CrudController < ApplicationController
   class_attribute :permitted_attrs, :filtering_params, :sortable_attrs
   
   self.sortable_attrs = []
+  self.filtering_params = []
   
   before_action :entry, only: [:show, :new, :edit, :update, :destroy]
   before_action :authorize

@@ -9,12 +9,15 @@
     %td.text-nowrap= link_to post.website.decorate.host, filtered_entries_path(business_website_id: post.website.id)
   
   %td.text-nowrap
-    = link_to post.decorate.title, edit_blog_contents_post_path(post)
+    = link_to post.decorate.title, can?(:update, post) ? edit_blog_contents_post_path(post) : blog_contents_post_path(post)
     = link_to post.decorate.public_url do
       = i 'external-link'
   
-  - if params[:owner].blank?
-    %td.text-nowrap= post.decorate.owner_username
+  - %w(owner editor writer optimizer).each do |user_type|  
+    - if params[user_type.to_sym].blank?
+      - user = post.send(user_type)
+      %td.text-nowrap.text-xs-center{class: (params["mine"] && user.eql?(current_user)) ? 'text text-primary' : ''}
+        = user.nil? ? '-' : link_to_if(!user.eql?(current_user), user.decorate.name, people_user_path(user))
   
   %td.text-nowrap=  post.decorate.categories(params)
   %td.text-nowrap=  post.decorate.tags(params)

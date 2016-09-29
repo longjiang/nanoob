@@ -15,16 +15,27 @@ en:
     all_businessess: all businesses
     all_categories: all categories
     all_channels: all channels
+    all_editors: all editors
+    all_optimizers: all optimizers
     all_owners: all owners
     all_statuses: all statuses
     all_states: all states
     all_tags: all tags
     all_websites: all websites
+    all_writers: all writers
     filter: filter
     mine: mine
     new: new
     recent: recent
     select: select
+    contents:
+      save_draft: Save Draft
+      update: Update
+      publish: Publish
+      unpublish: Unpublish
+      submit: Submit to editor
+      refuse: Refuse
+      
     
   backlinks:
     create:
@@ -228,11 +239,19 @@ en:
           draft: Draft
           published: Published
           scheduled: Scheduled
+          submitted: Submitted
         decorator:
           statuses:
-            draft: Last updated
-            published: Published
-            scheduled: Scheduled
+            with_date:
+              draft: Last updated %{date}
+              published: Published %{date}
+              scheduled: Scheduled on %{date}
+              submitted: Last reviewed %{date}
+            with_date_in_words:
+              draft: Last updated %{date} ago
+              published: Published %{date} ago
+              scheduled: Scheduled in %{date}
+              submitted: Last reviewed %{date} ago
       business:
         name: Name
         product: Product Line

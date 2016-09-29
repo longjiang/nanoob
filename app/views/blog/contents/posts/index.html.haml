@@ -39,11 +39,12 @@
             = link_to filtered_entries_path(title_contains: nil) do
               %i.fa.fa-filter.text-primary
         
-        - if params[:owner].blank? 
-          %th.text-nowrap.text-xs-center.text-sm-left
-            = i People::User.decorator_class.icon
-            %span.hidden-xs-down
-              = han 'blog/contents/post', :owner
+        - %w(owner editor writer optimizer).each do |user_type|        
+          - if params[user_type.to_sym].blank? 
+            %th.text-nowrap.text-xs-center
+              = i Blog::Contents::Post.decorator_class.user_icon(user_type.to_sym)
+              %span.hidden-xs-down
+                = han 'blog/contents/post', user_type.to_sym
         
         %th.text-nowrap= han 'blog/contents/post', :categories
         %th.text-nowrap Tags

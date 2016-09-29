@@ -81,6 +81,21 @@
       include_blank: th('forms.all_owners'),
       hide_label: true
       
+    = f.select :editor, People::User.all.map{|_| [_.decorate.name, _.id ]}, 
+      selected: params[:editor], 
+      include_blank: th('forms.all_editors'),
+      hide_label: true
+      
+    = f.select :writer, People::User.all.map{|_| [_.decorate.name, _.id ]}, 
+      selected: params[:writer], 
+      include_blank: th('forms.all_writers'),
+      hide_label: true
+      
+    = f.select :optimizer, People::User.all.map{|_| [_.decorate.name, _.id ]}, 
+      selected: params[:optimizer], 
+      include_blank: th('forms.all_optimizers'),
+      hide_label: true
+      
     - if @website
       = f.select :category_id, @website.categories.map{|_| [_.decorate.name, _.id ]}, 
         selected: params[:category_id], 

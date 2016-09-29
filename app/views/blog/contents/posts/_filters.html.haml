@@ -15,14 +15,14 @@
           
     %li.list-inline-item
     
-      - if params[:owner] && params[:owner].to_i.eql?(current_user.id)
+      - if params[:mine] && params[:mine].to_i.eql?(current_user.id)
         %span.text-primary= th 'forms.mine'
-        = link_to filtered_entries_path(owner: nil) do
+        = link_to filtered_entries_path(mine: nil) do
           = i 'times-circle-o'
       - else
-        = link_to filtered_entries_path(owner: current_user.id) do
+        = link_to filtered_entries_path(mine: current_user.id, owner: nil, writer: nil, editor: nil, optimizer: nil) do
           = th 'forms.mine'
-          %span.tag.tag-default= @posts_not_owner_filtered.owner(current_user.id).count
+          %span.tag.tag-default= @posts_not_user_filtered.mine(current_user.id).count
     
     %li.list-inline-item
       
@@ -45,6 +45,11 @@
       cond: params[:published_after].blank?,
       value: :scheduled,
       path_cond: {status: :published, published_after: Time.now,  published_before: nil}},
+      { count: @posts_not_status_filtered.submitted.count, 
+      filter: params[:status].eql?('submitted'), 
+      cond: !params[:status].eql?('submitted'),
+      value: :submitted,
+      path_cond: {status: :submitted, published_after: nil,  published_before: nil}},
       { count: @posts_not_status_filtered.draft.count, 
       filter: params[:status].eql?('draft'), 
       cond: !params[:status].eql?('draft'),
@@ -75,11 +80,6 @@
       selected: @website.try(:id), 
       include_blank: th('forms.all_websites'),
       hide_label: true
-    
-    = f.select :owner, People::User.all.map{|_| [_.decorate.name, _.id ]}, 
-      selected: params[:owner], 
-      include_blank: th('forms.all_owners'),
-      hide_label: true
       
     - if @website
       = f.select :category_id, @website.categories.map{|_| [_.decorate.name, _.id ]}, 
@@ -104,5 +104,27 @@
         hide_label: true
       
     = f.text_field :title_contains, value: params[:title_contains], hide_label: true, class: 'form-control-sms', placeholder: han('blog/contents/post', :title)
+    
+    - if params[:mine].blank?
+    
+      = f.select :owner, People::User.all.map{|_| [_.decorate.name, _.id ]}, 
+        selected: params[:owner], 
+        include_blank: th('forms.all_owners'),
+        hide_label: true
+      
+      = f.select :editor, People::User.all.map{|_| [_.decorate.name, _.id ]}, 
+        selected: params[:editor], 
+        include_blank: th('forms.all_editors'),
+        hide_label: true
+      
+      = f.select :writer, People::User.all.map{|_| [_.decorate.name, _.id ]}, 
+        selected: params[:writer], 
+        include_blank: th('forms.all_writers'),
+        hide_label: true
+      
+      = f.select :optimizer, People::User.all.map{|_| [_.decorate.name, _.id ]}, 
+        selected: params[:optimizer], 
+        include_blank: th('forms.all_optimizers'),
+        hide_label: true
     
     = f.submit th('forms.filter')

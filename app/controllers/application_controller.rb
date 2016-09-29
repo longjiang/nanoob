@@ -10,6 +10,8 @@ class ApplicationController < ActionController::Base
   before_action :add_menu_items, unless: :devise_controller?
   before_action :menu_activate, unless: :devise_controller?
   
+  after_action :save_filter, only: :index
+  
   around_action :set_time_zone
   
   include ApplicationHelper
@@ -29,7 +31,19 @@ class ApplicationController < ActionController::Base
     def init_menu
       @menu = Menu.new do |menu|
         %w(people/user business business/website partner partner/request partner/backlink blog/contents/post blog/contents/page).each do |item|
-          menu.add I18n.t("menu.#{item.pluralize}"), send("#{item.pluralize.gsub(/\//, '_')}_path", owner: current_user.id, business_id: current_user.business_id, business_website_id: current_user.website_id), item.camelize.constantize.model_name.element.pluralize, {icon: item.classify.constantize.decorator_class.icon}
+          if can? :list, item.camelize.constantize
+            if current_user.last_filters[item.pluralize].blank?
+              link_params = case item
+              when 'blog/contents/post'
+                {mine: current_user.id, business_id: current_user.business_id, business_website_id: current_user.website_id}
+              else
+                {owner: current_user.id, business_id: current_user.business_id, business_website_id: current_user.website_id}
+              end
+            else
+              link_params = current_user.last_filters[item.pluralize]
+            end
+            menu.add I18n.t("menu.#{item.pluralize}"), send("#{item.pluralize.gsub(/\//, '_')}_path", link_params), item.camelize.constantize.model_name.element.pluralize, {icon: item.classify.constantize.decorator_class.icon}
+          end
         end
       end
     end
@@ -42,6 +56,12 @@ class ApplicationController < ActionController::Base
     end
     
     def add_breadcrumbs
+    end
+    
+    def save_filter
+      kept_params = filtering_params + sortable_attrs.map{|_| "sort_by_#{_}"} + [:page]
+      current_user.last_filters = current_user.last_filters.merge(controller_path => params.slice(*kept_params).reject{|key, val| val.blank?}.to_unsafe_h())
+      current_user.save
     end
     
   private

@@ -49,6 +49,10 @@ class Business::Website < ApplicationRecord
     get_meta(:owner_id) || People::User.first.id
   end
   
+  def owner
+    People::User.find(owner_id)
+  end
+  
   def add_unknown_category(slug)
     categories = unknown_categories
     categories << slug

@@ -30,12 +30,14 @@ class People::User < Person
     website_updated_at DateTime, default: 1.year.ago
     requests_weekly_goal Integer, default: 25
     requests_overview Array, default: [:seven_last_days, :this_week, :last_week]
+    last_filters Hash, default: {}
   end
   
   def add_role role
-    if ROLES.include?(role.to_s) && !roles.include?(role)
-      self.roles = roles << role
+    if ROLES.include?(role.to_s) && !roles.include?(role.to_s) && !roles.include?(role)
+      self.roles = roles << role.to_s
     end
+    roles
   end
   
   def remove_role role

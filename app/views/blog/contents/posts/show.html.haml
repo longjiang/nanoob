@@ -1,17 +1,40 @@
-= link_to  "EDIT", edit_blog_contents_post_path(@post)
-
 %h2= @post.title
 
-%ul.nav.nav-tabs{role: "tablist"}
-  %li.nav-item
-    = link_to "body", "#body-html", data: {toggle: "tab"}, role: "tab", class:"nav-link active"
-  %li.nav-item
-    = link_to "Source", "#body-text", data: {toggle: "tab"}, role: "tab", class:"nav-link"
+.card
+  .card-header
+    Users
+  .card-block
+    %ul.list-group.list-group-flush
+      %li.list-group-item 
+        owner: 
+        = @post.owner.decorate.name
+      %li.list-group-item
+        Editor:
+        = @post.editor.decorate.name
+        
+.card
+  .card-header
+    History
+  .card-block
+    %ul.list-group.list-group-flush
+      %li.list-group-item 
+        created : 
+        = @post.decorate.created_at
+  .card-block
+    = link_to  "EDIT", edit_blog_contents_post_path(@post), class: 'btn btn-primary' if can? :update, @post
+      
+.card.text-xs-center
+  .card-header
+    %ul.nav.nav-tabs.card-header-tabs.pull-xs-left{role: "tablist"}
+      %li.nav-item
+        = link_to "body", "#body-html", data: {toggle: "tab"}, role: "tab", class:"nav-link active"
+      %li.nav-item
+        = link_to "Source", "#body-text", data: {toggle: "tab"}, role: "tab", class:"nav-link"
     
-.tab-content{style: "height:300px; overflow-y: scroll; padding: 10px"}
-  #body-html.tab-pane.fade.in.active{role: "tabpanel"}
-    = @post.body.html_safe
-  #body-text.tab-pane.fade{role: "tabpanel"}
-    = @post.body
+  .card-block.tab-content.text-xs-left{style: "height:300px; overflow-y: scroll; padding: 10px"}
+    #body-html.tab-pane.fade.in.active{role: "tabpanel"}
+      = @post.body.try(:html_safe)
+    #body-text.tab-pane.fade{role: "tabpanel"}
+      = @post.body
 
 = image_tag attachment_url(@post, :featured_image, :fill, 200, 200) if @post.featured_image_id?

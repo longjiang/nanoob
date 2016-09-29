@@ -8,4 +8,8 @@ class Blog::Contents::Post < Blog::Content
   has_and_belongs_to_many :categories,  class_name: 'Blog::Taxonomies::Category',   foreign_key: :blog_content_id, association_foreign_key: :blog_taxonomy_id , after_add: :increment_category_count, after_remove: :decrement_category_count
   has_and_belongs_to_many :tags,        class_name: 'Blog::Taxonomies::Tag',        foreign_key: :blog_content_id, association_foreign_key: :blog_taxonomy_id , after_add: :increment_tag_count, after_remove: :decrement_tag_count
 
+  delegate :username, to: :writer, prefix: true, allow_nil: true
+  delegate :username, to: :editor, prefix: true, allow_nil: true
+  delegate :username, to: :optimizer, prefix: true, allow_nil: true
+  
 end
