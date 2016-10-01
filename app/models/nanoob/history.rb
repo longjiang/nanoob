@@ -1,6 +1,5 @@
 module Nanoob::History extend ActiveSupport::Concern
   included do
-    #has_many :histories, ->(object){where(object_class: object.class.to_s.gsub("Decorator",""))}, :class_name => "History", foreign_key: :object_id, dependent: :destroy
     has_many :histories, as: :archivable, dependent: :destroy
   end
   

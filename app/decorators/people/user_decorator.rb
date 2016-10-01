@@ -9,6 +9,10 @@ class People::UserDecorator < PeopleDecorator
     "#{object.username.humanize}#{roles}"
   end
   
+  def self.collection
+    People::User.order(:username).all.map{|_| [_.decorate.name_with_roles, _.id]}
+  end
+  
   def self.icon
     'user'
   end

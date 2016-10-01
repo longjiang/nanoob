@@ -1,0 +1,304 @@
+fr:
+  
+# Generic
+  overview: Overview
+  history: History
+  
+  helpers:
+    submit:
+      and_create_request: and make a new request
+  
+  
+# Forms
+  forms:
+    all: all
+    all_businessess: all businesses
+    all_categories: all categories
+    all_channels: all channels
+    all_editors: all editors
+    all_optimizers: all optimizers
+    all_owners: all owners
+    all_statuses: all statuses
+    all_states: all states
+    all_tags: all tags
+    all_websites: all websites
+    all_writers: all writers
+    filter: filter
+    mine: mine
+    new: new
+    page_title_template_help: "Default: <i>%{default_tpl}</i>, Options: %{options}"
+    recent: recent
+    select: select
+    cancel: cancel
+    contents:
+      save_draft: Save Draft
+      update: Update
+      publish: Publish
+      unpublish: Unpublish
+      submit: Submit to editor
+      refuse: Refuse
+      
+
+  authors:
+    create:
+      flash: 
+        success_html: Author has been successfully created.
+    update:
+      flash:
+        success_html: Author has been successfully updated.
+    destroy:
+      flash:
+        success_html: Author has been successfully deleted.
+
+    
+  backlinks:
+    create:
+      flash: 
+        success_html: Backlink has been successfully created.
+    update:
+      flash:
+        success_html: Backlink has been successfully updated.
+    destroy:
+      flash:
+        success_html: Backlink has been successfully deleted.
+  
+  businesses:
+    create:
+      flash: 
+        success_html: Business has been successfully created.
+    update:
+      flash:
+        success_html: Business has been successfully updated.
+        
+  partners:
+    create:
+      flash: 
+        success_html: Partner has been successfully created.
+    update:
+      flash:
+        success_html: Partner has been successfully updated.
+    destroy:
+      flash:
+        success_html: Partner has been successfully deleted.
+        
+  pages:
+    create:
+      flash: 
+        success_html: Page has been successfully created.
+    update:
+      flash:
+        success_html: Page has been successfully updated.
+    destroy:
+      flash:
+        success_html: Page has been successfully deleted.
+        
+  posts:
+    create:
+      flash: 
+        success_html: Post has been successfully created.
+    update:
+      flash:
+        success_html: Post has been successfully updated.
+    destroy:
+      flash:
+        success_html: Post has been successfully deleted.
+    
+  requests:
+    create:
+      flash: 
+        success_html: Request has been successfully created.
+    update:
+      flash:
+        success_html: Request has been successfully updated.
+        
+  websites:
+    create:
+      flash: 
+        success_html: Website has been successfully created.
+    update:
+      flash:
+        success_html: Website has been successfully updated.
+    destroy:
+      flash:
+        success_html: Website has been successfully deleted.
+    
+# descriptions
+  descriptions:
+    businesses: This is the list of the products we are working on.
+    business/websites: This is the list of our websites.
+    partners: This is the list of our partners who may publish backlinks to our websites.
+    partner/requests: List of partnership requests we made to our partners. 
+    partner/backlinks: List of actual backlinks published (active or not).
+    people/users: List of people with access to back office.
+    people/authors: List of virtual people who signed the posts.
+    blog/contents/pages: Static pages published on our network of websites.
+    blog/contents/posts: Posts published on our network of websites.
+    blog/taxonomies/categories: Post categories are scoped to a website. 
+    blog/taxonomies/tags: Post tags are scoped to a website. 
+    
+# Menu
+  menu:
+    
+    blog/contents/pages: Pages
+    blog/contents/posts: Posts
+    blog/taxonomies/categories : Categories
+    blog/taxonomies/tags : Tags
+    businesses: Businesses
+    business/websites: Websites
+    people: People
+    people/users: Users
+    partners: Partners
+    partner/requests: Requests
+    partner/backlinks: Backlinks
+    
+    blog/contents/page:
+      all: All Pages
+      add_new: Add new
+    blog/contents/post:
+      all: All Posts
+      add_new: Add new
+    blog/taxonomies/categories:
+      all: Categories
+    blog/taxonomies/tags:
+      all: Tags
+    business:
+      all: All Businesses
+      add_new: Add new
+    business/website:
+      all: All Websites
+      add_new: Add new
+    blog/post:
+      all: All posts
+      add_new: Add new
+    people/author:
+      all: Authors
+      add_new: Add new
+    people/user:
+      all: All Users
+      add_new: Add new
+    partner:
+      all: All Partners
+      add_new: Add new
+    partner/request:
+      all: All Requests
+      add_new: Add new
+    partner/backlink:
+      all: All Backlinks
+      add_new: Add new
+  
+# ACTIVE RECORD  
+  activerecord:
+    
+    actions:
+      new: Add new
+      edit: Edit
+      
+    models:
+      blog/contents/page:
+        one: page
+        other: pages
+      blog/contents/post:
+        one: post
+        other: posts
+      blog/taxonomies/category:
+        one: category
+        other: categories
+      blog/taxonomies/tag:
+        one: tag
+        other: tags
+      business:
+        one: business
+        other: businesses
+      business/website: 
+        one: website
+        other: websites
+      people/author:
+        one: author
+        other: authors
+      people/user:
+        one: user
+        other: users
+      partner:
+        one: partner
+        other: partners
+      partner/backlink:
+        one: backlink
+        other: backlinks
+      partner/request:
+        one: request
+        other: requests
+      people/user:
+        one: User
+        other: Users
+      
+    attributes:
+      blog/contents/page:
+        categories: Categories
+        featured_image: Featured Image
+        status: Status
+        statuses:
+          draft: Draft
+          published: Published
+          scheduled: Scheduled
+        decorator:
+          statuses:
+            draft: Last updated
+            published: Published
+            scheduled: Scheduled
+      blog/contents/post:
+        categories: Categories
+        featured_image: Featured Image
+        status: Status
+        statuses:
+          draft: Draft
+          published: Published
+          scheduled: Scheduled
+          submitted: Submitted
+        decorator:
+          statuses:
+            with_date:
+              draft: Last updated %{date}
+              published: Published %{date}
+              scheduled: Scheduled on %{date}
+              submitted: Last reviewed %{date}
+            with_date_in_words:
+              draft: Last updated %{date} ago
+              published: Published %{date} ago
+              scheduled: Scheduled in %{date}
+              submitted: Last reviewed %{date} ago
+      business:
+        name: Name
+        product: Product Line
+        language: Language
+        business_product_id: Product Line
+      business/website:
+        platform: Platform
+        url: Url
+        host: Host
+        title: Title
+        baseline: Baseline
+        owner: Owner
+      partner:
+        title: Title
+        category: Category
+        contact: Contact
+      partner/backlink:
+        referrer: Referrer
+        anchor: Anchor
+        link: Link
+        status: Status
+        statuses:
+          active: Active
+          inactive: Inactived
+          unknown: In Progress
+      partner/request:
+        owner: Owner
+        subject: Subject
+        state: Status
+        body: Body
+        body_xs: Body
+        channels:
+          email: E-mail
+          webform: Web Form
+      people/author:
+        optimizer_id: Optimizer

@@ -12,4 +12,8 @@ class Blog::Public::CategoriesController < Blog::Public::ContentsController
     end
   end
   
+  def page_title
+    @category.decorate.name
+  end
+  
 end

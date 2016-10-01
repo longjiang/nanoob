@@ -22,6 +22,7 @@ namespace :db do
           nanou.add_role(:editor)
           nanou.save
           gilles.add_role(:editor)
+          gilles.add_role(:webmaster)
           gilles.save
           admin.add_role(:admin)
           admin.save

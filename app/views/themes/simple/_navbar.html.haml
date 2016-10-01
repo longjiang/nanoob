@@ -8,6 +8,6 @@
       = link_to @website.business.name, root_path, class: "navbar-brand"
       #menu.collapse.navbar-toggleable-xs
         %ul.nav.navbar-nav.pull-xs-right
-          - @website.pages.each do |page|
+          - @website.pages.published.each do |page|
             %li.nav-item
               = link_to page.decorate.title, page_path(slug: page.slug), class: "nav-link"

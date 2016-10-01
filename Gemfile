@@ -38,7 +38,7 @@ gem 'haml'
 gem 'bootstrap', '~> 4.0.0.alpha3.1'
 gem "font-awesome-rails"
 #gem 'bootstrap_form', :git => 'https://github.com/bootstrap-ruby/rails-bootstrap-forms'
-gem 'bootstrap_form', :git => 'https://github.com/SecondBureau/rails-bootstrap-forms'
+gem 'bootstrap_form', :git => 'https://github.com/SecondBureau/rails-bootstrap-forms', :branch => 'v4'
 #gem 'bootstrap_form', :path => '/Users/gilles/Workspaces/rails-bootstrap-forms'
 gem 'draper', '~> 3.0.0.pre1'
 #gem 'draper', :git => 'https://github.com/drapergem/draper.git', :branch => 'rails-5'

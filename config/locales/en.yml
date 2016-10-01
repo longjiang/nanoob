@@ -26,8 +26,10 @@ en:
     filter: filter
     mine: mine
     new: new
+    page_title_template_help: "Default: <i>%{default_tpl}</i>, Options: %{options}"
     recent: recent
     select: select
+    cancel: cancel
     contents:
       save_draft: Save Draft
       update: Update
@@ -36,6 +38,18 @@ en:
       submit: Submit to editor
       refuse: Refuse
       
+
+  authors:
+    create:
+      flash: 
+        success_html: Author has been successfully created.
+    update:
+      flash:
+        success_html: Author has been successfully updated.
+    destroy:
+      flash:
+        success_html: Author has been successfully deleted.
+
     
   backlinks:
     create:
@@ -97,16 +111,16 @@ en:
       flash:
         success_html: Request has been successfully updated.
         
-    websites:
-      create:
-        flash: 
-          success_html: Website has been successfully created.
-      update:
-        flash:
-          success_html: Website has been successfully updated.
-      destroy:
-        flash:
-          success_html: Website has been successfully deleted.
+  websites:
+    create:
+      flash: 
+        success_html: Website has been successfully created.
+    update:
+      flash:
+        success_html: Website has been successfully updated.
+    destroy:
+      flash:
+        success_html: Website has been successfully deleted.
     
 # descriptions
   descriptions:
@@ -286,4 +300,5 @@ en:
         channels:
           email: E-mail
           webform: Web Form
-      
+      people/author:
+        optimizer_id: Optimizer

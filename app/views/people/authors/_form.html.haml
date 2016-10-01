@@ -1,0 +1,42 @@
+= bootstrap_form_for @author, remote: true do |f|
+
+  .card
+    .card-header.text-xs-center
+      = yield :card_title
+    .card-block
+      .row
+        .col-xs-12.col-lg-4.col-xl-3
+          .card
+            .card-block
+              %h4.card-title
+                = i People::Author.decorator_class.icon
+                = @author.firstname
+                = @author.lastname
+
+              - if @author.profile_image_id?
+                = attachment_image_tag @author, :profile_image, :fill, 300, 300, format: "jpg", class: 'img-fluid'
+                = f.check_box :remove_profile_image
+              - else
+                = image_tag 'decoration/placeholders/profile_image_author_100x100.jpg', class: 'uploaded_image img-fluid'
+                .file-loading.invisible
+                  = i 'spinner fa-pulse'
+                  Loading....
+                = f.attachment_field :profile_image, direct: true, class:"filestyle", data: {input:"false"}
+              = f.text_field :username
+              = f.text_field :firstname
+              = f.text_field :lastname
+              = f.select :optimizer_id, People::User.decorator_class.collection, prompt: "#{t('forms.select')} #{han('people/author', :optimizer_id)}..."
+
+        
+
+        .col-xs-12.col-lg-8.col-xl-9
+          .card
+            .card-block
+              %fieldset.form-group.bootsy
+                %label.control-label{for: :people_author_biography}= han('people/author', :biography)
+                = f.bootsy_area :biography, placeholder: "Biography"
+          
+    .card-footer
+      .pull-xs-left= f.primary
+      = yield :add_new_button 
+      

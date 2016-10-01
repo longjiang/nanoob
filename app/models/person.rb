@@ -1,5 +1,6 @@
 class Person < ApplicationRecord
 
+  attachment :profile_image, type: :image
   
   include Storext.model
          
@@ -10,7 +11,6 @@ class Person < ApplicationRecord
     #subscribed_to_newsletter Boolean, default: false
     firstname String
     lastname String
-    roles Array, default: []
   end
   
 end

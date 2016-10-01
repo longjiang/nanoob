@@ -32,14 +32,14 @@
         %span.help-block= @post.decorate.errors[:body_xs].join(', ') if @post.decorate.has_errors(:body_xs)
       
       
-      - if current_user.has_role? :admin  
+      - if is_admin?  
         .card
           .card-header
             Users
             .pull-right.toggle-card
               =link_to i('chevron-down'), '#toggle-users', data: {toggle: 'collapse'}, class: 'text text-primary'
           .card-block.collapse.toggle-chevron{id: 'toggle-users'}
-            - users_collection = People::User.order(:username).all.map{|_| [_.decorate.name_with_roles, _.id]}
+            - users_collection = People::User.decorator_class.collection
             = f.select :owner_id, users_collection
             = f.select :writer_id, users_collection
             = f.select :editor_id, users_collection
@@ -88,9 +88,6 @@
             = f.submit t('forms.contents.submit'), name: 'submit_for_review', class: "btn btn-secondary pull-right" if can?(:submit, @post) && @post.editor && !@post.editor.id.eql?(current_user.id)
             = f.submit t('forms.contents.refuse'), name: 'refuse', class: "btn btn-secondary pull-right" if can?(:refuse, @post) && @post.writer && !@post.writer.id.eql?(current_user.id)
             
-          / - if current_user.has_role? :admin
-          /   .card-block
-          /     = f.select :status, Blog::Content.statuses.keys.map{|_| [_.humanize, _]}
             
       
       - if @post.website

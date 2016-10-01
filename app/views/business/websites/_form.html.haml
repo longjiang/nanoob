@@ -13,14 +13,26 @@
   
   = f.url_field :url, placeholder: 'https://'
   
-  = f.text_field :title
+  - if @website.nanoob?
   
-  = f.text_field :baseline
+    = f.text_field :title
   
-  = f.select :owner_id, People::User.all.map{|p| [p.username, p.id]}, prompt: "#{t('forms.select')} #{han('business/website', :owner).downcase}..."
+    = f.text_field :baseline
   
-  = f.select :author_id, People::Author.all.map{|p| [p.username, p.id]}, prompt: "#{t('forms.select')} #{han('business/website', :owner).downcase}..."
+    = f.select :author_id, People::Author.all.map{|p| [p.username, p.id]}, prompt: "#{t('forms.select')} #{han('business/website', :author).downcase}..."
   
-  = f.select :theme, Business::Website::THEMES, prompt: "#{t('forms.select')} #{han('business/website', :theme).downcase}..."
+    = f.select :theme, Business::Website::THEMES, prompt: "#{t('forms.select')} #{han('business/website', :theme).downcase}..."
+    
+    = f.text_field :woopra
+    
+    = f.text_field :page_title_template, 
+    help: t('forms.page_title_template_help', default_tpl: Business::WebsiteDecorator::PAGE_TITLE_TEMPLATE_DEFAULT, options: Business::WebsiteDecorator::PAGE_TITLE_TEMPLATE_OPTIONS.join(', ')).html_safe
+  
+  - if is_admin?
+    = f.select :owner_id, People::User.all.map{|p| [p.username, p.id]}, prompt: "#{t('forms.select')} #{han('business/website', :owner).downcase}..." 
+  - else
+    = f.hidden_field :owner_id
   
   = f.primary
+  
+  = f.submit t('forms.cancel'), name: 'cancel', class: "btn btn-secondary pull-right"

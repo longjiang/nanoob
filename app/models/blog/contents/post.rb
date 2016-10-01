@@ -10,6 +10,6 @@ class Blog::Contents::Post < Blog::Content
 
   delegate :username, to: :writer, prefix: true, allow_nil: true
   delegate :username, to: :editor, prefix: true, allow_nil: true
-  delegate :username, to: :optimizer, prefix: true, allow_nil: true
+  delegate :username, to: :optimizer, prefix: true, allow_nil: true 
   
 end

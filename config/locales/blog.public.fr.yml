@@ -1,0 +1,11 @@
+fr:
+  published: publié
+  published_at: publié le
+  by: par
+  continued: lire la suite
+  in_categories:
+    one: dans la catégorie %{categories}
+    other: dans les catégories %{categories}
+  with_tags:
+    one: avec le mot clé %{tags}
+    other: avec les mots clés %{tags}

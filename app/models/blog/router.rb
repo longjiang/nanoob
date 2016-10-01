@@ -48,6 +48,7 @@ class Blog::Router
     miscellaneous
     tags
     categories
+    authors
     posts
     pages
   end
@@ -81,6 +82,12 @@ class Blog::Router
   def categories
     r = Route.new(:get, '/category/:slug(/page/:page)', 'categories#index')
     r.as = :category
+    self.routes << r
+  end
+  
+  def authors
+    r = Route.new(:get, '/author/:slug(/page/:page)', 'authors#index')
+    r.as = :author
     self.routes << r
   end
   

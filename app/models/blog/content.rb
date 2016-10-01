@@ -40,9 +40,10 @@ class Blog::Content < ApplicationRecord
   end
   
   delegate :username, to: :owner, prefix: true
-
   
   attr_writer :body_xs
+  
+  has_meta :seo_score, :author_id, :views_count
 
   def body_xs
     @body_xs ||= body
@@ -56,24 +57,22 @@ class Blog::Content < ApplicationRecord
     (published_at.nil? ? Time.now : published_at).strftime('%m')
   end
   
-  def seo_score=(seo_score)
-    set_meta(:seo_score, seo_score)
-  end
-  
-  def seo_score
-    get_meta(:seo_score)
-  end
-  
-  def author=(user)
-    set_meta(:author_id, user.id)
-  end
-  
   def author
-    @author ||= get_meta(:author_id).present? ? People::Author.find(get_meta(:author_id)) : People::Author.new
+    @author ||= get_meta(:author_id).present? ? People::Author.find(get_meta(:author_id)) : website.author
   end
+  
+  def views_count
+    @views_count ||= get_meta(:views_count).present? ? get_meta(:views_count).to_i : 0
+  end
+  
   
   def self.slugify(title, website)
     available_slug title.try(:parameterize)
+  end
+  
+  def viewed
+    self.views_count += 1
+    self.save
   end
   
   private

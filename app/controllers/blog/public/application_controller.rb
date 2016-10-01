@@ -3,8 +3,12 @@ class Blog::Public::ApplicationController < ApplicationController
   skip_before_action :authenticate_user!
   skip_before_action :init_menu
   skip_before_action :menu_activate
-  skip_after_action  :save_filter
-  before_action      :find_website
+  prepend_before_action :find_website
+  prepend_before_action :set_locale
+  
+  
+  
+  include WoopraConcern
   
   private
   
@@ -18,6 +22,8 @@ class Blog::Public::ApplicationController < ApplicationController
     @website ||= Business::Website.find_by_url("#{request.protocol}#{request.host.gsub('.dev','').gsub('www.','')}")
   end
   
+  def set_locale
+    I18n.locale = :fr
+  end
 
-  
 end

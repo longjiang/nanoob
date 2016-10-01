@@ -61,8 +61,8 @@ class Blog::ContentDecorator < ApplicationRecordDecorator
     option :SEO_SCORE_COLOR, object.seo_score
   end
   
-  def excerpt
-    h.truncate(ActionView::Base.full_sanitizer.sanitize(object.body), length: 100)
+  def excerpt(length=150)
+    h.truncate(ActionView::Base.full_sanitizer.sanitize(object.body), length: length, separator: /\s/, omission: ' [...]')
   end
   
   def status_color

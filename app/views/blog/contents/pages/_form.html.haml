@@ -67,12 +67,9 @@
             
           .card-block
             - if @page.new_record?
-              = f.primary 'Save draft'
-              = f.submit 'Publish', name: 'publish', class: "btn btn-secondary pull-right"
+              = f.primary t('forms.contents.save_draft')
             - else
-              = f.primary "Update"
-              - if @page.published?
-                = f.submit "Unpublish", name: 'unpublish', class: "btn btn-secondary pull-right"
-              - else
-                = f.submit "Publish", name: 'publish', class: "btn btn-secondary pull-right"
+              = f.primary t('forms.contents.update')
+            = f.submit t('forms.contents.publish'), name: 'publish', class: "btn btn-secondary pull-right" if can?(:publish, @page) 
+            = f.submit t('forms.contents.unpublish'), name: 'unpublish', class: "btn btn-secondary pull-right" if can?(:unpublish, @page)
       

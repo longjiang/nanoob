@@ -1,10 +1,12 @@
 class Blog::Public::ContentsController < Blog::Public::ApplicationController
 
+  include MetaConcern
+  
   before_action      :javascript_file
   before_action      :stylesheet_file
 
   layout :layout
-
+  
   private
 
   def layout

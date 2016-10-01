@@ -2,7 +2,7 @@ class Business::Website < ApplicationRecord
   
   include Nanoob::Meta
   
-  has_meta :title, :baseline, :theme, :owner_id, :author_id
+  has_meta :title, :baseline, :theme, :owner_id, :author_id, :woopra, :page_title_template
   
   enum platform: [ :wordpress, :blogger, :nanoob ]
   
@@ -45,12 +45,12 @@ class Business::Website < ApplicationRecord
     get_meta(:theme) || self.class::THEMES[0]
   end
   
-  def owner_id
-    get_meta(:owner_id) || People::User.first.id
+  def owner
+    @owner ||= get_meta(:owner_id).present? ? People::User.find(get_meta(:owner_id)) : People::User.new
   end
   
-  def owner
-    People::User.find(owner_id)
+  def author
+    @author ||= get_meta(:author_id).present? ? People::Author.find(get_meta(:author_id)) : People::Author.new
   end
   
   def add_unknown_category(slug)

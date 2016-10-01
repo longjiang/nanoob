@@ -1,15 +1,8 @@
 
 - content_for :page_title do
   = i Business::Website.decorator_class.icon
-  = @website.decorate.host
+  = @website.host
   = link_to @website.url do
     = i 'external-link'
 
-%ul
-  %li
-    %b platform
-    = @website.platform
-  %li
-    %b url
-    = @website.url
-    
+= render "show_#{@website.object.platform}"

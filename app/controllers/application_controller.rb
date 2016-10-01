@@ -10,13 +10,12 @@ class ApplicationController < ActionController::Base
   before_action :add_menu_items, unless: :devise_controller?
   before_action :menu_activate, unless: :devise_controller?
   
-  after_action :save_filter, only: :index
-  
   around_action :set_time_zone
   
   include ApplicationHelper
   include Breadcrumbs::ActionController
   include IndexAddnewConcern
+  include ShowEditConcern
   
   rescue_from "AccessGranted::AccessDenied" do |exception|
     redirect_to root_path, alert: "You don't have permission to access this page.", status: 303
@@ -56,12 +55,6 @@ class ApplicationController < ActionController::Base
     end
     
     def add_breadcrumbs
-    end
-    
-    def save_filter
-      kept_params = filtering_params + sortable_attrs.map{|_| "sort_by_#{_}"} + [:page]
-      current_user.last_filters = current_user.last_filters.merge(controller_path => params.slice(*kept_params).reject{|key, val| val.blank?}.to_unsafe_h())
-      current_user.save
     end
     
   private

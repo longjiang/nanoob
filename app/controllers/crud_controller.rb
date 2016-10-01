@@ -3,15 +3,19 @@ class CrudController < ApplicationController
   include Nanoob::GenericModel
   
   index_addnew
+  show_edit
   
   class_attribute :permitted_attrs, :filtering_params, :sortable_attrs
   
   self.sortable_attrs = []
   self.filtering_params = []
   
+  before_action :cancel, only: [:create, :update]
   before_action :entry, only: [:show, :new, :edit, :update, :destroy]
   before_action :authorize
   before_action :decorate_entry, only: [:show]
+  after_action :save_filter, only: :index
+  after_action :store_location, only: [:index, :show]
 
   def index
     entries
@@ -186,12 +190,31 @@ class CrudController < ApplicationController
     action = :read if action.eql?(:show)
     action = :create if action.eql?(:new)
     action = :update if action.eql?(:edit)
-    action = :delete if action.eql?(:destroy)
     if entry=get_entry
       authorize! action, entry
     else
       authorize! action, model_class
     end
+  end
+  
+  def save_filter
+    kept_params = filtering_params + sortable_attrs.map{|_| "sort_by_#{_}"} + [:page]
+    current_user.last_filters = current_user.last_filters.merge(controller_path => params.slice(*kept_params).reject{|key, val| val.blank?}.to_unsafe_h())
+    current_user.save
+  end
+  
+  def store_location
+    session[:return_to] = request.url
+  end
+  
+  def cancel
+    if params[:cancel].present?
+      if session[:return_to].present?
+        redirect_to session[:return_to]
+      else
+        redirect_to action: "index"
+      end
+    end  
   end
 
 end

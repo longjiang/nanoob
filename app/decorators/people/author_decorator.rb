@@ -1,7 +1,11 @@
 class People::AuthorDecorator < PeopleDecorator
   
   def name
-    object.username.humanize
+    if object.firstname.blank?
+      object.username.humanize
+    else
+      "#{object.firstname} #{object.lastname}"
+    end
   end
   
   def self.icon

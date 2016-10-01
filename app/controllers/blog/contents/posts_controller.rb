@@ -18,6 +18,13 @@ class Blog::Contents::PostsController < Blog::ContentsController
   
   private
   
+  def default_users
+    entry.owner = current_user unless entry.owner 
+    entry.writer = current_user unless entry.writer
+    entry.editor = current_user unless entry.editor
+    entry.optimizer = current_user unless entry.optimizer   
+  end
+  
   def update_bodies
     p = params[:blog_contents_post]
     p[:body]    = p[:body_xs] unless p[:body_xs].eql?(p.delete(:body_xs_was))

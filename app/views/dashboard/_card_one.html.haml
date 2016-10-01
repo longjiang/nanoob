@@ -1,0 +1,15 @@
+
+.card.card-inverse{class: "card-#{content[:cssclass]}"}
+  .card-block
+    .row
+      .col-xs-3
+        = i content[:icon], '5x'
+      .col-xs-9.text-xs-right
+        %p.h1= content[:count]
+        %p.card-text= content[:label]
+  .card-footer
+    = link_to content[:path] do
+      .pull-left
+        View details
+      .pull-right
+        = i 'arrow-circle-right'

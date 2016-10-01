@@ -6,23 +6,10 @@
   
 %p= t 'descriptions.people/authors'
 
-.table-responsive
-  %table.table.table-sm.table-hover
-    %thead.thead-default
-      %tr
-        %th.text-nowrap.text-xs-center #
-        
-        %th.text-nowrap Username
-          
-        %th.text-nowrap 
-    
-    %tbody
-      - @authors.each do |author|
-      
-        %tr
-          %th.text-nowrap.text-xs-center{scope: "row"}= author.id
-          
-          %td.text-nowrap= author.decorate.name
-          
-          %td.text-nowrap            
-            = render partial: 'shared/form_actions', locals: {object: author}
+.row
+  .col-md-12.col-lg-3
+    = render 'list'
+  .col-md-12.col-lg-9
+    .author_flash
+    .author_form
+      = render 'new'

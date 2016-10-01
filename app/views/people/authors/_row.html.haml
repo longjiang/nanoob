@@ -1,0 +1,11 @@
+%tr
+  %th.text-nowrap.text-xs-center{scope: "row"}= author.id
+  
+  %td.text-nowrap= link_to author.decorate.name, edit_people_author_path(author), remote: true
+    
+  %td.hidden-lg-down.text-nowrap= author.optimizer.username rescue '-'
+  
+  %td
+    - if can? :destroy, author
+      = link_to people_author_path(author), method: :delete, data: { confirm: 'Are you sure?' }, remote: true do
+        = i 'trash-o'

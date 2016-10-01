@@ -6,7 +6,9 @@ class People::User < Person
   
   #validates_inclusion_of :time_zone, in: ActiveSupport::TimeZone.zones.map { |m| m.name }, message: 'is not a valid Time Zone'
   
-  ROLES = %w(admin editor blogger)
+  ROLES = %w(admin editor blogger webmaster)
+  
+  store_attribute :meta, :roles, Array, default: []
   
   has_many :requests,         class_name: 'Partner::Request',   foreign_key: :owner_id
   has_many :updated_requests, class_name: 'Partner::Request',   foreign_key: :state_updated_by

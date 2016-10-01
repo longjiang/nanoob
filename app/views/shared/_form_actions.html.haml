@@ -7,6 +7,6 @@
   = link_to send("edit_#{object.model_name.singular_route_key}_path", object) do
     = i 'pencil'
     
-- if can? :delete, object
+- if can? :destroy, object
   = link_to send("#{object.model_name.singular_route_key}_path", object), method: :delete, data: { confirm: 'Are you sure?' } do
     = i 'trash-o'

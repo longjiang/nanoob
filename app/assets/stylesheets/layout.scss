@@ -21,6 +21,11 @@ body.modal-open {
   display: block ;
 }
 
+h1.page-title {
+  padding-bottom: 9px;
+  border-bottom: 1px solid $table-bg-hover;
+}
+
 /*
  * Off Canvas at medium breakpoint
  * --------------------------------------------------
