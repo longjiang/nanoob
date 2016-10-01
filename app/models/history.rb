@@ -5,7 +5,7 @@ class History < ApplicationRecord
   before_create :timestamp!
   
   belongs_to :person
-  belongs_to :event, foreign_key: :history_event_id
+  belongs_to :event, optional: true, foreign_key: :history_event_id #TODO: event is not optional
   belongs_to :archivable, optional: true, polymorphic: true
   
   store_attributes :datas do
