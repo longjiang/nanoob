@@ -1,0 +1,11 @@
+- year = @year
+- month = archive[:month]
+- count = archive[:count]
+
+.panel.panel-default
+  .panel-heading{role: 'tab', id: "heading#{year}#{month}"}
+    %h4.panel-title
+      =link_to archives_path(website_id: @website.id, year: year, month: month), id: "linkto#{year}#{month}", remote: true, data: {toggle: "collapse", parent: "#posts-archive-#{year}"}, aria: {expanded: false, controls: "collapse#{year}#{month}"}, class: "collapsed" do
+        = month
+        = "(#{count})"
+  .panel-collapse.collapse{id: "collapse#{year}#{month}", role: 'tabpanel', aria: {labelledby: "heading#{year}#{month}"}}

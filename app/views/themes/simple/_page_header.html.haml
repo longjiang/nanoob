@@ -1,8 +1,8 @@
-%header.intro-header{:style => "background: url(#{image_path('home-bg.jpg')})"}
+%header.intro-header{:style => "background-image: url(#{yield(:page_header_image).blank? ? image_path('home-bg.jpg') : yield(:page_header_image)})"}
   .container
     .row
       .col-lg-8.offset-lg-2.col-md-10.offset-md-1
         .site-heading
-          %h1 Clean Blog
+          %h2= yield(:heading).blank? ? @website.decorate.title : yield(:heading)
           %hr.small/
-          %span.subheading A Clean Blog Theme by Start Bootstrap  
+          %span.subheading= yield(:subheading).blank? ? @website.decorate.baseline : yield(:subheading)

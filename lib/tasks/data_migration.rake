@@ -43,8 +43,12 @@ class Datamigration
       end
       wpPost.status = statuses_mapping[wpPost.status]
       puts "Processing row ##{row_num +1}/#{total}  (ID: #{wpPost.id}, Status: #{wpPost.status}, Title: #{wpPost.title})" 
-      post = Blog::Post.create!(owner: owner, website: website, title: recoding(wpPost.title), body: recoding(wpPost.body), slug: wpPost.name, status: wpPost.status, published_at: wpPost.date, created_at: wpPost.date, updated_at: wpPost.date)
-      @ids_mapping[wpPost.id.to_s] = post.id
+      begin
+        post = Blog::Contents::Post.create!(owner: owner, website: website, title: recoding(wpPost.title), body: recoding(wpPost.body), slug: wpPost.name, status: wpPost.status, published_at: wpPost.date, created_at: wpPost.date, updated_at: wpPost.date)
+        @ids_mapping[wpPost.id.to_s] = post.id
+      rescue Exception => e
+        puts "WARNING: Post not created (#{e})."
+      end
     end
     website.set_meta(:ids_mapping, @ids_mapping)
     website.set_meta(:data_migration_step, 1)
@@ -70,7 +74,7 @@ class Datamigration
         wpMeta_value  = PHP.unserialize(wpMeta_value)
         url     = "http://#{wpMeta_value['bucket']}/#{wpMeta_value['key']}"
         url = URI.escape(url)
-        post = Blog::Post.find_by_id!(ids_mapping[wpPost_id.to_s])
+        post = Blog::Contents::Post.find_by_id!(ids_mapping[wpPost_id.to_s])
         print "    attaching file..."
         post.remote_featured_image_url = url
         post.save!(touch: false)
@@ -102,7 +106,7 @@ class Datamigration
       wpCategory_name = row['name']
       puts "Processing row ##{row_num +1}/#{total} (PostID: #{wpPost_id}, Category: #{wpCategory_name})"
       category = find_category_or_create_by_name(recoding(wpCategory_name))
-      post = Blog::Post.find_by_id!(ids_mapping[wpPost_id.to_s])
+      post = Blog::Contents::Post.find_by_id!(ids_mapping[wpPost_id.to_s])
       post.categories << category unless post.categories.include?(category)
     end
     puts "====="

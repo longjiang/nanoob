@@ -1,0 +1,11 @@
+en:
+  published: published
+  published_at: published
+  by: by
+  continued: read story
+  in_categories:
+    one: dans la catégorie %{categories}
+    other: dans les catégories %{categories}
+  with_tags:
+    one: avec le mot clé %{tags}
+    other: avec les mots clés %{tags}

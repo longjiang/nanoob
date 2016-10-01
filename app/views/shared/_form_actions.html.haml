@@ -1,7 +1,12 @@
-%span.hidden-xs-down
-  = link_to send("#{object.model_name.singular_route_key}_path", object) do
-    = i 'eye'
-= link_to send("edit_#{object.model_name.singular_route_key}_path", object) do
-  = i 'pencil'
-= link_to send("#{object.model_name.singular_route_key}_path", object), method: :delete, data: { confirm: 'Are you sure?' } do
-  = i 'trash-o'
+- if can? :read, object
+  %span.hidden-xs-down
+    = link_to send("#{object.model_name.singular_route_key}_path", object) do
+      = i 'eye'
+
+- if can? :update, object
+  = link_to send("edit_#{object.model_name.singular_route_key}_path", object) do
+    = i 'pencil'
+    
+- if can? :destroy, object
+  = link_to send("#{object.model_name.singular_route_key}_path", object), method: :delete, data: { confirm: 'Are you sure?' } do
+    = i 'trash-o'

@@ -1,0 +1,147 @@
+/ views/blog/contents/posts/_form.html.haml
+
+= bootstrap_form_for(@post) do |f|
+
+  / = f.alert_message 'errors'
+
+  .row
+  
+    .col-md-8.col-xl-9
+
+      - if @website
+        = f.hidden_field :business_website_id, value: @website.id
+      - else 
+        - websites = Business::Website.order('url desc')
+        = f.select :business_website_id, websites.map{|_| [_.decorate.host, _.id]}, 
+        {prompt: "#{t('forms.select')} #{tm('business/website')}..."},
+        { updateslug: 'blog_contents_post_slug', data: {klass: 'Contents::Post'} }
+
+      = f.text_field :title, updateslug: 'blog_contents_post_slug', data: {klass: 'Contents::Post'}
+    
+      = f.text_field :slug, prepend: @post.decorate.permalink_prefix, append: ".html", label: "Permalink"
+  
+      = f.hidden_field :body_xs_was, value: @post.body_xs
+  
+      = f.hidden_field :body_was, value: @post.body
+  
+      .hidden-sm-up= f.text_area :body_xs, placeholder: "Body"
+  
+      %fieldset.form-group.bootsy.hidden-xs-down{class: @post.decorate.body_xs_if_error_class }
+        %label.control-label{for: :partner_request_body}= han('blog/contents/post', :body)
+        = f.bootsy_area :body, class: 'form-control', placeholder: "Body"
+        %span.help-block= @post.decorate.errors[:body_xs].join(', ') if @post.decorate.has_errors(:body_xs)
+      
+      
+      - if is_admin?  
+        .card
+          .card-header
+            Users
+            .pull-right.toggle-card
+              =link_to i('chevron-down'), '#toggle-users', data: {toggle: 'collapse'}, class: 'text text-primary'
+          .card-block.collapse.toggle-chevron{id: 'toggle-users'}
+            - users_collection = People::User.decorator_class.collection
+            = f.select :owner_id, users_collection
+            = f.select :writer_id, users_collection
+            = f.select :editor_id, users_collection
+            = f.select :optimizer_id, users_collection
+      
+  
+    .col-md-4.col-xl-3
+    
+      .card
+        .card-header
+          Publish
+          .pull-right.toggle-card
+            =link_to i('chevron-up'), '#toggle-status', data: {toggle: 'collapse'}, class: 'text text-primary'
+        .collapse.in.toggle-chevron{id: 'toggle-status'}
+          .card-block
+            %p
+              = han('blog/contents/post', :status) 
+              \:
+              %span{class: "text-#{@post.decorate.status_color}"}
+                = i @post.decorate.status_icon
+                = @post.decorate.status
+            %p
+              = han('blog/contents/post', :publication)
+              \:
+              %span.published_at_value
+                - if @post.published_at
+                  = @post.decorate.published_at
+                - else
+                  Now
+              
+              = f.hidden_field :publish_now, value: true unless @post.published_at
+                
+              %button.btn.btn-secondary.btn-sm{id: 'show_published_at_select'} Modify
+              #published_at_select
+                = f.datetime_select :published_at, {hide_label: true, order: [:day, :month, :year, :hour, :minute]}, {class: 'form-control-sm'}
+                %button.btn.btn-secondary.btn-sm{id: 'update_published_at_select'} OK
+                = link_to 'Cancel', '#', id: 'hide_published_at_select'
+            
+          .card-block
+            - if @post.new_record?
+              = f.primary t('forms.contents.save_draft')
+            - else
+              = f.primary t('forms.contents.update')
+            = f.submit t('forms.contents.publish'), name: 'publish', class: "btn btn-secondary pull-right" if can?(:publish, @post) 
+            = f.submit t('forms.contents.unpublish'), name: 'unpublish', class: "btn btn-secondary pull-right" if can?(:unpublish, @post) 
+            = f.submit t('forms.contents.submit'), name: 'submit_for_review', class: "btn btn-secondary pull-right" if can?(:submit, @post) && @post.editor && !@post.editor.id.eql?(current_user.id)
+            = f.submit t('forms.contents.refuse'), name: 'refuse', class: "btn btn-secondary pull-right" if can?(:refuse, @post) && @post.writer && !@post.writer.id.eql?(current_user.id)
+            
+            
+      
+      - if @post.website
+      
+        .card
+          .card-header
+            Categories
+            .pull-right.toggle-card
+              =link_to i('chevron-up'), '#toggle-categories', data: {toggle: 'collapse'}, class: 'text text-primary'
+          .card-block.collapse.in.toggle-chevron{id: 'toggle-categories'}
+            .div{style: "height: 200px;overflow-y: scroll;"}
+              = f.collection_check_boxes :category_ids, @post.website.categories.order('posts_count desc, name asc'), :id, :name_with_tag, hide_label: true
+              
+        .card
+          .card-header
+            Tags
+            .pull-right.toggle-card
+              =link_to i('chevron-up'), '#toggle-tags', data: {toggle: 'collapse'}, class: 'text text-primary'
+          .card-block.collapse.in.toggle-chevron{id: 'toggle-tags'}
+            .div
+              = f.collection_select :tag_ids, @post.website.tags.order('posts_count desc, name asc'), :id, :name, {hide_label: true}, {multiple: true}
+            
+      
+      
+      .card
+        .card-header
+          = han('blog/contents/post', :featured_image)
+          .pull-right.toggle-card
+            =link_to i('chevron-up'), '#toggle-featured-image', data: {toggle: 'collapse'}, class: 'text text-primary'
+        
+        .card-block.text-xs-center.collapse.in.toggle-chevron{id: 'toggle-featured-image'}
+          - if @post.featured_image_id?
+            = attachment_image_tag @post, :featured_image, :fill, 300, 300, format: "jpg", class: 'img-fluid'
+            = f.check_box :remove_featured_image
+          - else
+            = image_tag 'decoration/placeholders/featured_image_100x100.png', class: 'uploaded_image img-fluid'
+            .file-loading.invisible
+              = i 'spinner fa-pulse'
+              Loading....
+            = f.attachment_field :featured_image, direct: true, class:"filestyle", data: {input:"false"}
+          
+  
+      / - if @post.featured_image_id?
+      /   = attachment_image_tag @post, :featured_image, :fill, 100, 100, format: "jpg", class: 'img-fluid'
+      /   = f.check_box :remove_featured_image
+      / - else
+      /   %fieldset.form-group
+      /     %label.control-label= han('blog/contents/post', :featured_image)
+      /     = image_tag 'decoration/placeholders/featured_image_100x100.png', class: 'uploaded_image img-fluid'
+      /     .file-loading.invisible
+      /       = i 'spinner fa-pulse'
+      /       Loading....
+      /     = f.attachment_field :featured_image, direct: true, class:"filestyle", data: {input:"false"}
+  
+      
+  
+  

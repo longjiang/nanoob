@@ -1,5 +1,6 @@
 class Person < ApplicationRecord
 
+  attachment :profile_image, type: :image
   
   include Storext.model
          

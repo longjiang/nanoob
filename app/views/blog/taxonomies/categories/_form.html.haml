@@ -1,0 +1,14 @@
+= bootstrap_form_for @category, remote: true do |f|
+  - if @website
+    = f.hidden_field :business_website_id, value: @website.id
+    = f.hidden_field :hide_website_col, value: true unless @show_website_col
+  - else 
+    - websites = Business::Website.order('url desc')
+    = f.select :business_website_id, websites.map{|_| [_.decorate.host, _.id]}, 
+    {prompt: "#{t('forms.select')} #{tm('business/website')}..."}, { updateslug: 'blog_taxonomies_category_slug', data: {klass: 'Taxonomies::Category'} }
+
+  = f.text_field :name, updateslug: 'blog_taxonomies_category_slug', data: {klass: 'Taxonomies::Category'}
+
+  = f.text_field :slug, prepend: @category.decorate.permalink_prefix, label: "Permalink"
+
+  .pull-xs-left= f.primary 

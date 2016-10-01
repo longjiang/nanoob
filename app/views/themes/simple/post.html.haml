@@ -1,0 +1,51 @@
+- if @post.featured_image_id?
+  - content_for :page_header_image do
+    =  attachment_url(@post, :featured_image) 
+
+- content_for :heading do
+  = @post.title
+
+- content_for :subheading do
+  .container
+    .row
+      .col-lg-8.offset-lg-2.col-md-10.offset-md-1
+        %ul.list-inline.text-xs-center
+          %li.list-inline-item
+            %a{:href => "#"}
+              %span.fa-stack.fa-lg
+                %i.fa.fa-circle.fa-stack-2x
+                %i.fa.fa-twitter.fa-stack-1x.fa-inverse
+          %li.list-inline-item
+            %a{:href => "#"}
+              %span.fa-stack.fa-lg
+                %i.fa.fa-circle.fa-stack-2x
+                %i.fa.fa-facebook.fa-stack-1x.fa-inverse
+          %li.list-inline-item
+            %a{:href => "#"}
+              %span.fa-stack.fa-lg
+                %i.fa.fa-circle.fa-stack-2x
+                %i.fa.fa-github.fa-stack-1x.fa-inverse
+- categories = []
+- @post.categories.each do |c|
+  - categories << link_to(c.name, category_path(slug: c.slug))
+    
+- tags = []
+- @post.tags.each do |t|
+  - tags << link_to(t.name, tag_path(slug: t.slug))
+
+.container
+  .row
+    .col-sm-8
+      %p.body= @post.body.html_safe
+
+      %p.footer
+        = t(:published_at).humanize
+        = I18n.l @post.published_at.to_date, format: :default
+        %span{itemprop: 'author', itemscope: true, itemtype: "https://schema.org/Person"}
+          = t(:by)
+          %span{itemprop: 'name'}= link_to @post.author.decorate.name, author_path(slug: @post.author.username)
+        = I18n.t(:in_categories, categories: categories.join(', '), count: categories.count).html_safe unless categories.blank?
+        = I18n.t(:with_tags, tags: tags.join(', '), count: tags.count).html_safe unless tags.blank?
+        \.
+       
+        

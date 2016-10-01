@@ -1,0 +1,17 @@
+/ views/blog/people/authors/_edit.html.haml
+
+- content_for :card_title do
+  = "Edit Author"
+  
+- content_for :add_new_button do
+  - if can? :create, People::Author
+    .pull-xs-right 
+      = link_to people_authors_path, 
+        class: 'btn btn-secondary pull-right', 
+        role: 'button', 
+        title: th('activerecord.actions.new') do
+        = i 'plus'
+        = t 'activerecord.actions.new'
+    
+= render 'form'
+

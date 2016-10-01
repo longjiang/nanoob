@@ -2,6 +2,8 @@ class Business::Website < ApplicationRecord
   
   include Nanoob::Meta
   
+  has_meta :title, :baseline, :theme, :owner_id, :author_id, :woopra, :page_title_template
+  
   enum platform: [ :wordpress, :blogger, :nanoob ]
   
   THEMES = %w(simple lapoigneedemain.com)
@@ -13,18 +15,19 @@ class Business::Website < ApplicationRecord
   validates :url,          url: true
   validates :theme,        presence: true
   
-  belongs_to  :business, counter_cache: true
-  has_many    :backlinks, class_name: 'Partner::Backlink', foreign_key: :business_website_id
-  has_many    :posts    , class_name: 'Blog::Post', foreign_key: :business_website_id
-  has_many    :categories    , class_name: 'Blog::Category', foreign_key: :business_website_id
+  belongs_to  :business    , counter_cache: true
+  has_many    :backlinks   , class_name: 'Partner::Backlink', foreign_key: :business_website_id
+  has_many    :pages       , class_name: 'Blog::Contents::Page', foreign_key: :business_website_id
+  has_many    :posts       , class_name: 'Blog::Contents::Post', foreign_key: :business_website_id
+  has_many    :categories  , class_name: 'Blog::Taxonomies::Category', foreign_key: :business_website_id
+  has_many    :tags        , class_name: 'Blog::Taxonomies::Tag', foreign_key: :business_website_id
   
   scope :has_categories , -> { (where "categories_count > 0 ")}
+  scope :has_tags , -> { (where "tags_count > 0 ")}
   
   delegate :name, to: :business, prefix: true
   
   before_save :remove_trailing_slash
-  
-  
   
   def remove_trailing_slash
     if url_changed?
@@ -38,28 +41,36 @@ class Business::Website < ApplicationRecord
     self.find_by_url("#{uri.scheme}://#{uri.host}")
   end
   
-  def baseline=(baseline)
-    set_meta(:baseline, baseline)
-  end
-  
-  def baseline
-    get_meta(:baseline)
-  end
-  
-  def theme=(theme)
-    set_meta(:theme, theme)
-  end
-  
   def theme
     get_meta(:theme) || self.class::THEMES[0]
   end
   
-  def owner=(owner)
-    set_meta(:owner, owner)
+  def owner
+    @owner ||= get_meta(:owner_id).present? ? People::User.find(get_meta(:owner_id)) : People::User.new
   end
   
-  def owner
-    get_meta(:owner) || People::User.first
+  def author
+    @author ||= get_meta(:author_id).present? ? People::Author.find(get_meta(:author_id)) : People::Author.new
+  end
+  
+  def add_unknown_category(slug)
+    categories = unknown_categories
+    categories << slug
+    set_meta(:unknown_categories, categories.uniq) 
+  end
+  
+  def unknown_categories
+    get_meta(:unknown_categories) || []
+  end
+  
+  def add_unknown_tag(slug)
+    tags = unknown_tags
+    tags << slug
+    set_meta(:unknown_tags, tags.uniq) 
+  end
+  
+  def unknown_tags
+    get_meta(:unknown_tags) || []
   end
   
   # mandatory for grouped_collection_select?

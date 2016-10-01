@@ -1,0 +1,34 @@
+= render_deck
+        
+.card.card-outline-primary
+  .card-block
+    %ul.list-group.list-group-flush
+      %li.list-group-item 
+        %b Platform:
+        = @website.platform
+      %li.list-group-item
+        %b Url:
+        = @website.url
+      %li.list-group-item
+        %b Title
+        = @website.object.title
+      %li.list-group-item
+        %b Owner
+        = @website.owner.decorate.name
+        
+  / - if can? :update, @website.object
+  /   .card-footer
+  /     = link_to  "EDIT", edit_business_website_path(@website), class: 'btn btn-primary'
+
+
+.card
+  .card-header
+    Statistics
+  .card-block
+    %ul.list-group.list-group-flush
+      %li.list-group-item 
+        %b Backlinks 
+        %span.tag.tag-default= link_to @website.backlinks.size, partner_backlinks_path(website_id: @website.id)
+        = link_to new_partner_backlink_path(website_id: @website.id), class: 'tag tag-primary', role: 'button', title: th('activerecord.actions.new') do
+          = i 'plus'
+          %span.hidden-md-down= t 'activerecord.actions.new'

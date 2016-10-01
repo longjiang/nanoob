@@ -1,0 +1,6 @@
+= render 'list'
+$('#categories_count').html('#{@categories_unpaginated.count}');
+$('#blog_taxonomy_category_name').val('');
+$('#blog_taxonomy_category_slug').val('');
+$('<div></div>').addClass('alert alert-info').html('Category Created').appendTo($('.category_flash')).fadeOut(3000);
+

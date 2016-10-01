@@ -1,13 +1,14 @@
-%title= @page_title
+= page_title
 %meta{:charset => "utf-8"}
 %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}
 %meta{:content => "width=device-width, initial-scale=1, shrink-to-fit=no", :name => "viewport"}
-%meta{:content => @page_description, :name => "description"}
+= page_description
 
 / = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic'
 = stylesheet_link_tag    "#{@stylesheet_file}", media: 'all', 'data-turbolinks-track' => 'reload'
 = javascript_include_tag "#{@javascript_file}", 'data-turbolinks-track' => true
 = csrf_meta_tags
+= woopra_tracker
 
 / HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
 / WARNING: Respond.js doesn't work if you view the page via file://

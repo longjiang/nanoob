@@ -1,15 +1,5 @@
 require 'resque/server'
 
-class DomainConstraint
-  def self.matches? request
-    matching_website?(request)
-  end
-  def self.matching_website? request
-    url = "#{request.protocol}#{request.host.gsub('.dev','').gsub('www.','')}"
-    Business::Website.find_by_url(url).present?
-  end
-end
-
 Rails.application.routes.draw do
   
   devise_for :users, class_name: "People::User"
@@ -28,22 +18,27 @@ Rails.application.routes.draw do
     resources :partners, :concerns => :paginatable
     resources :partner_requests, controller: 'partner/requests', :concerns => :paginatable
     resources :partner_backlinks, controller: 'partner/backlinks', :concerns => :paginatable
-    resources :blog_posts, controller: 'blog/posts', :concerns => :paginatable
-    resources :blog_categories, controller: 'blog/categories', :concerns => :paginatable
-    resources :users, controller: 'people/users'
+    
+    #STI
+    resources :blog_contents_posts, controller: 'blog/contents/posts', :concerns => :paginatable
+    resources :blog_contents_pages, controller: 'blog/contents/pages', :concerns => :paginatable
+    
+    resources :blog_taxonomies_categories, controller: 'blog/taxonomies/categories', :concerns => :paginatable
+    resources :blog_taxonomies_tags, controller: 'blog/taxonomies/tags', :concerns => :paginatable
+    
+    resources :people_users, controller: 'people/users', :concerns => :paginatable
+    resources :people_authors, controller: 'people/authors', :concerns => :paginatable
+    
   end
-  
-  match '/:year/:month/:slug', to: 'blog/public/posts#show', :constraints => DomainConstraint, via: [:get, :post], as: :post
-  get '/page/:page', :constraints => DomainConstraint, to: 'blog/public/posts#index'
-  root 'blog/public/posts#index', :constraints => DomainConstraint, via: [:get, :post]
-  
+
+  Blog::Router.load
   
   scope '/ws' do
-    get '/forms/blog_post_slug_generator',      to: 'webservice/forms#blog_post_slug_generator' 
-    get '/forms/blog_post_permalink_prefix',    to: 'webservice/forms#blog_post_permalink_prefix'
-    get '/forms/blog_category_slug_generator',  to: 'webservice/forms#blog_category_slug_generator' 
-    get '/forms/blog_category_permalink_prefix',to: 'webservice/forms#blog_category_permalink_prefix'
-    get '/forms/blog_post_published_at',        to: 'webservice/forms#blog_post_published_at'
+    get '/forms/blog_slug_generator',           to: 'webservice/forms#blog_slug_generator' 
+    get '/forms/blog_permalink_prefix',         to: 'webservice/forms#blog_permalink_prefix'
+   
+    get '/forms/blog_contents_post_published_at',        to: 'webservice/forms#blog_contents_post_published_at'
+    get '/forms/blog_contents_page_published_at',        to: 'webservice/forms#blog_contents_page_published_at'
   end
   
   root 'welcome#index'

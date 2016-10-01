@@ -1,0 +1,33 @@
+
+
+%tr{class: post.draft? ? 'text text-muted' : ''}
+  %th.text-nowrap.text-xs-center{scope: "row"}= post.id
+  
+  %td= image_tag attachment_url(post, :featured_image, :fill, 20, 20, format: "jpg") if post.featured_image_id?
+  
+  - if @website.nil?
+    %td.text-nowrap= link_to post.website.decorate.host, filtered_entries_path(business_website_id: post.website.id)
+  
+  %td.text-nowrap
+    = link_to post.decorate.title, can?(:update, post) ? edit_blog_contents_post_path(post) : blog_contents_post_path(post)
+    = link_to post.decorate.public_url do
+      = i 'external-link'
+  
+  - %w(owner editor writer optimizer).each do |user_type|  
+    - if params[user_type.to_sym].blank?
+      - user = post.send(user_type)
+      %td.text-nowrap.text-xs-center{class: (params["mine"] && user.eql?(current_user)) ? 'text text-primary' : ''}
+        = user.nil? ? '-' : link_to_if(!user.eql?(current_user), user.decorate.name, people_user_path(user))
+  
+  %td.text-nowrap=  post.decorate.categories(params)
+  %td.text-nowrap=  post.decorate.tags(params)
+  %td.text-nowrap
+    %span{class: "text-#{post.decorate.status_color}"}
+      = i post.decorate.status_icon
+      = post.decorate.status_with_date
+  %td= post.comments_count
+  %td.text-nowrap
+    %span{class: "text-#{post.decorate.seo_score_color}"}
+      = i 'circle'
+  %td.text-nowrap
+    = render partial: 'shared/form_actions', locals: {object: post} 

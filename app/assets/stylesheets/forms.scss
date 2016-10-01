@@ -1,3 +1,7 @@
+.select2-container--bootstrap {
+  color: #000;
+}
+
 form {
     label.required:after {
     content:" *";
@@ -14,22 +18,17 @@ form {
     margin-top: 10px;
   }
 
-  .select2-container--bootstrap {
-    color: #000;
-  }
+
 
   fieldset.bootsy {
-    border: solid 1px grey;
-    padding: 10px;
+    // border: solid 1px grey;
+    // padding: 10px;
   
     textarea {
       height: 300px;
       color: #000;
+      width: 100%;
     }
-  }
-
-  body.bootsy_text_area  a {
-   color: red; 
   }
 
   .has-error {
@@ -50,5 +49,25 @@ form {
   
   .toggle-card {
     cursor: pointer;
+  }
+}
+
+.form-control.bootsy_text_area  {
+  a {
+    color: $brand-primary; 
+    &[rel~="internal"] {
+      &:after {
+        content: "\f08e";
+        font-family: FontAwesome;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: inherit;
+        padding-left: 0.2em;
+        color: $brand-danger;
+      }
+    }
+    &:hover {
+      color: darken($brand-primary, 15%);
+    }
   }
 }

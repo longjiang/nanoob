@@ -1,0 +1,39 @@
+.list-group-item, 
+.list-group-item a{
+  color: #000;
+}
+
+.card-header {
+  color: #000;
+}
+
+@mixin card-footer($color) {
+  background-color: $card-cap-bg;
+  color: $color;
+  a {
+    color: $color;
+    &:hover {
+      color: darken($color, 15%);
+    }
+  }
+}
+
+.card-primary .card-footer {
+  @include card-footer($brand-primary);
+}
+
+.card-info .card-footer {
+  @include card-footer($brand-info);
+}
+
+.card-success .card-footer {
+  @include card-footer($brand-success);
+}
+
+.card-warning .card-footer {
+  @include card-footer($brand-warning);
+}
+
+.card-danger .card-footer {
+  @include card-footer($brand-danger);
+}
