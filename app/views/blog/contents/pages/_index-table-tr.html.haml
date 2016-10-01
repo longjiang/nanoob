@@ -1,0 +1,24 @@
+
+
+%tr{class: page.draft? ? 'text text-muted' : ''}
+  %th.text-nowrap.text-xs-center{scope: "row"}= page.id
+  
+  %td= image_tag attachment_url(page, :featured_image, :fill, 20, 20, format: "jpg") if page.featured_image_id?
+  
+  - if @website.nil?
+    %td.text-nowrap= link_to page.website.decorate.host, filtered_entries_path(business_website_id: page.website.id)
+  
+  %td.text-nowrap= page.decorate.title
+  
+  - if params[:owner].blank?
+    %td.text-nowrap= page.decorate.owner_username
+  
+  %td.text-nowrap
+    %span{class: "text-#{page.decorate.status_color}"}
+      = i page.decorate.status_icon
+      = page.decorate.status_with_date
+  %td.text-nowrap
+    %span{class: "text-#{page.decorate.seo_score_color}"}
+      = i 'circle'
+  %td.text-nowrap
+    = render partial: 'shared/form_actions', locals: {object: page} 

@@ -1,0 +1,20 @@
+/ views/blog/contents/posts/index.html.haml
+
+- unless @website.nil?
+  - add_breadcrumb @website.business.decorate.name
+  - add_breadcrumb @website.decorate.host
+  
+- content_for :page_title do
+  = i Blog::Taxonomies::Tag.decorator_class.icon
+  = tmp 'blog/taxonomies/tag'
+  %span.tag.tag-info{id: 'tags_count'}= @tags_unpaginated.count
+  
+%p= t 'descriptions.blog/taxonomies/tags'
+
+.row
+  .col-md-12.col-lg-5
+    = render 'list'
+  .col-md-12.col-lg-7
+    .tag_flash
+    .tag_form
+      = render 'new'

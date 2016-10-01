@@ -18,5 +18,6 @@
           = render_breadcrumbs
           .hidden-xs-down
             = render_index_addnew
-          %h1= yield :page_title
+            = render_show_edit
+          %h1.page-title= yield :page_title
           = yield

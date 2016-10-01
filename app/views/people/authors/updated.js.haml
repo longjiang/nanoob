@@ -1,0 +1,4 @@
+= render 'list'
+$('.author_form').html('#{j render(partial: 'new')}');
+$('<div></div>').addClass('alert alert-info').html('author Updated').appendTo($('.author_flash')).fadeOut(3000);
+= render 'activate'

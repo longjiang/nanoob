@@ -1,6 +1,6 @@
 %li.nav-item
   = link_to url, options.delete(:html_options) {{class: 'nav-link'}} do
-    = i options[:icon]
+    = i "#{options[:icon]} fa-fw"
     &nbsp;
     = body
   = options[:submenu]

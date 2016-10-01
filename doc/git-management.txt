@@ -17,3 +17,9 @@ created develop->blogs branch
 
 29/08/2016 Release 1.0
  - Blogs
+ 
+ 02/10/2016 Release 1.1
+  - Blogs 
+  - Refactoring Page, Post, Authors
+  - User roles management
+  - Design Theme "simple"

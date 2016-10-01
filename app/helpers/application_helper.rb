@@ -25,4 +25,12 @@ module ApplicationHelper
     model.to_s.classify.constantize.decorator_class.send('human_enum_name', attribute, value)
   end
   
+  def has_role? role
+    current_user.has_role? role
+  end
+  
+  def is_admin?
+    has_role? :admin
+  end
+  
 end

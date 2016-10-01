@@ -14,7 +14,7 @@ module IndexAddnewConcern
     @addnew_path
   end
   
-  def index_addnew(path)
+  def addnew_path=(path)
     @addnew_path = path
   end
   
@@ -24,7 +24,7 @@ module IndexAddnewConcern
    module ClassMethods
      def index_addnew(path=nil)
        before_action only: [:index] do |controller|
-         controller.send(:index_addnew, path || new_object_path)
+         controller.send("addnew_path=", path || new_object_path) if can? :create, controller_path.singularize.camelize.constantize
         end
      end
    end

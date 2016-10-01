@@ -1,47 +1,41 @@
-class Blog::Public::PostsController < ApplicationController
-  
-  skip_before_action :authenticate_user!
-  skip_before_action :init_menu
-  skip_before_action :menu_activate
-  before_action      :find_website
-  before_action      :javascript_file
-  before_action      :stylesheet_file
-  
-  layout :layout
+class Blog::Public::PostsController < Blog::Public::ContentsController
   
   def index
-    @posts_unpaginated = @website.posts.published
+    @posts_unpaginated = @website.posts.published.order(published_at: 'desc')
     @posts = @posts_unpaginated.page(params[:page])
+    @archives = @website.posts.published.group('extract(year from published_at)').count.map{|a,b| {year: a.to_i, count: b}}
     render template: "themes/simple/index"
   end
   
   def show
-    @post = Blog::Post.website(@website).find_by_slug!(params[:slug])
-    render template: "themes/simple/show"
+    @post = Blog::Contents::Post.website(@website).find_by_slug!(params[:slug])
+    @post.viewed
+    woopra_track 'nanoob article', {
+      title: @post.title, 
+      permalink: post_url(slug: @post.slug, year: @post.year, month: @post.month), 
+      "post date" => (@post.published? ? @post.published_at : @post.updated_at), 
+      status: @post.status,
+      author: @post.author.decorate.name 
+    }
+    render template: "themes/simple/post"
+  end
+    
+  def page_title
+    case action_name
+    when 'index'
+      @website.decorate.title
+    when 'show'
+      @post.decorate.title
+    end
   end
   
-  private
-  
-  def find_website
-    @website ||= Business::Website.find_by_url("#{request.protocol}#{request.host.gsub('.dev','').gsub('www.','')}")
-  end
-  
-  def layout
-    file = Rails.root.join('app', 'views', 'themes', @website.theme, 'layout.html.haml')
-    theme = File.exist?(file) ? @website.theme : 'simple'
-    "../themes/#{theme}/layout"
-  end
-  
-  def javascript_file
-    file = Rails.root.join('app', 'assets', 'themes', @website.theme, "javascripts", "index.js")
-    theme = File.exist?(file) ? @website.theme : 'simple'
-    @javascript_file = "#{theme}/javascripts/index"
-  end
-  
-  def stylesheet_file
-    file = Rails.root.join('app', 'assets', 'themes', @website.theme, "stylesheets", "index.scss")
-    theme = File.exist?(file) ? @website.theme : 'simple'
-    @stylesheet_file = "#{theme}/stylesheets/index"
+  def page_title_template
+    case action_name
+    when 'index'
+      "%%sitename%%"
+    else
+      super
+    end
   end
   
 end

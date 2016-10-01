@@ -1,0 +1,15 @@
+%tr
+  %th.text-nowrap.text-xs-center{scope: "row"}= tag.id
+  - if @website.nil?
+    %td.text-nowrap= link_to tag.website.host, filtered_entries_path(business_website_id: tag.website.id)
+  %td
+    = link_to tag.name, edit_blog_taxonomies_tag_path(tag, hide_website_col: @website.nil? ? nil : true), remote: true
+    = link_to tag.decorate.public_url do
+      = i 'external-link'
+  %td
+    = link_to tag.posts.size, blog_contents_posts_path(tag_id: tag.id)
+    
+  %td
+    - if tag.posts.size.eql?(0)
+      = link_to blog_taxonomies_tag_path(tag, hide_website_col: @website.nil? ? nil : true), method: :delete, data: { confirm: 'Are you sure?' }, remote: true do
+        = i 'trash-o'

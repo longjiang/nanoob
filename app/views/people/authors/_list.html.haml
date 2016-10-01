@@ -1,0 +1,20 @@
+.table-responsive
+  %table.table.table-sm.table-hover
+    %thead.thead-default
+      %tr
+        %th.text-nowrap.text-xs-center #
+        
+        %th.text-nowrap Username
+        
+        %th.hidden-lg-down.text-nowrap.text-xs-center
+          = i Blog::Contents::Post.decorator_class.user_icon(:optimizer)
+          %span.hidden-xs-down
+            = han 'blog/contents/post', :optimizer
+          
+        %th.text-nowrap 
+    
+    %tbody
+      = render partial: 'row', collection: @authors, as: :author
+      
+#pagination-bottom.text-xs-center 
+  = paginate @authors, remote: true, action: :index

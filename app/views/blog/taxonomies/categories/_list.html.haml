@@ -1,0 +1,25 @@
+= render 'filters'
+  
+.table-responsive
+  %table.table.table-sm.table-hover.loading
+    %thead.thead-default
+      %tr
+        %th.text-nowrap.text-xs-center #
+        
+        - if @website.nil?
+          %th.text-nowrap.text-xs-center.text-sm-left
+            = i Business::Website.decorator_class.icon
+            %span.hidden-xs-down= tm 'business/website'
+            
+        %th= han 'blog/taxonomies/category', :name
+        %th.text-nowrap.text-xs-center.text-sm-left
+          = i Blog::Contents::Post.decorator_class.icon
+          %span.hidden-xs-down= tm 'blog/contents/post'
+        
+        %th
+  
+    %tbody
+      = render partial: 'row', collection: @categories, as: :category
+      
+#pagination-bottom.text-xs-center 
+  = paginate @categories, remote: true, action: :index

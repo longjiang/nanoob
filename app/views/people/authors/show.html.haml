@@ -1,0 +1,13 @@
+- content_for :page_title do
+  = i People::Author.decorator_class.icon
+  = tmp 'people/author'
+  
+%p= t 'descriptions.people/authors'
+
+.row
+  .col-md-12.col-lg-3
+    = render 'list'
+  .col-md-12.col-lg-9
+    .author_flash
+    .author_form
+      = render 'edit'

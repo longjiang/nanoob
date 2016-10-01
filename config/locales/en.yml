@@ -15,15 +15,41 @@ en:
     all_businessess: all businesses
     all_categories: all categories
     all_channels: all channels
+    all_editors: all editors
+    all_optimizers: all optimizers
     all_owners: all owners
     all_statuses: all statuses
     all_states: all states
+    all_tags: all tags
     all_websites: all websites
+    all_writers: all writers
     filter: filter
     mine: mine
     new: new
+    page_title_template_help: "Default: <i>%{default_tpl}</i>, Options: %{options}"
     recent: recent
     select: select
+    cancel: cancel
+    contents:
+      save_draft: Save Draft
+      update: Update
+      publish: Publish
+      unpublish: Unpublish
+      submit: Submit to editor
+      refuse: Refuse
+      
+
+  authors:
+    create:
+      flash: 
+        success_html: Author has been successfully created.
+    update:
+      flash:
+        success_html: Author has been successfully updated.
+    destroy:
+      flash:
+        success_html: Author has been successfully deleted.
+
     
   backlinks:
     create:
@@ -55,6 +81,17 @@ en:
       flash:
         success_html: Partner has been successfully deleted.
         
+  pages:
+    create:
+      flash: 
+        success_html: Page has been successfully created.
+    update:
+      flash:
+        success_html: Page has been successfully updated.
+    destroy:
+      flash:
+        success_html: Page has been successfully deleted.
+        
   posts:
     create:
       flash: 
@@ -74,16 +111,16 @@ en:
       flash:
         success_html: Request has been successfully updated.
         
-    websites:
-      create:
-        flash: 
-          success_html: Website has been successfully created.
-      update:
-        flash:
-          success_html: Website has been successfully updated.
-      destroy:
-        flash:
-          success_html: Website has been successfully deleted.
+  websites:
+    create:
+      flash: 
+        success_html: Website has been successfully created.
+    update:
+      flash:
+        success_html: Website has been successfully updated.
+    destroy:
+      flash:
+        success_html: Website has been successfully deleted.
     
 # descriptions
   descriptions:
@@ -92,25 +129,38 @@ en:
     partners: This is the list of our partners who may publish backlinks to our websites.
     partner/requests: List of partnership requests we made to our partners. 
     partner/backlinks: List of actual backlinks published (active or not).
-    blog/posts: Posts published on our network of websites.
-    blog/categories: Post categories are scoped to a website. 
+    people/users: List of people with access to back office.
+    people/authors: List of virtual people who signed the posts.
+    blog/contents/pages: Static pages published on our network of websites.
+    blog/contents/posts: Posts published on our network of websites.
+    blog/taxonomies/categories: Post categories are scoped to a website. 
+    blog/taxonomies/tags: Post tags are scoped to a website. 
     
 # Menu
   menu:
     
-    blog/categories : Categories
-    blog/posts: Posts
+    blog/contents/pages: Pages
+    blog/contents/posts: Posts
+    blog/taxonomies/categories : Categories
+    blog/taxonomies/tags : Tags
     businesses: Businesses
     business/websites: Websites
+    people: People
+    people/users: Users
     partners: Partners
     partner/requests: Requests
     partner/backlinks: Backlinks
     
-    blog/categories:
-      all: Categories
-    blog/post:
+    blog/contents/page:
+      all: All Pages
+      add_new: Add new
+    blog/contents/post:
       all: All Posts
       add_new: Add new
+    blog/taxonomies/categories:
+      all: Categories
+    blog/taxonomies/tags:
+      all: Tags
     business:
       all: All Businesses
       add_new: Add new
@@ -119,6 +169,12 @@ en:
       add_new: Add new
     blog/post:
       all: All posts
+      add_new: Add new
+    people/author:
+      all: Authors
+      add_new: Add new
+    people/user:
+      all: All Users
       add_new: Add new
     partner:
       all: All Partners
@@ -138,18 +194,30 @@ en:
       edit: Edit
       
     models:
-      blog/category:
-        one: category
-        other: categories
-      blog/post:
+      blog/contents/page:
+        one: page
+        other: pages
+      blog/contents/post:
         one: post
         other: posts
+      blog/taxonomies/category:
+        one: category
+        other: categories
+      blog/taxonomies/tag:
+        one: tag
+        other: tags
       business:
         one: business
         other: businesses
       business/website: 
         one: website
         other: websites
+      people/author:
+        one: author
+        other: authors
+      people/user:
+        one: user
+        other: users
       partner:
         one: partner
         other: partners
@@ -164,7 +232,7 @@ en:
         other: Users
       
     attributes:
-      blog/post:
+      blog/contents/page:
         categories: Categories
         featured_image: Featured Image
         status: Status
@@ -177,6 +245,27 @@ en:
             draft: Last updated
             published: Published
             scheduled: Scheduled
+      blog/contents/post:
+        categories: Categories
+        featured_image: Featured Image
+        status: Status
+        statuses:
+          draft: Draft
+          published: Published
+          scheduled: Scheduled
+          submitted: Submitted
+        decorator:
+          statuses:
+            with_date:
+              draft: Last updated %{date}
+              published: Published %{date}
+              scheduled: Scheduled on %{date}
+              submitted: Last reviewed %{date}
+            with_date_in_words:
+              draft: Last updated %{date} ago
+              published: Published %{date} ago
+              scheduled: Scheduled in %{date}
+              submitted: Last reviewed %{date} ago
       business:
         name: Name
         product: Product Line
@@ -186,6 +275,9 @@ en:
         platform: Platform
         url: Url
         host: Host
+        title: Title
+        baseline: Baseline
+        owner: Owner
       partner:
         title: Title
         category: Category
@@ -208,4 +300,5 @@ en:
         channels:
           email: E-mail
           webform: Web Form
-      
+      people/author:
+        optimizer_id: Optimizer

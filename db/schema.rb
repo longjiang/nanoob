@@ -10,30 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160818114554) do
+ActiveRecord::Schema.define(version: 20161001003526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "blog_categories", force: :cascade do |t|
-    t.integer  "business_website_id"
-    t.integer  "parent_id"
-    t.string   "name"
-    t.string   "slug"
-    t.integer  "posts_count",         default: 0
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.index ["business_website_id"], name: "index_blog_categories_on_business_website_id", using: :btree
-  end
-
-  create_table "blog_categories_posts", id: false, force: :cascade do |t|
-    t.integer "blog_category_id", null: false
-    t.integer "blog_post_id",     null: false
-    t.index ["blog_category_id", "blog_post_id"], name: "index_blog_categories_posts_on_category_id_and_post_id", unique: true, using: :btree
-    t.index ["blog_post_id"], name: "index_blog_categories_posts_on_blog_post_id", using: :btree
-  end
-
-  create_table "blog_posts", force: :cascade do |t|
+  create_table "blog_contents", force: :cascade do |t|
     t.integer  "business_website_id"
     t.integer  "owner_id"
     t.integer  "editor_id"
@@ -48,8 +30,31 @@ ActiveRecord::Schema.define(version: 20160818114554) do
     t.integer  "categories_count",    default: 0
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
-    t.index ["business_website_id"], name: "index_blog_posts_on_business_website_id", using: :btree
-    t.index ["slug"], name: "index_blog_posts_on_slug", using: :btree
+    t.string   "type"
+    t.integer  "optimizer_id"
+    t.index ["business_website_id"], name: "index_blog_contents_on_business_website_id", using: :btree
+    t.index ["slug"], name: "index_blog_contents_on_slug", using: :btree
+    t.index ["type"], name: "index_blog_contents_on_type", using: :btree
+  end
+
+  create_table "blog_contents_taxonomies", id: false, force: :cascade do |t|
+    t.integer "blog_taxonomy_id", null: false
+    t.integer "blog_content_id",  null: false
+    t.index ["blog_content_id"], name: "index_blog_contents_taxonomies_on_blog_content_id", using: :btree
+    t.index ["blog_taxonomy_id", "blog_content_id"], name: "index_blog_contents_taxonomies_on_content_id_and_taxonomy_id", unique: true, using: :btree
+  end
+
+  create_table "blog_taxonomies", force: :cascade do |t|
+    t.integer  "business_website_id"
+    t.integer  "parent_id"
+    t.string   "name"
+    t.string   "slug"
+    t.integer  "posts_count",         default: 0
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.string   "type"
+    t.index ["business_website_id"], name: "index_blog_taxonomies_on_business_website_id", using: :btree
+    t.index ["type"], name: "index_blog_taxonomies_on_type", using: :btree
   end
 
   create_table "bootsy_image_galleries", force: :cascade do |t|
@@ -81,6 +86,8 @@ ActiveRecord::Schema.define(version: 20160818114554) do
     t.integer  "categories_count", default: 0
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.integer  "tags_count",       default: 0
+    t.integer  "pages_count",      default: 0
     t.index ["business_id"], name: "index_business_websites_on_business_id", using: :btree
   end
 
@@ -106,15 +113,25 @@ ActiveRecord::Schema.define(version: 20160818114554) do
   end
 
   create_table "histories", force: :cascade do |t|
-    t.string   "archivable_type",              null: false
-    t.integer  "archivable_id",                null: false
+    t.string   "archivable_type",               null: false
+    t.integer  "archivable_id",                 null: false
     t.integer  "person_id"
-    t.datetime "valid_from",                   null: false
-    t.datetime "valid_to",                     null: false
-    t.integer  "lock_version",    default: 0,  null: false
-    t.jsonb    "datas",           default: {}, null: false
+    t.datetime "valid_from",                    null: false
+    t.datetime "valid_to",                      null: false
+    t.integer  "lock_version",     default: 0,  null: false
+    t.jsonb    "datas",            default: {}, null: false
+    t.integer  "history_event_id"
     t.index ["archivable_type", "archivable_id"], name: "index_histories_on_archivable_type_and_archivable_id", using: :btree
+    t.index ["history_event_id"], name: "index_histories_on_history_event_id", using: :btree
     t.index ["person_id"], name: "index_histories_on_person_id", using: :btree
+  end
+
+  create_table "history_events", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.jsonb    "datas"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "meta", force: :cascade do |t|
@@ -196,19 +213,25 @@ ActiveRecord::Schema.define(version: 20160818114554) do
     t.integer  "posts_count",            default: 0
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "pages_count",            default: 0
+    t.integer  "edited_posts_count",     default: 0
+    t.integer  "written_posts_count",    default: 0
+    t.integer  "optimized_posts_count",  default: 0
+    t.string   "profile_image_id"
     t.index ["email"], name: "index_people_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_people_on_reset_password_token", unique: true, using: :btree
     t.index ["username"], name: "index_people_on_username", unique: true, using: :btree
   end
 
-  add_foreign_key "blog_categories", "blog_categories", column: "parent_id"
-  add_foreign_key "blog_categories", "business_websites"
-  add_foreign_key "blog_posts", "business_websites"
-  add_foreign_key "blog_posts", "people", column: "editor_id"
-  add_foreign_key "blog_posts", "people", column: "owner_id"
-  add_foreign_key "blog_posts", "people", column: "writer_id"
+  add_foreign_key "blog_contents", "business_websites"
+  add_foreign_key "blog_contents", "people", column: "editor_id"
+  add_foreign_key "blog_contents", "people", column: "owner_id"
+  add_foreign_key "blog_contents", "people", column: "writer_id"
+  add_foreign_key "blog_taxonomies", "blog_taxonomies", column: "parent_id"
+  add_foreign_key "blog_taxonomies", "business_websites"
   add_foreign_key "business_websites", "businesses"
   add_foreign_key "businesses", "business_products"
+  add_foreign_key "histories", "history_events"
   add_foreign_key "histories", "people"
   add_foreign_key "partner_backlinks", "business_websites"
   add_foreign_key "partner_backlinks", "businesses"
