@@ -26,3 +26,6 @@ created develop->blogs branch
   
 02/10/2016 Hotfix 1.1.1
  - New relic Gem
+ 
+02/10/2016 Hotfix 1.1.2
+ - New relic config
