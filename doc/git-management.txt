@@ -23,3 +23,6 @@ created develop->blogs branch
   - Refactoring Page, Post, Authors
   - User roles management
   - Design Theme "simple"
+  
+02/10/2016 Hotfix 1.1.1
+ - New relic Gem
