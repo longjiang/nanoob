@@ -67,7 +67,7 @@ gem 'access-granted', '~> 1.1.0'
 
 # activerecord
 gem "validate_url"
-gem "mysql2"
+#gem "mysql2"
 gem 'iconv'
 
 # state machine
@@ -122,6 +122,7 @@ end
 
 group :heroku do
   gem 'rails_12factor' # enable features such as static asset serving and logging on Heroku
+  gem 'newrelic_rpm'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
