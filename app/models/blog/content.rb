@@ -1,6 +1,7 @@
 class Blog::Content < ApplicationRecord
   
   include Nanoob::Meta
+  include Trackable
   #include Bootsy::Container
   
   attachment :featured_image, type: :image
@@ -16,6 +17,8 @@ class Blog::Content < ApplicationRecord
   validates   :slug,          presence: true
   validates   :slug,          uniqueness:  { scope: :business_website_id }
   #validates_format_of :slug, :without => /^\d/
+  
+  has_many    :anchors,    class_name: 'Seo::Anchor', foreign_key: 'blog_content_id'
     
   scope :owner,           -> (staff)      { where owner: staff.to_i }
   scope :editor,          -> (staff)      { where editor: staff.to_i }
@@ -32,6 +35,8 @@ class Blog::Content < ApplicationRecord
   scope :published_before,-> (date)       { where("#{self.table_name}.published_at < ? ", date) }
   scope :category_id,     -> (id)         { joins(:categories).where('blog_taxonomies.id = ?', id) }
   scope :tag_id,          -> (id)         { joins(:tags).where('blog_taxonomies.id = ?', id) }
+  scope :publicized,      ->              { where(status: :published).where("#{self.table_name}.published_at < ? ", Time.now) }
+  scope :scheduled,       ->              { where(status: :published).where("#{self.table_name}.published_at > ? ", Time.now) }
  
  
   def self.sort_by_status_date(direction='asc')
@@ -61,18 +66,41 @@ class Blog::Content < ApplicationRecord
     @author ||= get_meta(:author_id).present? ? People::Author.find(get_meta(:author_id)) : website.author
   end
   
+  def author?
+    !author.new_record?
+  end
+  
   def views_count
     @views_count ||= get_meta(:views_count).present? ? get_meta(:views_count).to_i : 0
   end
   
+  def update_views_count
+    self.views_count  = events.count
+    @views_count      = events.count
+  end
+  
+  def sanitized_body
+     @sanitized_body ||= (ActionView::Base.full_sanitizer.sanitize body || '')
+  end
+  
+  def sanitized_title
+    @sanitized_title ||= (ActionView::Base.full_sanitizer.sanitize title || '')
+  end
   
   def self.slugify(title, website)
     available_slug title.try(:parameterize)
   end
   
-  def viewed
-    self.views_count += 1
-    self.save
+  def visits
+    @visits ||= Visit.joins(:events).where('ahoy_events.name = ?', 'Viewed trackable').where("properties ->> 'trackable_id' = ?) AND (properties ->> 'trackable_type' = ?", id.to_s, self.class.name)
+  end
+  
+  def events
+    @events ||= Ahoy::Event.where(name: 'Viewed trackable').where_properties(trackable_id: id, trackable_type: self.class.name)
+  end
+  
+  def publicized?
+    published? && published_at < Time.now
   end
   
   private

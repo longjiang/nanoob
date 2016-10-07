@@ -3,7 +3,12 @@
 }
 
 form {
-    label.required:after {
+  
+  &.form-inline {
+    line-height: 2;
+  }
+    
+  label.required:after {
     content:" *";
   }
 
@@ -37,11 +42,7 @@ form {
     }
   }
 
-  .filters .list-inline-item:not(:first-child)::before {
-    content: '|';
-    padding-right: 5px;
-    color: $brand-danger;
-  }
+
 
   .uploaded_image, .featured_image {
     margin: auto;
@@ -70,4 +71,10 @@ form {
       color: darken($brand-primary, 15%);
     }
   }
+}
+
+.filters .list-inline-item:not(:first-child)::before {
+  content: '|';
+  padding-right: 5px;
+  color: $brand-danger;
 }

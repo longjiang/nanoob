@@ -25,15 +25,15 @@ end
 # websites
 
 website1 = Business::Website.find_by_url('https://lapoigneedemain.com')
-#website1.url = 'http://lapoigneedemain.com'
-#website1.save(touch: false)
+website1.url = 'http://lapoigneedemain.com'
+website1.save(touch: false)
 
 website2 = Business::Website.find_by_url('https://lemarchedurideau.com')
-#website2.url = 'http://lemarchedurideau.com'
-#website2.save(touch: false)
+website2.url = 'http://lemarchedurideau.com'
+website2.save(touch: false)
 
 # Loading lemarchedurideau
-#Rake::Task["db:data_migration:wp"].invoke('lemarchedurideau')
+Rake::Task["db:data_migration:wp"].invoke('lemarchedurideau')
 
 # randomize posts users
 gilles = People::User.find_by_username('gilles')
@@ -55,6 +55,7 @@ Blog::Contents::Post.all.each do |p|
   p.save(touch: false)
 end
 puts " ok!"
+
 
 # # Partners
 # partner1 = Partner.new(owner: user1, title: 'Made in Design', url: 'http://madeindesign.com', contact_name: 'Guillaume', contact_email: 'guillaume_madeindesign@nanoob.com', webform_url: 'http://www.madeindesign.com/contact.html')

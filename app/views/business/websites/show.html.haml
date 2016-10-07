@@ -1,8 +1,7 @@
 
 - content_for :page_title do
   = i Business::Website.decorator_class.icon
-  = @website.host
-  = link_to @website.url do
-    = i 'external-link'
+  = fluid_text @website, :show_page_title
+
 
 = render "show_#{@website.object.platform}"

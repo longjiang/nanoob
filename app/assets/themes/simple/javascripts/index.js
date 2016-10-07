@@ -4,6 +4,7 @@
 //= require jquery_ujs
 //= require turbolinks
 
+//= require ahoy
 
 //= require ./jqBootstrapValidation
 //= require ./contact_me.js

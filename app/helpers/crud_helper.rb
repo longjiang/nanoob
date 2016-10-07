@@ -19,7 +19,7 @@ module CrudHelper
     params[sortable_attr_name(attr)].eql?('desc')
   end
   
-  def asc?(attr)
+  def asc?(attr) 
     params[sortable_attr_name(attr)].eql?('asc')
   end
   

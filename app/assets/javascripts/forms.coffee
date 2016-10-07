@@ -30,6 +30,7 @@ document.addEventListener 'turbolinks:load', ->
   $('#partner_request_partner_id').select2 theme: "bootstrap" if $('#partner_request_partner_id').is('select')
   $('#partner_backlink_partner_id').select2 theme: "bootstrap" if $('#partner_backlink_partner_id').is('select')
   $('#partner_backlink_partner_request_id').select2 theme: "bootstrap" if $('#partner_backlink_partner_request_id').is('select')
+  
   if $('#blog_contents_post_tag_ids').is('select')
     $('#blog_contents_post_tag_ids').select2 
       theme: "bootstrap" 

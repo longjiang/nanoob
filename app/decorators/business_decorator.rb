@@ -1,12 +1,12 @@
 class BusinessDecorator < ApplicationRecordDecorator
   delegate_all
   
-  def name
-    "#{h.i(self.class.icon)} #{object.name}".html_safe
+  def flag
+    object.language.decorate.flag
   end
   
-  def flag
-    h.flag(object.language).html_safe
+  def name
+    "#{h.i(self.class.icon)} #{object.name}".html_safe
   end
 
   def self.icon

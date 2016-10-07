@@ -21,8 +21,7 @@ class Blog::Router
     end
     
     def website_exists? request
-      url = "#{request.protocol}#{request.host.gsub('.dev','').gsub('www.','')}"
-      Business::Website.find_by_url(url).present?
+      Business::Website.find_by_request(request).present?
     end
   end
   
@@ -86,7 +85,7 @@ class Blog::Router
   end
   
   def authors
-    r = Route.new(:get, '/author/:slug(/page/:page)', 'authors#index')
+    r = Route.new(:get, '/author/:id/:slug(/page/:page)', 'authors#index')
     r.as = :author
     self.routes << r
   end

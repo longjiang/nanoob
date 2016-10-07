@@ -10,16 +10,72 @@
         %b Url:
         = @website.url
       %li.list-group-item
-        %b Title
+        %b Title:
         = @website.object.title
       %li.list-group-item
-        %b Owner
+        %b Owner:
         = @website.owner.decorate.name
+      %li.list-group-item
+        %b author:
+        = @website.author.decorate.name
         
   / - if can? :update, @website.object
   /   .card-footer
   /     = link_to  "EDIT", edit_business_website_path(@website), class: 'btn btn-primary'
 
+
+
+
+
+.card
+  .card-header
+    %ul.nav.nav-tabs.card-header-tabs.pull-xs-left{role: "tablist"}
+      %li.nav-item
+        = link_to '#visits_30_days', data: {toggle: "tab"}, role: "tab", class: 'nav-link active' do
+          Visits Last Month
+          = "(#{@website.visits.where('started_at > ?', 30.days.ago).count})"
+      %li.nav-item
+        = link_to '#visits_7_days', data: {toggle: "tab"}, role: "tab", class: 'nav-link' do
+          Visits Last Week
+          = "(#{@website.visits.where('started_at > ?', 7.days.ago).count})"
+    
+  .card-block.tab-content{style: "height:350px;"}
+    #visits_30_days.tab-pane.fade.in.active{role: "tabpanel"}
+      =  line_chart charts_website_visits_path(id: @website.id, started_after: 30.days.ago), min: nil
+      
+    #visits_7_days.tab-pane.fade.active{role: "tabpanel"}
+      =  line_chart charts_website_visits_path(id: @website.id, started_after: 7.days.ago), min: nil
+      
+      
+.card
+  .card-header
+    10 Most frequent words
+    = "(#{@website.posts.size} posts)"
+  .card-block
+    .row
+      .col-xs-12.col-sm-8
+        = pie_chart charts_website_most_frequent_words_path(id: @website.id, top: 10), height: "431px"
+      .col-xs-12.col-sm-4
+        %ul.list-group.list-group-flush
+          - @website.words.order(frequency: :desc).limit(10).each do |w|
+            %li.list-group-item 
+              = w.word
+              .pull-right
+                = w.frequency
+                = "(#{(100 * w.frequency / @website.words_count.to_f).round(2)}%)" if @website.words_count > 0
+
+    
+.card
+  .card-header
+    10 Most popular pages
+  .card-block
+    %ul.list-group.list-group-flush
+      - @website.viewed_content(10).each do |item, views|
+        %li.list-group-item
+          = i item.decorate.class.icon
+          = link_to item.decorate.name, url_for(controller: item.class.name.underscore.pluralize, action: :show, id: item.id)
+          .pull-right
+            = views
 
 .card
   .card-header

@@ -5,6 +5,7 @@ class Blog::ContentDecorator < ApplicationRecordDecorator
   STATUS_COLOR_OPTIONS = {default:'muted', draft:'muted', submitted: 'primary', scheduled: 'success', published:'success'}
   STATUS_ICON_OPTIONS = {default:'thumb-tack', draft:'pencil-square-o', submitted: 'pencil-square-o', scheduled: 'calendar-check-o', published:'check-circle-o'}
   USER_TYPE_ICON_OPTIONS = {default:'', owner:'user', editor:'legal', optimizer:'graduation-cap', writer:'pencil'}
+  ATTR_ICON_OPTIONS = {comments_count: 'comment-o', views_count: 'eye' }
   
   def categories(params={})
     return "-" if object.categories.blank?
@@ -62,7 +63,7 @@ class Blog::ContentDecorator < ApplicationRecordDecorator
   end
   
   def excerpt(length=150)
-    h.truncate(ActionView::Base.full_sanitizer.sanitize(object.body), length: length, separator: /\s/, omission: ' [...]')
+    h.truncate object.sanitized_body, length: length, separator: /\s/, omission: ' [...]'
   end
   
   def status_color
@@ -81,10 +82,12 @@ class Blog::ContentDecorator < ApplicationRecordDecorator
     "#{permalink_prefix}#{object.slug}"
   end
   
-  
-  
   def self.user_icon(user_type)
     option USER_TYPE_ICON_OPTIONS, user_type
+  end
+  
+  def self.status_icon(status)
+    option STATUS_ICON_OPTIONS, status
   end
 
 
