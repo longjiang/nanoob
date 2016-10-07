@@ -4,6 +4,7 @@ class CrudController < ApplicationController
   
   index_addnew
   show_edit
+  edit_cancel
   
   class_attribute :permitted_attrs, :filtering_params, :sortable_attrs
   

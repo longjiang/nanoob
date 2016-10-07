@@ -1,0 +1,23 @@
+#views.card
+  .card-header
+    %ul.nav.nav-tabs.card-header-tabs.pull-xs-left{role: "tablist"}
+      - if !@post.publicized? || @post.object.published_at < 30.days.ago
+        %li.nav-item
+          = link_to '#visits_30_days', data: {toggle: "tab"}, role: "tab", class: 'nav-link active' do
+            = i 'area-chart'
+            Visits Last Month
+            = "(#{@post.visits.where('started_at > ?', 30.days.ago).count})"
+      - if @post.publicized? 
+        %li.nav-item
+          = link_to '#visits_all', data: {toggle: "tab"}, role: "tab", class: "nav-link #{(!@post.publicized? || @post.object.published_at < 30.days.ago) ? '' : 'active'}" do
+            = i 'area-chart'
+            Visits since published
+            = "(#{@post.visits.where('started_at > ?', @post.object.published_at).count})"
+  
+  .card-block.tab-content{style: "height:350px;"}
+    - if !@post.publicized? || @post.object.published_at < 30.days.ago
+      #visits_30_days.tab-pane.fade.in.active{role: "tabpanel"}
+        =  line_chart charts_post_visits_path(id: @post.id, started_after: 30.days.ago), min: nil
+    - if @post.publicized?
+      #visits_all.tab-pane.fade{role: "tabpanel", class: "#{(!@post.publicized? || @post.object.published_at < 30.days.ago) ? '' : 'in active'}"}
+        = line_chart charts_post_visits_path(id: @post.id, started_after: @post.object.published_at), min: nil

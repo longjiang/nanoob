@@ -1,4 +1,10 @@
 %li.breadcrumb-item.active
-  - if options[:icon].present?
-    = i options[:icon]
-  = label.html_safe
+  - unless options[:with_link]
+    - if options[:icon].present?
+      = i options[:icon]
+    = label.html_safe
+  - else
+    = link_to path do
+      - if options[:icon].present?
+        = i options[:icon]
+      = label.html_safe

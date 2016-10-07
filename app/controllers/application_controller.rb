@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :init_menu, unless: :devise_controller?
   before_action :add_menu_items, unless: :devise_controller?
   before_action :menu_activate, unless: :devise_controller?
+  before_action :set_locale
   
   around_action :set_time_zone
   
@@ -16,6 +17,7 @@ class ApplicationController < ActionController::Base
   include Breadcrumbs::ActionController
   include IndexAddnewConcern
   include ShowEditConcern
+  include EditCancelConcern
   
   rescue_from "AccessGranted::AccessDenied" do |exception|
     redirect_to root_path, alert: "You don't have permission to access this page.", status: 303
@@ -63,5 +65,9 @@ class ApplicationController < ActionController::Base
       time_zone = current_user.try(:time_zone) || 'UTC'
       Time.use_zone(time_zone, &block)
     end  
+    
+    def set_locale
+      I18n.locale = :en
+    end
     
 end

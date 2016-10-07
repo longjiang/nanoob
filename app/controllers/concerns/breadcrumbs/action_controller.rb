@@ -34,7 +34,7 @@ module Breadcrumbs
 
        def add_breadcrumb(label, path = nil, options={})
          before_action do |controller|
-           controller.send(:add_breadcrumb, label, path)
+           controller.send(:add_breadcrumb, label, path, options)
          end
        end
 

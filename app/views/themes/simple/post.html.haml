@@ -43,9 +43,11 @@
         = I18n.l @post.published_at.to_date, format: :default
         %span{itemprop: 'author', itemscope: true, itemtype: "https://schema.org/Person"}
           = t(:by)
-          %span{itemprop: 'name'}= link_to @post.author.decorate.name, author_path(slug: @post.author.username)
+          %span{itemprop: 'name'}= link_to @post.author.decorate.name, author_path(@post.author)
         = I18n.t(:in_categories, categories: categories.join(', '), count: categories.count).html_safe unless categories.blank?
         = I18n.t(:with_tags, tags: tags.join(', '), count: tags.count).html_safe unless tags.blank?
         \.
        
+    .col-sm-4
+      = render 'blog/public/widgets/archives'
         

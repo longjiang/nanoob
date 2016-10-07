@@ -12,12 +12,14 @@ module Nanoob::Meta extend ActiveSupport::Concern
     end
     
     def set_meta(key, value)
-      instance_variable_set(:"@meta_#{key.to_s}", value)
+      key = key.to_s
+      instance_variable_set(:"@meta_#{key}", value)
       datas.meta = datas.meta.merge({key => value})
     end
 
     def get_meta(key)
-      instance_variable_get(:"@meta_#{key.to_s}") || instance_variable_set(:"@meta_#{key.to_s}", datas.meta[key.to_s])
+      key = key.to_s
+      instance_variable_get(:"@meta_#{key}") || instance_variable_set(:"@meta_#{key}", datas.meta[key])
     end
     
     def save_meta

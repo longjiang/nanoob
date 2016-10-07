@@ -18,5 +18,7 @@
 //= require turbolinks
 //= require select2
 //= require refile
+//= require highcharts
+//= require chartkick
 
 //= require_tree .

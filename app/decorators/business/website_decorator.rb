@@ -6,7 +6,23 @@ class Business::WebsiteDecorator < ApplicationRecordDecorator
   PAGE_TITLE_TEMPLATE_OPTIONS = %w(page_title sitename)  # methods must exist in Blog::Public::MetaConcern (or in controllers)
   
   def name
-    "#{h.i(self.class.icon)} #{host}".html_safe
+    title
+  end
+  
+  def show_page_title(size=:xl)
+    length = case size
+    when :xs
+      18
+    when :sm
+      30
+    when :md
+      35
+    when :lg
+      40
+    else
+      99
+    end
+    h.truncate(name, length: length).html_safe
   end
 
   def host

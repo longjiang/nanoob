@@ -1,7 +1,7 @@
 class Blog::Public::PostsController < Blog::Public::ContentsController
   
   def index
-    @posts_unpaginated = @website.posts.published.order(published_at: 'desc')
+    @posts_unpaginated = @website.posts.publicized.order(published_at: 'desc')
     @posts = @posts_unpaginated.page(params[:page])
     @archives = @website.posts.published.group('extract(year from published_at)').count.map{|a,b| {year: a.to_i, count: b}}
     render template: "themes/simple/index"
@@ -9,7 +9,8 @@ class Blog::Public::PostsController < Blog::Public::ContentsController
   
   def show
     @post = Blog::Contents::Post.website(@website).find_by_slug!(params[:slug])
-    @post.viewed
+    @post.track(self)
+    @archives = @website.posts.publicized.group('extract(year from published_at)').count.map{|a,b| {year: a.to_i, count: b}}
     woopra_track 'nanoob article', {
       title: @post.title, 
       permalink: post_url(slug: @post.slug, year: @post.year, month: @post.month), 

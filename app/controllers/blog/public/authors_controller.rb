@@ -1,7 +1,8 @@
 class Blog::Public::AuthorsController < Blog::Public::ContentsController
   
   def index
-    @author = People::Author.find_by_username(params[:slug])
+    @author = People::Author.find(params[:id].to_i)
+    @author.track self
     render template: "themes/simple/author"
   end
   

@@ -1,5 +1,9 @@
 class AdminRole < AccessGranted::Role
   def configure
+    
+    can [:list, :read, :create, :update, :destroy], Business
+    
+    
     can [:update, :destroy, :assign], Blog::Contents::Post
     can :publish, Blog::Contents::Post do |post|
       post.draft? || post.submitted?

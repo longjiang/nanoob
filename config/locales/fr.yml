@@ -4,6 +4,12 @@ fr:
   overview: Overview
   history: History
   
+  greetings:
+    morning: Bonjour %{user}
+    afternoon: Bonne après midi %{user}
+    evening: Bonsoir %{user}
+    night: Bonsoir %{user}
+  
   helpers:
     submit:
       and_create_request: and make a new request

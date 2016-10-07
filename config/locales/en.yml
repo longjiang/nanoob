@@ -4,6 +4,12 @@ en:
   overview: Overview
   history: History
   
+  greetings:
+    morning: Good morning %{user}
+    afternoon: Good afternoon %{user}
+    evening: Good evening %{user}
+    night: Good night %{user}
+  
   helpers:
     submit:
       and_create_request: and make a new request
@@ -254,6 +260,20 @@ en:
           published: Published
           scheduled: Scheduled
           submitted: Submitted
+        views_count: 
+          one: view
+          other: views
+        comments_count:
+          one: comment
+          other: comments
+        words_count: 
+          one: word
+          other: words
+        anchors_count: 
+          one: link
+          other: links
+        external_links: external links
+        internal_links: internal links
         decorator:
           statuses:
             with_date:

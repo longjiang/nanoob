@@ -1,3 +1,4 @@
+$dark-color: #434857;
 
 $brand-primary: #1ca8dd;
 $body-bg: #252830;
@@ -8,9 +9,12 @@ $headings-font-weight: 300;
 $link-color: #ffffff;
 $link-hover-decoration: none;
 $link-hover-color: $brand-primary;
-$table-bg-hover: #434857;
-$card-bg: #434857;
-$breadcrumb-bg: #434857;
-$pagination-bg: #434857;
+$table-bg-hover: $dark-color;
+$card-bg: $dark-color;
+$breadcrumb-bg: $dark-color;
+$pagination-bg: $dark-color;
 $pagination-active-border: #fff;
 $input-border-color: #c8cacb;
+
+$nav-tabs-active-link-hover-bg: $dark-color;
+$nav-tabs-active-link-hover-color: #fff;

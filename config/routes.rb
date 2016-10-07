@@ -39,6 +39,12 @@ Rails.application.routes.draw do
    
     get '/forms/blog_contents_post_published_at',        to: 'webservice/forms#blog_contents_post_published_at'
     get '/forms/blog_contents_page_published_at',        to: 'webservice/forms#blog_contents_page_published_at'
+    
+    get '/charts/website_visits/:id',             to: 'webservice/charts#website_visits',               as: :charts_website_visits
+    get '/charts/website_most_frequent_words/:id', to: 'webservice/charts#website_most_frequent_words',  as: :charts_website_most_frequent_words
+    
+    get '/charts/post_visits/:id',              to: 'webservice/charts#post_visits',               as: :charts_post_visits
+    get '/charts/post_most_frequent_words/:id', to: 'webservice/charts#post_most_frequent_words',  as: :charts_post_most_frequent_words
   end
   
   root 'welcome#index'

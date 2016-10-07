@@ -17,8 +17,9 @@ module ApplicationHelper
     th "activerecord.models.#{model.to_s}", options.merge(count: 2)
   end
   
-  def han(model, attribute)
-    model.to_s.classify.constantize.send('human_attribute_name', attribute)
+  def han(model, attribute, options = {})
+    options[:count] = 1 if options[:count] && options[:count].eql?(0)
+    model.to_s.classify.constantize.send('human_attribute_name', attribute, options)
   end
   
   def hen(model, attribute, value)
@@ -31,6 +32,16 @@ module ApplicationHelper
   
   def is_admin?
     has_role? :admin
+  end
+  
+  def fluid_text(object, method)
+    capture_haml do
+      haml_tag :span, object.send(method, :xs), class: 'hidden-sm-up'
+      haml_tag :span, object.send(method, :sm), class: 'hidden-md-up hidden-xs-down'
+      haml_tag :span, object.send(method, :md), class: 'hidden-lg-up hidden-sm-down'
+      haml_tag :span, object.send(method, :lg), class: 'hidden-xl-up hidden-md-down'
+      haml_tag :span, object.send(method, :xl), class: 'hidden-lg-down'
+    end.html_safe
   end
   
 end
