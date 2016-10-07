@@ -56,6 +56,7 @@ class Blog::Router
     self.routes << Route.new(:get, '/sitemap.xml',                    'sitemap#index',       {:format => 'xml'})
     self.routes << Route.new(:get, '/sitemap/posts.xml',              'sitemap#posts',       {:format => 'xml'})
     self.routes << Route.new(:get, '/sitemap/categories.xml',         'sitemap#categories',  {:format => 'xml'})
+    self.routes << Route.new(:get, '/sitemap/tags.xml',               'sitemap#tags',        {:format => 'xml'})
     self.routes << Route.new(:get, '/sitemap/search/:dimensions.xml', 'sitemap#search',      {:format => 'xml'})
     self.routes << Route.new(:get, '/sitemap-index.xsl',              'sitemap#index',       {:format => 'xsl'})
     self.routes << Route.new(:get, '/sitemap.xsl',                    'sitemap#feed',        {:format => 'xsl'})
