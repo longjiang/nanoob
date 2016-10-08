@@ -1,7 +1,7 @@
 a.nav-link {
 
   text-decoration: none;
-  color: #cfd2da;
+  color: $gray-lightest;
   @include hover-focus {
     color: $link-hover-color;
     background: #fff;
@@ -21,6 +21,6 @@ a.nav-link {
 }
 
 .submenu-1 {
-  background: #434857;
+  background: $alt-color;
   font-weight: 200;
 }

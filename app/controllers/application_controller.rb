@@ -61,9 +61,9 @@ class ApplicationController < ActionController::Base
     
   private
 
-    def set_time_zone(&block)
+    def set_time_zone
       time_zone = current_user.try(:time_zone) || 'UTC'
-      Time.use_zone(time_zone, &block)
+      Time.use_zone(time_zone) { yield }
     end  
     
     def set_locale

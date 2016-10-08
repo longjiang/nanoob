@@ -25,12 +25,12 @@ class Business::WebsitesController < CrudController
                  label: "#{hen('blog/contents/post', :status, :published)} #{tmp('blog/contents/post')}", 
                  path: blog_contents_posts_path(business_website_id: @website.id, status: :published, published_before: Time.now) if can? :list, Blog::Contents::Post
                
-       deck.add cssclass: 'danger', 
-                icon: 'calendar', 
-                count: @website.posts.published.published_after(30.days.ago).published_before(Time.now).size, 
-                label: "Last 30 days", 
-                path: blog_contents_posts_path(business_website_id: @website.id, status: :published, published_after: 30.days.ago, published_before: Time.now) if can? :list, Blog::Contents::Post
-      
+       deck.add cssclass: 'danger',
+                icon: 'calendar',
+                count: @website.posts.published.published_after(30.days.ago).published_before(Time.now).size,
+                label: "Last 30 days",
+                path: blog_contents_posts_path(business_website_id: @website.id, status: :published, published_after: 30.days.ago) if can? :list, Blog::Contents::Post
+           
         deck.add cssclass: 'warning', 
                  icon: Blog::Contents::Post.decorator_class::STATUS_ICON_OPTIONS[:scheduled], 
                  count: @website.posts.published.published_after(Time.now).size, 

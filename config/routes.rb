@@ -45,6 +45,8 @@ Rails.application.routes.draw do
     
     get '/charts/post_visits/:id',              to: 'webservice/charts#post_visits',               as: :charts_post_visits
     get '/charts/post_most_frequent_words/:id', to: 'webservice/charts#post_most_frequent_words',  as: :charts_post_most_frequent_words
+    
+    get '/charts/business_most_frequent_hosts/:id', to: 'webservice/charts#business_most_frequent_hosts',  as: :charts_business_most_frequent_hosts
   end
   
   root 'welcome#index'

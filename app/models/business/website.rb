@@ -29,7 +29,8 @@ class Business::Website < ApplicationRecord
   
   delegate :name, to: :business, prefix: true
   
-  has_meta :title, :baseline, :theme, :owner_id, :author_id, :woopra, :page_title_template, :words_count
+  meta_accessor :title, :baseline, :owner_id, :author_id, :woopra, :page_title_template
+  meta_writer   :theme, :words_count
   
   before_save :remove_trailing_slash
   
@@ -101,15 +102,13 @@ class Business::Website < ApplicationRecord
   
   def viewed_content(top=10)
     events
-      .where(name: 'Viewed trackable')
+      .trackables
       .select("properties ->> 'trackable_type' as a, properties ->> 'trackable_id' as b, count(*)")
       .group("a, b")
       .collect { |_| [_.a, _.b, _.count] }
       .sort { |a,b| b[2] <=> a[2] }
       .first(top)
       .collect { |_| [_[0].constantize.find(_[1]), _[2]]}
-    
-  
   end
 
 end
