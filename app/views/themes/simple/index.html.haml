@@ -36,7 +36,6 @@
         
                 .card-block
                   .card-title.h2{itemprop: 'headline'}= link_to post.title, post_link
-          
                   .card-text.h3{itemprop: 'description'}= post.decorate.excerpt(350)
           
                   %p.h4.card-text
@@ -46,6 +45,7 @@
                     %span{itemprop: 'author', itemscope:true, itemtype:"https://schema.org/Person"}
                       = t :by
                       %span{itemprop: 'name'}= link_to post.author.decorate.name, author_path(post.author)
+
             
               
                 .card-footer.h4
