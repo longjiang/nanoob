@@ -1,10 +1,10 @@
 namespace :db do
   namespace :maintenance do
   
-    desc "after migration 20161006132341"
-    task :after_migration_20161006132341 => :environment do |t, args|
+    desc "after migration 20161007104622"
+    task :after_migration_20161007104622 => :environment do |t, args|
       begin
-        if ActiveRecord::Migrator.current_version.eql?(20161006132341) && Business::Language.find_by_name('french').nil?
+        if ActiveRecord::Migrator.current_version.eql?(20161007104622) && Business::Language.find_by_name('french').nil?
           %w(french italian).each do |language|
             Business::Language.create(name: language, isocode: language[0,2])
           end
