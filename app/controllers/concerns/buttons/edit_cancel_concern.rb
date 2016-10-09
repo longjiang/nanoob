@@ -1,5 +1,5 @@
 
-module EditCancelConcern
+module Buttons::EditCancelConcern
   extend ActiveSupport::Concern
 
   included do
@@ -19,7 +19,7 @@ module EditCancelConcern
   end
   
    module ClassMethods
-     def edit_cancel
+     def edit_cancel_button
        append_before_action only: [:edit] do |controller|
          controller.send("cancel_path=", url_for(action: 'show', controller: controller_path)) if can? :read, entry
         end
@@ -27,8 +27,8 @@ module EditCancelConcern
    end
    
    module HelperMethods
-     def render_edit_cancel
-       render partial: 'shared/edit_cancel', locals: {path: cancel_path} unless cancel_path.blank?
+     def render_button_edit_cancel
+       render partial: 'shared/buttons/edit_cancel', locals: {path: cancel_path} unless cancel_path.blank?
      end
    end
 end

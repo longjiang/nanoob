@@ -1,3 +1,3 @@
 document.addEventListener 'turbolinks:load', ->
-  $('[data-toggle=sidebar]').click ->
-    $('#sidebar').toggleClass 'active'
+  $('[data-toggle]').click ->
+    $('#' + $(this).data('toggle')).toggleClass 'active'

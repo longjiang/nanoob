@@ -1,5 +1,5 @@
 
-module ShowEditConcern
+module Buttons::ShowEditConcern
   extend ActiveSupport::Concern
 
   included do
@@ -19,7 +19,7 @@ module ShowEditConcern
   end
   
    module ClassMethods
-     def show_edit
+     def show_edit_button
        append_before_action only: [:show] do |controller|
          controller.send("edit_path=", url_for(action: 'edit', controller: controller_path)) if can? :update, entry
         end
@@ -27,8 +27,8 @@ module ShowEditConcern
    end
    
    module HelperMethods
-     def render_show_edit
-       render partial: 'shared/show_edit', locals: {path: edit_path} unless edit_path.blank?
+     def render_button_show_edit
+       render partial: 'shared/buttons/show_edit', locals: {path: edit_path} unless edit_path.blank?
      end
    end
 end

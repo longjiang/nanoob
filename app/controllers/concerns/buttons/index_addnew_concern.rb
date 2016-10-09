@@ -1,5 +1,5 @@
 
-module IndexAddnewConcern
+module Buttons::IndexAddnewConcern
   extend ActiveSupport::Concern
 
   included do
@@ -22,7 +22,7 @@ module IndexAddnewConcern
   end
   
    module ClassMethods
-     def index_addnew(path=nil)
+     def index_addnew_button(path=nil)
        before_action only: [:index] do |controller|
          controller.send("addnew_path=", path || new_object_path) if can? :create, controller_path.singularize.camelize.constantize
         end
@@ -30,8 +30,8 @@ module IndexAddnewConcern
    end
    
    module HelperMethods
-     def render_index_addnew
-       render partial: 'shared/index_addnew', locals: {path: addnew_path} unless addnew_path.blank?
+     def render_button_index_addnew
+       render partial: 'shared/buttons/index_addnew', locals: {path: addnew_path} unless addnew_path.blank?
      end
    end
 end

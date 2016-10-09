@@ -11,7 +11,11 @@
         = sidebar_menu
       
       %section#tools
+        #toolbar
+          .btn-group
+            = render_button_support_toggle
         = render_breadcrumbs
+        
       
       %section#content
         .container-fluid
@@ -19,9 +23,9 @@
           = render partial: 'shared/flash'
 
           .hidden-xs-down
-            = render_index_addnew
-            = render_show_edit
-            = render_edit_cancel
+            = render_button_index_addnew
+            = render_button_show_edit
+            = render_button_edit_cancel
 
           %h1.page-title= yield :page_title
 

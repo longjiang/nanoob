@@ -1,5 +1,7 @@
 class Blog::Contents::PostsController < Blog::ContentsController
   
+  support_toggle_button 
+  
   before_action :init_statistics, only: [:show]
   
   def index

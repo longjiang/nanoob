@@ -16,9 +16,11 @@ class ApplicationController < ActionController::Base
   
   include ApplicationHelper
   include Breadcrumbs::ActionController
-  include IndexAddnewConcern
-  include ShowEditConcern
-  include EditCancelConcern
+  
+  include Buttons::IndexAddnewConcern
+  include Buttons::ShowEditConcern
+  include Buttons::EditCancelConcern
+  include Buttons::SupportToggleConcern
   
   rescue_from "AccessGranted::AccessDenied" do |exception|
     redirect_to root_path, alert: "You don't have permission to access this page.", status: 303
