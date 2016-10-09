@@ -1,26 +1,101 @@
-a.nav-link {
-
-  text-decoration: none;
-  color: $gray-lightest;
-  @include hover-focus {
-    color: $link-hover-color;
-    background: #fff;
+#nav {
+  a.navbar-brand {
+    color: $base-dark-color;
+    font-size: $brand-font-size;
   }
-  
-  
-
+  .navbar-nav {
+    .nav-link {
+      color: #777777;
+      @include hover-focus {
+        color: #333333;
+      }
+    }
+  }
 }
 
-.nav-pills .nav-link.active {
-  color: black;
+@media screen and (max-width: 767px) {
+  #nav {
+    a.navbar-brand {
+      font-size: $brand-sm-font-size;
+    }
+  }
 }
 
- a.active + .submenu-1 {
-  border: inset 1px black;
-  @include border-bottom-radius ($border-radius);
+#sidebar {
+  .sidebar-brand {
+    text-align: center;
+    a {
+      color: $silver;
+      font-size: $brand-font-size;
+    }
+    
+  }
+  .nav-pills {
+    .nav-link {
+      @include border-radius(0);
+      color: $body-bg-primary;
+      
+      &:hover {
+        &:before {
+          transform: rotate(45deg);
+          content: '';
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          background-color: white;
+          position: absolute;
+          right: -6px;
+          margin-top: 5px;
+        }
+      }
+    }
+    .nav-link.active,
+    .nav-item.open .nav-link {
+      @include plain-hover-focus {
+        color: $base-dark-color;
+        cursor: default;
+        background-color: #fff;
+      }
+    }
+  }
 }
 
-.submenu-1 {
-  background: $alt-color;
-  font-weight: 200;
+#tools {
+  .breadcrumb {
+    margin:0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
 }
+
+a.active + .submenu-1 {
+ background: red;
+}
+
+
+// a.nav-link {
+//
+//   text-decoration: none;
+//   color: $gray-lightest;
+//   @include hover-focus {
+//     color: $link-hover-color;
+//     background: #fff;
+//   }
+//
+//
+//
+// }
+//
+// .nav-pills .nav-link.active {
+//   color: black;
+// }
+//
+//  a.active + .submenu-1 {
+//   border: inset 1px black;
+//   @include border-bottom-radius ($border-radius);
+// }
+//
+// .submenu-1 {
+//   background: $alt-color;
+//   font-weight: 200;
+// }

@@ -90,7 +90,7 @@ class Blog::ContentsController < CrudController
   
   def add_breadcrumbs
     if @business.nil?
-      add_breadcrumb tmp(:business), businesses_path, icon: Partner::Backlink.decorator_class.icon
+      add_breadcrumb tmp(:business), businesses_path, icon: Business.decorator_class.icon
     else
       add_breadcrumb @business.decorate.name, business_path(@business)
     end

@@ -15,9 +15,9 @@
       Most frequent hosts
     .card-block
       .row
-        .col-xs-12.col-sm-8
+        .col-xs-12.col-md-8
           = pie_chart charts_business_most_frequent_hosts_path(id: @business.id, top: top), height: "431px", library: {title: 'mytite'}
-        .col-xs-12.col-sm-4
+        .col-xs-12.col-md-4
           %ul.list-group.list-group-flush
             - top_hosts = @business.top_hosts(top)
             - top_hosts.datas.each do |host, frequency|

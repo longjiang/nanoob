@@ -1,11 +1,13 @@
 
-html, body, #page-container {
+html, body, .full-height {
   height:100%;
   min-height: 100%;
 }
 
 body {
-  padding-top:47px;  
+  #padding-top:47px; 
+  padding: 10px 20px 0 20px;
+  background-color: $body-bg-primary ;
 }
 
 /* workaround modal-open padding issue */
@@ -13,77 +15,144 @@ body.modal-open {
     padding-right:0 !important;
 }
 
+#wrapper {
+  position: absolute;
+  top: 70px;
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  border: 1px solid rgba(black, .2);
+  @include border-top-radius ($wrapper-corner-size);
+  @include box-shadow(0 0 0 2px $box-shadow-color);
+  overflow: hidden;
+}
+
+#sidebar, #content, #footer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 #sidebar {
-   padding:10px 0 0 0;
-   background: $sidebar-bg;
+  padding:55px 0 0 0;
+  background: $sidebar-bg;
+  width: $sidebar-width;
+  z-index:2;
 }
 
-#main {
-  padding-top: 10px;
+#tools, #footer {
+  margin-left: $sidebar-width;
 }
 
-
-.test-offcanvas {
-  display: block ;
+#content {
+  left: $sidebar-width;
 }
+
+#tools {
+  
+  border-bottom: solid 1px #dddddd;
+  background-color: $breadcrumb-bg;
+}
+
+#footer {
+  top: auto;
+  height: 51px;
+  text-align: center;
+  padding-top: 2px;
+  border-top: solid 1px #dddddd;
+  z-index:1;
+}
+
+#content {
+  bottom: 52px;
+  overflow: auto;
+  margin: 51px 0 0 0;
+  background-color: $body-bg;
+  padding: 10px 0;
+  left: $sidebar-width;
+  z-index:0;
+}
+
 
 h1.page-title {
   padding-bottom: 9px;
   border-bottom: 1px solid $table-bg-hover;
 }
 
-/*
- * Off Canvas at medium breakpoint
- * --------------------------------------------------
- */
-//@media screen and (max-width: 48em) {
-  
-  @media screen and (max-width: 991px) {
 
-  .row-offcanvas {
-    position: relative;
+// XS, SM, MD  
+@media screen and (max-width: 991px) {
+  
+  #sidebar {
+    left: -$sidebar-width;
     -webkit-transition: all 0.25s ease-out;
     -moz-transition: all 0.25s ease-out;
     transition: all 0.25s ease-out;
+    border-right: solid 10px #fff;
+    
+    &.active {
+      left: 0;
+    }
+  }
+  #tools, #footer, #content {
+    margin-left: 0;
+    left: 0;
   }
 
-  .row-offcanvas-left
-  .sidebar-offcanvas {
-    left: -33%;
-  }
-
-  .row-offcanvas-left.active {
-    left: 33%;
-  }
-
-  .sidebar-offcanvas {
-    position: absolute;
-    top: 0;
-    width: 33%;
-    height: 100%;
-  }
 }
 
-/*
- * Off Canvas wider at sm breakpoint
- * --------------------------------------------------
- */
-//@media screen and (max-width: 34em) {
-  @media screen and (max-width: 543px) {
+// SM  
+@media screen and (max-width: 767px) and (min-width: 544px) {
   
-  .row-offcanvas-left
-  .sidebar-offcanvas {
-    left: -45%;
+  body {
+    padding: 0px;
+  }
+  
+  #nav {
+    position: fixed;
+    right:0;
+    left:0;
+    z-index:5;
+    background: $body-bg-primary;
+    @include box-shadow(0 0 2px 2px $box-shadow-color);
+  }
+  
+  #wrapper, #content, #footer {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    margin: 0;
+    @include border-top-radius (0);
+  }
+  
+  #tools {
+    margin-top: 47px;
   }
 
-  .row-offcanvas-left.active {
-    left: 45%;
+}
+
+
+// XS
+@media screen and (max-width: 543px) {
+  body {
+    padding: 0px;
   }
   
-  .sidebar-offcanvas {
-    width: 45%;
+  #wrapper, #content, #footer {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    margin: 0;
+    @include border-top-radius (0);
   }
 }
+  
 
 @media screen and (min-width:1200px) {
   
@@ -122,42 +191,9 @@ h1.page-title {
 }
 
 
-/* responsive nav stacked liked 3.x */
-@media(max-width:34em) {
-    .navbar .navbar-brand {
-        float:none;
-        display: block;
-    }
-    .navbar .navbar-nav>.nav-item {
-        float: none;
-        margin-left: .1rem;
-    }
-    .navbar .navbar-nav {
-        float:none !important;
-    }
-}
+
 
 .card {
     overflow:hidden;
 }
 
-.card-block .rotate {
-    z-index: 8;
-    float: right;
-    height: 100%;
-}
-
-.card-block .rotate i {
-    color: rgba(20, 20, 20, 0.15);
-    position: absolute;
-    left: 0;
-    left: auto;
-    right: -10px;
-    bottom: 0;
-    display: block;
-    -webkit-transform: rotate(-44deg);
-    -moz-transform: rotate(-44deg);
-    -o-transform: rotate(-44deg);
-    -ms-transform: rotate(-44deg);
-    transform: rotate(-44deg);
-}

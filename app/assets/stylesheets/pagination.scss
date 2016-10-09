@@ -16,3 +16,15 @@ tbody.loading {
     font-size: 20px;
   }
 }
+
+#footer {
+  section.pagination {
+    margin: 0;
+    padding: 0;
+  }
+  
+  ul.pagination {
+    margin: 3px 0 0 3px;
+    padding: 0;
+  }
+}

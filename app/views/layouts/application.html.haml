@@ -5,17 +5,30 @@
   
   %body
     = render 'navbar'
-    #page-container.container-fluid.full-height.row.row-offcanvas.row-offcanvas-left
-      #sidebar.col-lg-2.sidebar-offcanvas{role: "navigation"}
+    #wrapper
+      
+      %section#sidebar{role: :navigation}
         = sidebar_menu
-      #main.col-lg-10
-        = render partial: 'shared/flash'
+      
+      %section#tools
         = render_breadcrumbs
-        .hidden-xs-down
-          = render_index_addnew
-          = render_show_edit
-          = render_edit_cancel
-        %h1.page-title= yield :page_title
-        = yield
+      
+      %section#content
+        .container-fluid
+          
+          = render partial: 'shared/flash'
+
+          .hidden-xs-down
+            = render_index_addnew
+            = render_show_edit
+            = render_edit_cancel
+
+          %h1.page-title= yield :page_title
+
+          = yield
+          
+      %section#footer
+        %section.pagination
+          = yield :pagination
           
     = yield :charts_js

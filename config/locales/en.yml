@@ -3,6 +3,8 @@ en:
 # Generic
   overview: Overview
   history: History
+  logout: Logout
+  dashboard: Dashboard
   
   greetings:
     morning: Good morning %{user}

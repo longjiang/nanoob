@@ -9,8 +9,11 @@
   = tmp 'blog/contents/post'
   %span.tag.tag-info= @posts_unpaginated.count
   
-#pagination.pull-right.hidden-lg-down
+- content_for :pagination do 
   = paginate @posts, remote: true
+  
+%section.pagination.pull-right.hidden-lg-down
+  = yield :pagination
 
 %p.hidden-xs-down= t 'descriptions.blog/contents/posts'
 
@@ -69,10 +72,8 @@
         %th.text-nowrap.hidden-sm-down
         
     %tbody
-      = render partial: 'index-table-tr', collection: @posts, as: :post
-
-#pagination-bottom.text-xs-center       
-  = paginate @posts, remote: true
+      = render partial: 'index-table-tr', collection: @posts, as: :post     
+  
 
 
         
