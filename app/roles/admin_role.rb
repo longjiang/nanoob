@@ -1,7 +1,7 @@
 class AdminRole < AccessGranted::Role
   def configure
     
-    can [:list, :read, :create, :update, :destroy], Business
+    can [:create, :update, :destroy], Business
     
     
     can [:update, :destroy, :assign], Blog::Contents::Post

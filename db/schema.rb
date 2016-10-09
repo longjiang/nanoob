@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161006132341) do
+ActiveRecord::Schema.define(version: 20161007104622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -255,7 +255,18 @@ ActiveRecord::Schema.define(version: 20161006132341) do
     t.index ["seo_link_id"], name: "index_seo_anchors_on_seo_link_id", using: :btree
   end
 
-  create_table "seo_domains", force: :cascade do |t|
+  create_table "seo_host_categorizations", force: :cascade do |t|
+    t.integer  "seo_host_id"
+    t.integer  "business_id"
+    t.integer  "category",    default: 2, null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["business_id"], name: "index_seo_host_categorizations_on_business_id", using: :btree
+    t.index ["seo_host_id", "business_id", "category"], name: "index_host_categorizations_on_host_and_business_and_category", unique: true, using: :btree
+    t.index ["seo_host_id"], name: "index_seo_host_categorizations_on_seo_host_id", using: :btree
+  end
+
+  create_table "seo_hosts", force: :cascade do |t|
     t.string   "url"
     t.integer  "category",      default: 0, null: false
     t.integer  "links_count",   default: 0, null: false
@@ -266,12 +277,11 @@ ActiveRecord::Schema.define(version: 20161006132341) do
 
   create_table "seo_links", force: :cascade do |t|
     t.string   "url"
-    t.integer  "seo_domain_id"
-    t.integer  "level",         default: 2, null: false
+    t.integer  "seo_host_id"
     t.integer  "anchors_count", default: 0, null: false
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.index ["seo_domain_id"], name: "index_seo_links_on_seo_domain_id", using: :btree
+    t.index ["seo_host_id"], name: "index_seo_links_on_seo_host_id", using: :btree
   end
 
   create_table "seo_stop_words", force: :cascade do |t|
@@ -350,5 +360,7 @@ ActiveRecord::Schema.define(version: 20161006132341) do
   add_foreign_key "partners", "people", column: "owner_id"
   add_foreign_key "seo_anchors", "blog_contents"
   add_foreign_key "seo_anchors", "seo_links"
-  add_foreign_key "seo_links", "seo_domains"
+  add_foreign_key "seo_host_categorizations", "businesses"
+  add_foreign_key "seo_host_categorizations", "seo_hosts"
+  add_foreign_key "seo_links", "seo_hosts"
 end

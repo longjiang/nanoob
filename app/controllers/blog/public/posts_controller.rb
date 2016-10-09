@@ -3,7 +3,7 @@ class Blog::Public::PostsController < Blog::Public::ContentsController
   def index
     @posts_unpaginated = @website.posts.publicized.order(published_at: 'desc')
     @posts = @posts_unpaginated.page(params[:page])
-    @archives = @website.posts.published.group('extract(year from published_at)').count.map{|a,b| {year: a.to_i, count: b}}
+    @archives = @website.posts.published.order('extract(year from published_at) desc').group('extract(year from published_at)').count.map{|a,b| {year: a.to_i, count: b}}
     render template: "themes/simple/index"
   end
   

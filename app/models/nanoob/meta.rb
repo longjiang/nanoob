@@ -32,12 +32,31 @@ module Nanoob::Meta extend ActiveSupport::Concern
   
   module ClassMethods
     
-    def has_meta(*args)
+    def meta_accessor(*args)
       args.each do |arg|
-        define_method :"#{arg.to_s}", -> { get_meta(arg) }
-        define_method :"#{arg.to_s}=", -> (val) { set_meta(arg, val) } 
+        getter arg 
+        setter arg
       end
     end
+    
+    def meta_reader(*args)
+      args.each { |arg| getter arg }
+    end
+    
+    def meta_writer(*args)
+      args.each { |arg| setter arg }
+    end
+    
+    private
+    
+    def getter(arg)
+      define_method :"#{arg.to_s}", -> { get_meta(arg) }
+    end
+    
+    def setter(arg)
+      define_method :"#{arg.to_s}=", -> (val) { set_meta(arg, val) } 
+    end
+    
   end
   
 end

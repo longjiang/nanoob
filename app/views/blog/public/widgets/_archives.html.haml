@@ -1,5 +1,6 @@
-.card.card-block
-  %h4.card-title
+.card
+  %h4.card-header Archives
+  .card-block
   
-  #posts-archive{role:'tablist', aria:{multiselectable: true}}    
-    = render partial: 'blog/public/widgets/archives/year', collection: @archives, as: :archive
+    #posts-archive{role:'tablist', aria:{multiselectable: true}}    
+      = render partial: 'blog/public/widgets/archives/year', collection: @archives, as: :archive

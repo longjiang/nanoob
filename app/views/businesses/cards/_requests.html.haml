@@ -1,0 +1,30 @@
+%h2
+  = i Partner::Request.decorator_class.icon
+  = "Requests" 
+  = @business.requests.size
+
+.table-responsive
+  %table.table.table-sm.table-hover
+    %thead.thead-default
+      %tr
+        %th.text-nowrap Categorie
+        - Partner::Request.states.keys.each do |state|
+          %th= state.humanize
+        %th.text-nowrap Total
+    %tbody
+      - Partner.categories.keys.each do |category|
+        %tr
+          %th{scope: "row"}= category.humanize
+          - total = 0
+          - Partner::Request.states.each do |state, state_id|
+            - nb = Partner.joins(:requests).where('partner_requests.state = ?', state_id).where(category: category).where('partner_requests.business_id = ?', @business.id).count
+            - total += nb
+            %td.text-nowrap= nb
+          %td
+            = total
+      
+      %tr
+        %td.text-nowrap Total
+        - Partner::Request.states.each do |state, state_id|
+          %td.text-nowrap= Partner::Request.where(state: state).where(business: @business).count
+        %td.text-nowrap 

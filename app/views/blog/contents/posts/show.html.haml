@@ -52,16 +52,7 @@
             = anchor.text
     
     
-.card
-  .card-header
-    History
-  .card-block
-    %ul.list-group.list-group-flush
-      %li.list-group-item 
-        created : 
-        = @post.decorate.created_at
-  .card-block
-    = link_to  "EDIT", edit_blog_contents_post_path(@post), class: 'btn btn-primary' if can? :update, @post
+
       
 .card.text-xs-center
   .card-header

@@ -1,6 +1,6 @@
 .card
   .card-header
-    ☄  Overview
+    🏁  Overview
   .card-block
     %ul.list-group.list-group-flush
       %li.list-group-item 
@@ -11,12 +11,13 @@
           = i @post.decorate.status_icon
           = @post.decorate.status_with_date
       - %w(owner editor writer optimizer).each do |user_type|
-        %li.list-group-item
-          = i Blog::Contents::Post.decorator_class.user_icon(user_type.to_sym)
-          = han 'blog/contents/post', user_type.to_sym
-          \:
-          %em
-            = @post.send(user_type).decorate.name
+        - unless (user=@post.send(user_type)).blank?
+          %li.list-group-item
+            = i Blog::Contents::Post.decorator_class.user_icon(user_type.to_sym)
+            = han 'blog/contents/post', user_type.to_sym
+            \:
+            %em
+              = user.decorate.name
       %li.list-group-item
         Categories:
         = @post.object.categories.collect{|_| _.name}.join(', ')

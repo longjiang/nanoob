@@ -48,7 +48,7 @@ class Blog::Content < ApplicationRecord
   
   attr_writer :body_xs
   
-  has_meta :seo_score, :author_id, :views_count
+  meta_accessor :seo_score, :author_id
 
   def body_xs
     @body_xs ||= body
@@ -70,9 +70,6 @@ class Blog::Content < ApplicationRecord
     !author.new_record?
   end
   
-  def views_count
-    @views_count ||= get_meta(:views_count).present? ? get_meta(:views_count).to_i : 0
-  end
   
   def update_views_count
     self.views_count  = events.count
@@ -92,11 +89,11 @@ class Blog::Content < ApplicationRecord
   end
   
   def visits
-    @visits ||= Visit.joins(:events).where('ahoy_events.name = ?', 'Viewed trackable').where("properties ->> 'trackable_id' = ?) AND (properties ->> 'trackable_type' = ?", id.to_s, self.class.name)
+    @visits ||= Visit.joins(:events).where('ahoy_events.name = ?', Trackable::EVENT_NAME).where("properties ->> 'trackable_id' = ?) AND (properties ->> 'trackable_type' = ?", id.to_s, self.class.name)
   end
   
   def events
-    @events ||= Ahoy::Event.where(name: 'Viewed trackable').where_properties(trackable_id: id, trackable_type: self.class.name)
+    @events ||= Ahoy::Event.trackables.where_properties(trackable_id: id, trackable_type: self.class.name)
   end
   
   def publicized?

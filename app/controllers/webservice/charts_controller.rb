@@ -42,4 +42,15 @@ class Webservice::ChartsController < ApplicationController
     render json: datas
   end
   
+  def business_most_frequent_hosts
+    business = Business.find(params[:id].to_i)
+    datas = []
+    if business
+      top = params[:top].to_i || 8
+      top_hosts = business.top_hosts(top)
+      datas = top_hosts.datas.collect{|host, frequency| [host.decorate.chart_url, (100 * frequency / top_hosts.total.to_f).round(2)]}
+      datas << ['others', (100 * top_hosts.grouped_total / top_hosts.total.to_f).round(2)]
+    end
+    render json: datas
+  end
 end

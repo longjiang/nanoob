@@ -14,7 +14,7 @@ class Blog::Contents::Post < Blog::Content
   delegate :username, to: :editor, prefix: true, allow_nil: true
   delegate :username, to: :optimizer, prefix: true, allow_nil: true 
   
-  has_meta :words_count
+  meta_writer :words_count
   
   before_save :update_statistics
   
@@ -61,13 +61,35 @@ class Blog::Contents::Post < Blog::Content
         anchor_text = '[image]'
         image_url = a.css('img').first.attr('src')
       end
-      uri = URI(url)
-      puts "domain: #{uri.host} - url: #{url} - anchor: #{anchor_text} #{image_url}"
+      begin
+        uri = URI(url)
+        #puts "domain: #{uri.host} - url: #{url} - anchor: #{anchor_text} #{image_url}"
       
-      domain = Seo::Domain.find_or_create_by(url: uri.host)
-      link = domain.links.find_or_create_by(url: url)
-      a = self.anchors.find_or_create_by(link: link, text: anchor_text, image_url: image_url)
-      new_anchors_ids << a.id
+        host = Seo::Host.find_or_create_by(url: uri.host) do |h|
+          h.created_at = created_at
+          h.updated_at = created_at
+        end
+        
+        host_categorization = Seo::HostCategorization.find_or_create_by(host: host, business: website.business) do |c|
+          c.created_at = created_at
+          c.updated_at = created_at
+        end
+       
+        link = host.links.find_or_create_by(url: url) do |l|
+          l.created_at = created_at
+          l.updated_at = created_at
+        end
+        
+         a = self.anchors.find_or_create_by(link: link, text: anchor_text, image_url: image_url) do |anc|
+           anc.created_at = updated_at
+           anc.updated_at = updated_at
+         end
+
+        new_anchors_ids << a.id
+        
+      rescue Exception => e
+        puts "Post #{id} --> #{e}"
+      end
     end
     
     delete_ids = old_anchors_ids - new_anchors_ids
@@ -83,14 +105,17 @@ class Blog::Contents::Post < Blog::Content
   end
   
   def init_statistics
+    nothingToSave = true
     if words_count.eql?(0)
       set_words_count
       count_words
+      nothingToSave = false
     end
     if anchors.size.eql?(0)
       update_anchors
+      nothingToSave = false
     end
-    self.save(touch: false)
+    self.save(touch: false) unless nothingToSave
   end
   
 end

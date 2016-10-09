@@ -1,6 +1,6 @@
-class CreateSeoDomains < ActiveRecord::Migration[5.0]
+class CreateSeoHosts < ActiveRecord::Migration[5.0]
   def change
-    create_table :seo_domains do |t|
+    create_table :seo_hosts do |t|
       t.string :url
       t.integer :category, null:false, default: 0
       t.integer :links_count, null:false, default:0

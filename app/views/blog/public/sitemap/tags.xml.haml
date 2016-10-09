@@ -1,0 +1,11 @@
+!!! XML
+
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+
+%urlset{:xmlns => "http://www.sitemaps.org/schemas/sitemap/0.9"}
+  - for tag in @tags
+    %url
+      %loc #{tag_url(slug: tag.slug, format: :html)}
+      %lastmod=tag.updated_at.strftime('%Y-%m-%d')
+      %changefreq monthly
+      %priority 0.5
