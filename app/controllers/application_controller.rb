@@ -9,13 +9,18 @@ class ApplicationController < ActionController::Base
   before_action :init_menu, unless: :devise_controller?
   before_action :add_menu_items, unless: :devise_controller?
   before_action :menu_activate, unless: :devise_controller?
+  before_action :set_locale
+  before_action :add_home_breadcrumb
   
   around_action :set_time_zone
   
   include ApplicationHelper
   include Breadcrumbs::ActionController
-  include IndexAddnewConcern
-  include ShowEditConcern
+  
+  include Buttons::IndexAddnewConcern
+  include Buttons::ShowEditConcern
+  include Buttons::EditCancelConcern
+  include Buttons::SupportToggleConcern
   
   rescue_from "AccessGranted::AccessDenied" do |exception|
     redirect_to root_path, alert: "You don't have permission to access this page.", status: 303
@@ -59,9 +64,18 @@ class ApplicationController < ActionController::Base
     
   private
 
-    def set_time_zone(&block)
+    def set_time_zone
       time_zone = current_user.try(:time_zone) || 'UTC'
-      Time.use_zone(time_zone, &block)
+      Time.use_zone(time_zone) { yield }
     end  
+    
+    def set_locale
+      I18n.locale = :en
+    end
+    
+    def add_home_breadcrumb
+      add_breadcrumb  'home', root_path
+      
+    end
     
 end

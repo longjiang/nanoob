@@ -1,0 +1,20 @@
+.card
+  .card-header
+    💯 Key Metrics
+  .card-block
+    %ul.list-group.list-group-flush
+      %li.list-group-item 
+        = i @post.attribute_icon(:views_count)
+        = @post.views_count
+        = han('blog/contents/post', :views_count, count: @post.views_count).humanize
+        .pull-right.text-muted.small
+          %em
+            = time_ago_in_words(@post.events.last.time) unless @post.events.blank?
+      %li.list-group-item
+        = i @post.attribute_icon(:words_count)
+        = @post.words_count
+        = han('blog/contents/post', :words_count, count: @post.words_count).humanize
+      %li.list-group-item
+        = i @post.attribute_icon(:anchors_count)
+        = @post.anchors_count
+        = han('blog/contents/post', :anchors_count, count: @post.anchors_count).humanize

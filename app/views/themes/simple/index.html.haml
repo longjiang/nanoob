@@ -1,86 +1,69 @@
-/ .container
-/   .row
-/     .col-lg-8.offset-lg-2.col-md-10.offset-md-1
-/       - @posts.each do |post|
-/         .post-preview
-/           = link_to post_path(slug: post.slug, year: post.year, month: post.month) do
-/             %h2= post.title
-/             %h3= post.decorate.excerpt
-/           %p.post-meta
-/             Posted by
-/             = link_to post.author.decorate.name
-/             = post.published_at
-/   .row
-/     .col-lg-8.offset-lg-2.col-md-10.offset-md-1
-/       = paginate @posts
-/
-/   .row
-/     .col-lg-8.offset-lg-2.col-md-10.offset-md-1
-/       = render 'blog/public/widgets/archives'
-
 - colors = %w(primary success info warning danger)
 - width = 600
 - height = 1000
 
-
-%section{itemscope: true, itemtype:'https://schema.org/Blog'}
-  .container
-    .card-columns
-      
-      - @posts.each do |post|
-      
-        - post_link = post_path(slug: post.slug, year: post.year, month: post.month)
-        - image_src = post.featured_image_id? ? attachment_url(post, :featured_image, :limit, width, height) : asset_path('simple/images/featured_image.png')
-        - color     = colors.sample
-        
-        %article{itemprop: 'blogPosts', itemscope: true, itemtype: 'https://schema.org/BlogPosting'}
-        
-        %div{itemprop: 'publisher', itemscope: true, itemtype: 'https://schema.org/Organization'}
-          %div{itemprop: 'logo', itemscope: true, itemtype: 'https://schema.org/ImageObject'}
-            %meta{itemprop: 'url', content: "logo.png"}
-            %meta{itemprop: 'width', content: 100}
-            %meta{itemprop: 'height', content: 100}
-          %meta{itemprop: 'name', content: @website.business.name}
-          
-          %meta{itemprop: 'mainEntityOfPage', itemscope: true, itemtype: 'https://schema.org/WebPage', itemid: post_link}
-          %meta{itemprop: 'datePublished', content: post.published_at}
-          %meta{itemprop: 'dateModified', content: post.updated_at}
-          
-          .card.card-inverse{class: "card-#{color}"}
-          
-            .card-img-top.text-xs-center{itemprop: 'image', itemscope: true, itemtype:'https://schema.org/ImageObject'}
-              = image_tag image_src, class: 'img-fluid m-x-auto d-block' unless image_src.blank?
-              %meta{itemprop: 'url', content: image_src}
-              %meta{itemprop: 'width', content: width}
-              %meta{itemprop: 'height', content: height}
-            
-            .card-block
-              .card-title.h5{itemprop: 'headline'}= link_to post.title, post_link
-              
-              .card-text{itemprop: 'description'}= post.decorate.excerpt(350)
-              
-              %p.h6.card-text
-                = t(:published_at).humanize
-                = l post.published_at.to_date, format: :default
-                
-                %span{itemprop: 'author', itemscope:true, itemtype:"https://schema.org/Person"}
-                  = t :by
-                  %span{itemprop: 'name'}= link_to post.author.decorate.name, author_path(slug: post.author.username)
-                
-                  
-            .card-footer
-              = link_to post_link do
-                .pull-left.h6
-                  = t(:continued).humanize
-                .pull-right.h6
-                  = i 'arrow-circle-right'
-          
-            - unless image_src.blank?
-              .card-post-date.large
-                %span.post-date-day= post.published_at.day
-                %span.post-date-month= l post.published_at, format: "%b"
-                
 .container
   .row
-    .col-xs-12.text-xs-center
+    .col-md-9
+      %section{itemscope: true, itemtype:'https://schema.org/Blog'}
+        .card-columns
+          - @posts.each do |post|
+    
+            - post_link = post_path(slug: post.slug, year: post.year, month: post.month)
+            - image_src = post.featured_image_id? ? attachment_url(post, :featured_image, :limit, width, height) : asset_path('simple/images/featured_image.png')
+            - color     = colors.sample
+      
+            %article{itemprop: 'blogPosts', itemscope: true, itemtype: 'https://schema.org/BlogPosting'}
+      
+              %meta{itemprop: 'mainEntityOfPage', itemscope: true, itemtype: 'https://schema.org/WebPage', itemid: post_link}
+              %meta{itemprop: 'datePublished', content: post.published_at}
+              %meta{itemprop: 'dateModified', content: post.updated_at}
+      
+              %div{itemprop: 'publisher', itemscope: true, itemtype: 'https://schema.org/Organization'}
+                %div{itemprop: 'logo', itemscope: true, itemtype: 'https://schema.org/ImageObject'}
+                  %meta{itemprop: 'url', content: image_url("logo.png")}
+                  %meta{itemprop: 'width', content: 100}
+                  %meta{itemprop: 'height', content: 100}
+                %meta{itemprop: 'name', content: @website.business.name}
+        
+              .card.card-inverse{class: "card-#{color}"}
+      
+                .card-img-top.text-xs-center{itemprop: 'image', itemscope: true, itemtype:'https://schema.org/ImageObject'}
+                  = image_tag image_src, class: 'img-fluid m-x-auto d-block' unless image_src.blank?
+                  %meta{itemprop: 'url', content: asset_url(image_src)}
+                  %meta{itemprop: 'width', content: width}
+                  %meta{itemprop: 'height', content: height}
+        
+                .card-block
+                  .card-title.h2{itemprop: 'headline'}= link_to post.title, post_link
+          
+                  .card-text.h3{itemprop: 'description'}= post.decorate.excerpt(350)
+          
+                  %p.h4.card-text
+                    = t(:published_at).humanize
+                    = l post.published_at.to_date, format: :default
+            
+                    %span{itemprop: 'author', itemscope:true, itemtype:"https://schema.org/Person"}
+                      = t :by
+                      %span{itemprop: 'name'}= link_to post.author.decorate.name, author_path(post.author)
+            
+              
+                .card-footer.h4
+                  = link_to post_link do
+                    .pull-left
+                      = t(:continued).humanize
+                    .pull-right
+                      = i 'arrow-circle-right'
+      
+                - unless image_src.blank?
+                  .card-post-date.large
+                    %span.post-date-day= post.published_at.day
+                    %span.post-date-month= l post.published_at, format: "%b"
+
+                
+    .col-md-3
+      = render 'blog/public/widgets/archives'
+  
+  .row
+    .col-md-10.text-xs-center
       = paginate @posts

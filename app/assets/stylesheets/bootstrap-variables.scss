@@ -1,16 +1,113 @@
+@import 'color-swatches';
 
-$brand-primary: #1ca8dd;
-$body-bg: #252830;
-$body-color: #fff;
-$font-family-base: "Roboto";
+// Bootstrap default
+// $gray-dark:                 #373a3c !default;
+// $gray:                      #55595c !default;
+// $gray-light:                #818a91 !default;
+// $gray-lighter:              #eceeef !default;
+// $gray-lightest:             #f7f7f9 !default;
+//
+// $brand-primary:             #0275d8 !default;
+// $brand-success:             #5cb85c !default;
+// $brand-info:                #5bc0de !default;
+// $brand-warning:             #f0ad4e !default;
+// $brand-danger:              #d9534f !default;
+// $brand-inverse:             $gray-dark !default;
+
+// Version 1
+// $alt-color: #434857;
+// $brand-primary: #1ca8dd;
+// $body-bg: #252830;
+// $body-color: #fff;
+// $input-border-color: #c8cacb;
+// $sidebar-bg:                #252830;
+//
+// $font-family-base: "Roboto";
+// $font-size-root: 14px;
+// $headings-font-weight: 300;
+// $link-color: #ffffff;
+// $link-hover-decoration: none;
+// $link-hover-color: $brand-primary;
+// $table-bg-hover: $alt-color;
+// $card-bg: $alt-color;
+// $breadcrumb-bg: $alt-color;
+// $pagination-bg: $alt-color;
+// $pagination-active-border: #fff;
+//
+// $nav-tabs-active-link-hover-bg: $alt-color;
+// $nav-tabs-active-link-hover-color: #fff;
+
+// Version 2
+// 8.10.2016
+$enable-shadows: true;
+
+$base-color: $turquoise;
+$base-dark-color: $midnight-blue;
+$body-bg-primary: $silver;
+
+$brand-primary: $base-color;
+
+$wrapper-corner-size: 15px;
+$box-shadow-color: rgba(black, 0.04);
+
+$sidebar-width: 180px;
+$sidebar-bg: $base-dark-color;
+$offcanvas-aside-right-width: 400px;
+
 $font-size-root: 14px;
-$headings-font-weight: 300;
-$link-color: #ffffff;
-$link-hover-decoration: none;
-$link-hover-color: $brand-primary;
-$table-bg-hover: #434857;
-$card-bg: #434857;
-$breadcrumb-bg: #434857;
-$pagination-bg: #434857;
-$pagination-active-border: #fff;
-$input-border-color: #c8cacb;
+$brand-font-size: 1.8em;
+$brand-sm-font-size: 1.2em;
+$base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+$link-color:            $base-dark-color !default;
+$link-decoration:       none !default;
+$link-hover-color:      lighten($link-color, 15%) !default;
+$link-hover-decoration: underline !default;
+
+$input-border-color: $body-bg-primary;
+
+
+// Globals
+// 
+// 
+// $base-dark-color-alternative: $wet-asphalt;
+//
+// 
+// 
+//
+// 
+//
+// 
+// $body-bg-secondary: $asbestos;
+//
+
+//
+// $dock-bg: $sidebar-bg;
+// $dock-active-icon-color: $base-color;
+// $dock-link-font-size: .8em;
+//
+// $animation-duration: .4s;
+//
+// 
+//
+// // Bootstrap Overrides
+// $brand-primary: $base-color;
+// $brand-success: $brand-primary;
+//
+// $navbar-default-bg: rgba(0,0,0,0);
+// $navbar-default-brand-color: $base-dark-color;
+// $navbar-default-brand-hover-color: lighten($base-dark-color, 5);
+//
+// $breadcrumb-bg: $clouds;
+// $panel-heading-bg: $clouds;
+//
+// $dropdown-bg: $sidebar-bg;
+// $dropdown-border: darken($dropdown-bg, 10) !default;
+// $dropdown-divider-bg: $dropdown-border;
+// $dropdown-link-color: $clouds !default;
+
+
+$alt-color: green;
+
+
+

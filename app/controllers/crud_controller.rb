@@ -2,8 +2,9 @@ class CrudController < ApplicationController
   
   include Nanoob::GenericModel
   
-  index_addnew
-  show_edit
+  index_addnew_button
+  show_edit_button
+  edit_cancel_button
   
   class_attribute :permitted_attrs, :filtering_params, :sortable_attrs
   

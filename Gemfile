@@ -67,7 +67,7 @@ gem 'access-granted', '~> 1.1.0'
 
 # activerecord
 gem "validate_url"
-#gem "mysql2"
+gem "mysql2"
 gem 'iconv'
 
 # state machine
@@ -80,6 +80,13 @@ gem 'storext', :git => 'https://github.com/G5/storext.git'
 
 # emails
 gem 'postmark-rails', '>= 0.10.0'
+
+# posts
+gem 'words_counted'
+gem "chartkick", '>= 2'
+gem 'groupdate'
+gem "highcharts-rails"
+gem 'ahoy_matey'
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'

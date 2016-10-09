@@ -9,10 +9,15 @@
   = tmp 'blog/contents/post'
   %span.tag.tag-info= @posts_unpaginated.count
   
-%p= t 'descriptions.blog/contents/posts'
-
-#pagination.pull-right.hidden-xs-down
+- content_for :pagination do 
   = paginate @posts, remote: true
+  
+%section.pagination.pull-right.hidden-lg-down
+  = yield :pagination
+
+%p.hidden-xs-down= t 'descriptions.blog/contents/posts'
+
+
   
 = render 'filters'
 
@@ -41,17 +46,17 @@
         
         - %w(owner editor writer optimizer).each do |user_type|        
           - if params[user_type.to_sym].blank? 
-            %th.text-nowrap.text-xs-center
+            %th.text-nowrap.text-xs-center.hidden-lg-down
               = i Blog::Contents::Post.decorator_class.user_icon(user_type.to_sym)
               %span.hidden-xs-down
                 = han 'blog/contents/post', user_type.to_sym
         
-        %th.text-nowrap= han 'blog/contents/post', :categories
-        %th.text-nowrap Tags
+        %th.text-nowrap.hidden-md-down= han 'blog/contents/post', :categories
+        %th.text-nowrap.hidden-md-down= han 'blog/contents/post', :tags
         
         
         %th.text-nowrap
-          = link_to sorted_entries_path(status_date: asc?(:status_date) ? :desc : :asc) do
+          = link_to sorted_entries_path(status_date: desc?(:status_date) ? :asc : :desc) do
             = han 'blog/contents/post', :status
           - unless params[:sort_by_status_date].blank?
             = i 'sort-alpha-asc' if asc? :status_date
@@ -61,15 +66,14 @@
               %i.fa.fa-filter.text-primary
         
         
-        %th.text-nowrap= i 'comment-o'
-        %th.text-nowrap SEO
-        %th.text-nowrap
+        %th.text-xs-center.hidden-xs-down= i Blog::Contents::Post.decorator_class.attribute_icon(:comments_count)
+        %th.text-xs-center= i Blog::Contents::Post.decorator_class.attribute_icon(:views_count)
+        %th.text-xs-center SEO
+        %th.text-nowrap.hidden-sm-down
         
     %tbody
-      = render partial: 'index-table-tr', collection: @posts, as: :post
-
-#pagination-bottom.text-xs-center       
-  = paginate @posts, remote: true
+      = render partial: 'index-table-tr', collection: @posts, as: :post     
+  
 
 
         

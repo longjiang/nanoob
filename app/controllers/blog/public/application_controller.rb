@@ -1,10 +1,16 @@
 class Blog::Public::ApplicationController < ApplicationController
   
-  skip_before_action :authenticate_user!
-  skip_before_action :init_menu
-  skip_before_action :menu_activate
-  prepend_before_action :find_website
-  prepend_before_action :set_locale
+  filters = _process_action_callbacks.map(&:filter) 
+  
+  skip_before_action(*filters, raise: false)
+  skip_after_action(*filters, raise: false)
+  skip_around_action(*filters, raise: false)
+  
+  # skip_before_action :authenticate_user!
+  # skip_before_action :init_menu
+  # skip_before_action :menu_activate
+  before_action :find_website
+  before_action :set_locale
   
   
   
@@ -19,7 +25,7 @@ class Blog::Public::ApplicationController < ApplicationController
   def find_website
     #TODO: save port in business_website.url
     blog_root_path
-    @website ||= Business::Website.find_by_url("#{request.protocol}#{request.host.gsub('.dev','').gsub('www.','')}")
+    @website ||= Business::Website.find_by_request(request)
   end
   
   def set_locale

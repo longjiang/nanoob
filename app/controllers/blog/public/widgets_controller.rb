@@ -9,7 +9,7 @@ class Blog::Public::WidgetsController < Blog::Public::ApplicationController
       @posts = @website.posts.published.where('published_at >= ? and published_at <= ?', starts_at, ends_at)
       render template: 'blog/public/widgets/archives/posts'
     else
-      @archives = @website.posts.published.where('extract(year from published_at) = ?', @year).group('extract(month from published_at)').count.map{|a,b| {month: a.to_i, count: b}}
+      @archives = @website.posts.published.order('extract(month from published_at) desc').where('extract(year from published_at) = ?', @year).group('extract(month from published_at)').count.map{|a,b| {month: a.to_i, count: b}}
       render template: 'blog/public/widgets/archives/months'
     end
   end

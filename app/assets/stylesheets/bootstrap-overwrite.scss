@@ -1,4 +1,4 @@
-.list-group-item, 
+.list-group-item,
 .list-group-item a{
   color: #000;
 }
@@ -37,3 +37,4 @@
 .card-danger .card-footer {
   @include card-footer($brand-danger);
 }
+

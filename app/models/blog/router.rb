@@ -21,8 +21,7 @@ class Blog::Router
     end
     
     def website_exists? request
-      url = "#{request.protocol}#{request.host.gsub('.dev','').gsub('www.','')}"
-      Business::Website.find_by_url(url).present?
+      Business::Website.find_by_request(request).present?
     end
   end
   
@@ -57,6 +56,7 @@ class Blog::Router
     self.routes << Route.new(:get, '/sitemap.xml',                    'sitemap#index',       {:format => 'xml'})
     self.routes << Route.new(:get, '/sitemap/posts.xml',              'sitemap#posts',       {:format => 'xml'})
     self.routes << Route.new(:get, '/sitemap/categories.xml',         'sitemap#categories',  {:format => 'xml'})
+    self.routes << Route.new(:get, '/sitemap/tags.xml',               'sitemap#tags',        {:format => 'xml'})
     self.routes << Route.new(:get, '/sitemap/search/:dimensions.xml', 'sitemap#search',      {:format => 'xml'})
     self.routes << Route.new(:get, '/sitemap-index.xsl',              'sitemap#index',       {:format => 'xsl'})
     self.routes << Route.new(:get, '/sitemap.xsl',                    'sitemap#feed',        {:format => 'xsl'})
@@ -86,7 +86,7 @@ class Blog::Router
   end
   
   def authors
-    r = Route.new(:get, '/author/:slug(/page/:page)', 'authors#index')
+    r = Route.new(:get, '/author/:id/:slug(/page/:page)', 'authors#index')
     r.as = :author
     self.routes << r
   end

@@ -44,6 +44,9 @@
             = f.select :writer_id, users_collection
             = f.select :editor_id, users_collection
             = f.select :optimizer_id, users_collection
+      - else
+        - %w(owner writer editor optimizer).each do |user_type|
+          = f.hidden_field "#{user_type}_id".to_sym
       
   
     .col-md-4.col-xl-3

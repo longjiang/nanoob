@@ -62,6 +62,25 @@ class ApplicationRecordDecorator < Draper::Decorator
     self.class.option options, value
   end
 
+  def attribute_icon(attr)
+    self.class.attribute_icon attr
+  end
+  
+  def show_page_title(size=:xl)
+    length = case size
+    when :xs
+      18
+    when :sm
+      30
+    when :md
+      35
+    when :lg
+      40
+    else
+      99
+    end
+    h.truncate(name, length: length).html_safe
+  end
   
   def self.option(options, value)
     return options[:default] if value.nil?

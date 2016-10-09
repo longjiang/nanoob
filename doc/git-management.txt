@@ -18,7 +18,7 @@ created develop->blogs branch
 29/08/2016 Release 1.0
  - Blogs
  
- 02/10/2016 Release 1.1
+02/10/2016 Release 1.1
   - Blogs 
   - Refactoring Page, Post, Authors
   - User roles management
@@ -29,3 +29,6 @@ created develop->blogs branch
  
 02/10/2016 Hotfix 1.1.2
  - New relic config
+ 
+09/10/2016 Release 1.2
+  - Design v2

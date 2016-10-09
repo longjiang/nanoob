@@ -1,5 +1,6 @@
 class WebmasterRole < AccessGranted::Role
   def configure
+    can [:list, :read], Business
     can :manage, People::Author
     can :manage, Business::Website
     can :manage, Blog::Taxonomies::Tag

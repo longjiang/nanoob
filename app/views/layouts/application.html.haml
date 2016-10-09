@@ -5,19 +5,34 @@
   
   %body
     = render 'navbar'
-    #main.container-fluid
-      .row.row-offcanvas.row-offcanvas-left
-        #sidebar.col-md-3.col-lg-2.sidebar-offcanvas{role: "navigation"}
-          = sidebar_menu
-        .col-md-9.col-lg-10.main
-          %p.hidden-md-up
-            %button.btn.btn-primary-outline.btn-sm{type: "button", data: {toggle: "offcanvas"}}
-              = i 'chevron-left'
-              Menu
+    #wrapper
+      
+      %section#sidebar{role: :navigation}
+        = sidebar_menu
+      
+      %section#tools
+        #toolbar
+          .btn-group
+            = render_button_support_toggle
+        = render_breadcrumbs
+        
+      
+      %section#content
+        .container-fluid
+          
           = render partial: 'shared/flash'
-          = render_breadcrumbs
+
           .hidden-xs-down
-            = render_index_addnew
-            = render_show_edit
+            = render_button_index_addnew
+            = render_button_show_edit
+            = render_button_edit_cancel
+
           %h1.page-title= yield :page_title
+
           = yield
+          
+      %section#footer
+        %section.pagination
+          = yield :pagination
+          
+    = yield :charts_js

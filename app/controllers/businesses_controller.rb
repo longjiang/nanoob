@@ -1,5 +1,5 @@
 class BusinessesController < CrudController
-  self.permitted_attrs = [:name, :business_product_id, :language]
+  self.permitted_attrs = [:name, :business_product_id, :business_language_id]
   
   before_action :add_breadcrumbs, except: [:index, :show]
   

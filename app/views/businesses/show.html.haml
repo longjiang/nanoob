@@ -1,56 +1,47 @@
-= link_to edit_business_path(@business), 
-  class: 'btn btn-primary pull-right', 
-  role: 'button', 
-  title: th('activerecord.actions.edit') do
-  = i 'pencil'
-  = t 'activerecord.actions.edit'
-
-%h1
+- content_for :page_title do
   = @business.name
-%p
-  = @business.product_name.humanize
-  = @business.flag
-  
-%h2
-  = i 'bar-chart'
-  = 'Statistiques'
-    
-%h2
-  = i Business::Website.decorator_class.icon
-  = "Websites"
-  
-%h2
-  = i Partner::Request.decorator_class.icon
-  = "Requests" 
-  = @business.requests.size
 
-.table-responsive
-  %table.table.table-sm.table-hover
-    %thead.thead-default
-      %tr
-        %th.text-nowrap Categorie
-        - Partner::Request.states.keys.each do |state|
-          %th= state.humanize
-        %th.text-nowrap Total
-    %tbody
-      - Partner.categories.keys.each do |category|
-        %tr
-          %th{scope: "row"}= category.humanize
-          - total = 0
-          - Partner::Request.states.each do |state, state_id|
-            - nb = Partner.joins(:requests).where('partner_requests.state = ?', state_id).where(category: category).where('partner_requests.business_id = ?', @business.id).count
-            - total += nb
-            %td.text-nowrap= nb
-          %td
-            = total
-      
-      %tr
-        %td.text-nowrap Total
-        - Partner::Request.states.each do |state, state_id|
-          %td.text-nowrap= Partner::Request.where(state: state).where(business: @business).count
-        %td.text-nowrap 
+= @business.product_name.humanize
+= @business.flag
   
-%h2
-  = i Partner::Backlink.decorator_class.icon
-  = "Backlink" 
+  
+- if @business.hosts.size > 0
+
+  - top = 10
+  .card
+    .card-header
+      = i Seo::HostDecorator.icon
+      = top
+      Most frequent hosts
+    .card-block
+      .row
+        .col-xs-12.col-md-8
+          = pie_chart charts_business_most_frequent_hosts_path(id: @business.id, top: top), height: "431px", library: {title: 'mytite'}
+        .col-xs-12.col-md-4
+          %ul.list-group.list-group-flush
+            - top_hosts = @business.top_hosts(top)
+            - top_hosts.datas.each do |host, frequency|
+              %li.list-group-item 
+                = host.url
+                .pull-right
+                  = frequency
+
+
+  
+  .card
+    .card-header
+      = i Seo::HostDecorator.icon
+      10 last hosts created
+    .card-block
+      %ul.list-group.list-group-flush
+        - @business.host_categorizations.order(created_at: :desc).limit(10).each do |c|
+          %li.list-group-item
+            = i c.decorate.category_icon
+            = c.host.decorate.name
+            .pull-right
+              = c.decorate.updated_at
+          
+
+  
+  
     

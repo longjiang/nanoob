@@ -1,27 +1,58 @@
-%h2= @post.title
+- content_for :page_title do
+  = i Blog::Contents::Post.decorator_class.icon
+  = fluid_text @post, :show_page_title
+  = link_to @post.decorate.public_url do
+    = i 'external-link'
+    
+= render_deck
 
-.card
+.row
+  .col-xs-12.col-md-7
+    = render partial: 'blog/contents/posts/cards/overview'
+
+  .col-xs-12.col-md-5
+    = render 'blog/contents/posts/cards/key_metrics'
+
+    .text-xs-center
+      - if @post.featured_image_id?
+        = image_tag attachment_url(@post, :featured_image, :fill, 1000, 200), class: 'img-thumbnail img-fluid'
+
+
+- if @post.events.size > 0
+  = render 'blog/contents/posts/cards/chart_visits'
+
+
+
+#words.card
   .card-header
-    Users
+    = i 'pie-chart'
+    10 Most frequent words
   .card-block
-    %ul.list-group.list-group-flush
-      %li.list-group-item 
-        owner: 
-        = @post.owner.decorate.name
-      %li.list-group-item
-        Editor:
-        = @post.editor.decorate.name
+    .row
+      .col-xs-12.col-sm-8
+        = pie_chart charts_post_most_frequent_words_path(id: @post.id, top: 10), height: "431px"
+      .col-xs-12.col-sm-4
+        %ul.list-group.list-group-flush
+          - @post.words.order(frequency: :desc).limit(10).each do |w|
+            %li.list-group-item 
+              = w.word
+              .pull-right
+                = w.frequency
+                = "(#{(100 * w.frequency / @post.words_count.to_f).round(2)}%)" if @post.words_count > 0
         
-.card
+#anchors.card
   .card-header
-    History
+    links
   .card-block
     %ul.list-group.list-group-flush
-      %li.list-group-item 
-        created : 
-        = @post.decorate.created_at
-  .card-block
-    = link_to  "EDIT", edit_blog_contents_post_path(@post), class: 'btn btn-primary' if can? :update, @post
+      - @post.anchors.each do |anchor|
+        %li.list-group-item 
+          = anchor.url
+          .pull-right
+            = anchor.text
+    
+    
+
       
 .card.text-xs-center
   .card-header
@@ -37,4 +68,4 @@
     #body-text.tab-pane.fade{role: "tabpanel"}
       = @post.body
 
-= image_tag attachment_url(@post, :featured_image, :fill, 200, 200) if @post.featured_image_id?
+

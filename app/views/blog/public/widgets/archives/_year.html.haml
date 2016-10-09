@@ -3,7 +3,7 @@
   
 .panel.panel-default{id: "post-archives-#{year}"}
   .panel-heading{role: 'tab', id: "heading#{year}"}
-    %h4.panel-title
+    .panel-title.h3
       =link_to archives_path(website_id: @website.id, year: year), id: "linkto#{year}", remote: true, data: {toggle: "collapse", parent: '#posts-archive'}, aria: {expanded: false, controls: "#collapse#{year}"} do
         = year
         = "(#{count})"
