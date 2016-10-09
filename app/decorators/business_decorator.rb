@@ -2,7 +2,7 @@ class BusinessDecorator < ApplicationRecordDecorator
   delegate_all
   
   def flag
-    object.language.decorate.flag
+    object.language.decorate.flag rescue '' 
   end
   
   def name
