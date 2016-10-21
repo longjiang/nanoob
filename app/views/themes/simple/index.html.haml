@@ -38,14 +38,15 @@
                   .card-title.h2{itemprop: 'headline'}= link_to post.title, post_link
                   .card-text.h3{itemprop: 'description'}= post.decorate.excerpt(350)
           
+
                   %p.h4.card-text
                     = t(:published_at).humanize
                     = l post.published_at.to_date, format: :default
             
                     %span{itemprop: 'author', itemscope:true, itemtype:"https://schema.org/Person"}
                       = t :by
-                      %span{itemprop: 'name'}= link_to post.author.decorate.name, author_path(post.author)
 
+                      %span{itemprop: 'name'}= link_to post.author.decorate.name, author_path(slug: post.author.username)
             
               
                 .card-footer.h4
@@ -59,7 +60,6 @@
                   .card-post-date.large
                     %span.post-date-day= post.published_at.day
                     %span.post-date-month= l post.published_at, format: "%b"
-
                 
     .col-md-3
       = render 'blog/public/widgets/archives'
