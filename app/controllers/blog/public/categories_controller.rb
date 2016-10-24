@@ -1,10 +1,11 @@
 class Blog::Public::CategoriesController < Blog::Public::ContentsController
   
+  include Blog::Public::ThemeConcern
+  
   def index
     @category = @website.categories.find_by_slug(params[:slug])
     if @category
       @posts = @category.posts.published.page(params[:page])
-      render template: "themes/simple/category"
     else
       @website.add_unknown_category(params[:slug])
       @website.save

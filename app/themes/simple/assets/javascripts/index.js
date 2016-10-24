@@ -11,6 +11,6 @@
 
 //= require ./clean-blog.min
 
-//= require ./../../widgets/widgets
-//= require ./../../widgets/analytics
-//= require ./../../widgets/woopra
+//= require ./widgets
+//= require ./analytics
+//= require ./woopra

@@ -11,6 +11,12 @@ Rails.application.config.assets.version = '1.0'
 #Rails.application.config.assets.precompile += %w( **/javascripts/index.js )
 #Rails.application.config.assets.precompile += [ "./**/javascripts/index.js" ]
 
-Rails.application.config.assets.precompile += Dir.glob(Rails.root.join('app', 'assets', 'themes', '**', 'javascripts', 'index.js'))
-Rails.application.config.assets.precompile += [  'simple/stylesheets/index.css' ]
+#Rails.application.config.assets.precompile += Dir.glob(Rails.root.join('app', 'themes', '**', 'assets', 'javascripts', 'index.js'))
+
+Dir.glob(Rails.root.join('app', 'themes', '**')).map{|d| File.basename(d)}.each do |theme|
+
+  Rails.application.config.assets.precompile += [  "#{theme}/index.css", "#{theme}/index.js" ]
+
+end
+
 

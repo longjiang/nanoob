@@ -1,0 +1,4 @@
+- content_for :list_title do
+  = "Archives pour: #{@category.decorate.name}"
+  
+= render 'posts/posts'
