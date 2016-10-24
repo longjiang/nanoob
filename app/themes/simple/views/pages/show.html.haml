@@ -1,0 +1,9 @@
+- content_for :heading do
+  = @page.title
+
+.container
+  .row
+    .col-sm-8
+      %p.body= @page.body.html_safe
+    .col-sm-4
+      = render 'sidebar'

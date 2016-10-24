@@ -6,13 +6,8 @@ class Blog::Public::ApplicationController < ApplicationController
   skip_after_action(*filters, raise: false)
   skip_around_action(*filters, raise: false)
   
-  # skip_before_action :authenticate_user!
-  # skip_before_action :init_menu
-  # skip_before_action :menu_activate
   before_action :find_website
   before_action :set_locale
-  
-  
   
   include WoopraConcern
   

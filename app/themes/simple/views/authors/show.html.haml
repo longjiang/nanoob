@@ -1,0 +1,15 @@
+
+
+- content_for :heading do
+  = @author.name
+
+.container
+  .row
+    .col-sm-8
+      - if @author.profile_image_id?
+        .pull-left.pt-3.pr-3
+          = attachment_image_tag @author, :profile_image, :fill, 300, 300, format: "jpg", class: 'img-fluid img-thumbnail', alt: "profile picture", title: @author.name 
+        
+      %p.body= @author.biography.try(:html_safe)
+    .col-sm-4
+      = render 'sidebar'

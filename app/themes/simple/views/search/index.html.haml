@@ -1,0 +1,8 @@
+
+- content_for :list_title do
+  = "Résultats de la recherche pour #{@page_title}"
+  
+- content_for :list_header do
+  = "Vous recherchez l'offre #{@title} au meilleur prix ? Ne cherchez plus ! La Poignée de main avec son immense catalogue de produits et des prix au plus bas aujourd'hui #{Time.now.strftime('%A %e %B %Y')}, est là pour vous."
+  
+= render_theme 'index'
