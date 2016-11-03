@@ -4,16 +4,14 @@
 
   - if list_title.present?
     .row
-      .col-md-9
+      .col-md-12
         %h1= list_title
-        
+
   .row
-    .col-md-9
+    .col-md-12
       = render 'posts/list'
-                
-    .col-md-3
-      = render 'sidebar'
-  
+
   .row
-    .col-md-10.text-xs-center
-      = paginate @posts
+    .col-md-12.text-xs-center
+      / = paginate @posts
+      = will_paginate @posts

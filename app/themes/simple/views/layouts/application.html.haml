@@ -2,10 +2,13 @@
 %html
   %head
     = render 'head'
-  
+
   %body
     = woopra_events
-    = render 'navbar'
-    = render 'header'
-    = yield
-    = render 'footer'
+    .container-fluid
+      .row
+        .col-md-3
+          = render 'sidebar'
+        .col-md-9
+          = yield
+      = render 'footer'

@@ -14,3 +14,4 @@
 //= require ./widgets
 //= require ./analytics
 //= require ./woopra
+//= require ./pagination
