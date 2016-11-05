@@ -1,5 +1,11 @@
 class Webservice::ChartsController < ApplicationController
   
+  filters = _process_action_callbacks.map(&:filter) 
+  
+  skip_before_action(*filters, raise: false)
+  skip_after_action(*filters, raise: false)
+  skip_around_action(*filters, raise: false)
+  
   def website_visits
     @website = Business::Website.find(params[:id].to_i)
     datas = []

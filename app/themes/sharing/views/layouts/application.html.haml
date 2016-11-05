@@ -1,0 +1,11 @@
+!!!
+%html
+  %head
+    = render 'head'
+  
+  %body
+    = render 'header'
+    = yield
+    = render 'footer'
+      
+  = yield :charts_js
