@@ -4,7 +4,7 @@ class Business::Website < ApplicationRecord
   
   enum platform: [ :wordpress, :blogger, :nanoob ]
   
-  THEMES = %w(simple lapoigneedemain.com)
+  THEMES = %w(simple lapoigneedemain.com sharing)
   
   validates :business_id,  presence: true
   validates :platform,     presence: true
@@ -30,7 +30,7 @@ class Business::Website < ApplicationRecord
   delegate :name, to: :business, prefix: true
   
   meta_accessor :title, :baseline, :owner_id, :author_id, :woopra, :page_title_template
-  meta_writer   :theme, :words_count
+  meta_writer   :theme, :words_count, :parent_theme
   
   before_save :remove_trailing_slash
   
@@ -53,6 +53,10 @@ class Business::Website < ApplicationRecord
   
   def theme
     get_meta(:theme) || self.class::THEMES[0]
+  end
+  
+  def parent_theme
+    nil
   end
   
   def owner

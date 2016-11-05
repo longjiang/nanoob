@@ -1,0 +1,69 @@
+
+.jumbotron
+  .container
+    %p= "Cet article a été rédigé pour vous par  #{@post.author.decorate.name}."
+
+.container
+    
+  .row
+    .col-xs-12
+      %h2
+        = i Blog::Contents::Post.decorator_class.icon
+        = fluid_text @post.decorate, :show_page_title
+
+
+  .row
+    .col-xs-12
+  
+      .card.text-xs-center
+        .card-header
+          %ul.nav.nav-tabs.card-header-tabs.pull-xs-left{role: "tablist"}
+            %li.nav-item
+              = link_to "Post", "#body-html", data: {toggle: "tab"}, role: "tab", class:"nav-link active"
+            %li.nav-item
+              = link_to "Source", "#body-text", data: {toggle: "tab"}, role: "tab", class:"nav-link"
+  
+        .card-block.tab-content.text-xs-left{style: "height:400px; overflow-y: scroll; padding: 10px"}
+          #body-html.tab-pane.fade.in.active{role: "tabpanel"}
+            = @post.body.try(:html_safe)
+          #body-text.tab-pane.fade{role: "tabpanel"}
+            = @post.body
+        
+
+      #words.card
+        .card-header
+          = i 'pie-chart'
+          10 Most frequent words
+        .card-block
+          .row
+            .col-xs-12.col-sm-8
+              = pie_chart charts_post_most_frequent_words_path(id: @post.id, top: 10), height: "431px"
+            .col-xs-12.col-sm-4
+              %ul.list-group.list-group-flush
+                - @post.words.order(frequency: :desc).limit(10).each do |w|
+                  %li.list-group-item 
+                    = w.word
+                    .pull-right
+                      = w.frequency
+                      = "(#{(100 * w.frequency / @post.words_count.to_f).round(2)}%)" if @post.words_count > 0
+        
+      #anchors.card
+        .card-header
+          = i 'link'
+          Links
+        .card-block
+          %ul.list-group.list-group-flush
+            - @post.anchors.each do |anchor|
+              %li.list-group-item 
+                = anchor.url
+                .pull-right
+                  = anchor.text
+    
+    
+
+      
+
+
+
+
+        

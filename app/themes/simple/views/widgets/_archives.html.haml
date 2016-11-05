@@ -1,0 +1,6 @@
+.card
+  %h4.card-header Archives
+  .card-block
+  
+    #posts-archive{role:'tablist', aria:{multiselectable: true}}    
+      = render partial: 'widgets/archives/year', collection: @archives, as: :archive

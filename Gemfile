@@ -59,6 +59,7 @@ gem 'refile-mini_magick', github: 'refile/refile-mini_magick'
 gem "refile-s3"
 gem 'php-serialize'
 
+
 # Authentication
 gem 'devise'
 

@@ -86,7 +86,7 @@ class Blog::Router
   end
   
   def authors
-    r = Route.new(:get, '/author/:id/:slug(/page/:page)', 'authors#index')
+    r = Route.new(:get, '/authors/:id/:slug', 'authors#show')
     r.as = :author
     self.routes << r
   end

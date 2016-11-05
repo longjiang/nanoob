@@ -26,6 +26,8 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: "You don't have permission to access this page.", status: 303
   end
   
+
+  
   protected
 
     def configure_permitted_parameters

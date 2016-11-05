@@ -1,0 +1,11 @@
+!!!
+%html
+  %head
+    = render 'head'
+  
+  %body
+    = woopra_events
+    = render 'navbar'
+    = render 'header'
+    = yield
+    = render 'footer'
