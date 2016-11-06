@@ -6,12 +6,13 @@
 
 / = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic'
 = stylesheet_link_tag    'index', media: 'all', 'data-turbolinks-track' => 'reload'
-= stylesheet_link_tag    'https://fonts.googleapis.com/css?family=Josefin+Sans:400,700'
-= stylesheet_link_tag    'https://fonts.googleapis.com/css?family=Vollkorn:400,700'
+%link{:href => "https://fonts.googleapis.com/css?family=Josefin+Sans:400,700", :rel => "stylesheet"}/
+%link{:href => "https://fonts.googleapis.com/css?family=Vollkorn:400,700", :rel => "stylesheet"}/
 %link{:href => "/assets/simple/clean-blog-base.css", :rel => "stylesheet"}/
 %link{:href => "/assets/simple/clean-blog-layout.css", :rel => "stylesheet"}/
 %link{:href => "/assets/simple/clean-blog-utilities.css", :rel => "stylesheet"}/
 %link{:href => "/assets/simple/clean-blog-modules.css", :rel => "stylesheet"}/
+
 = javascript_include_tag 'index', 'data-turbolinks-track' => true
 = csrf_meta_tags
 = woopra_tracker
