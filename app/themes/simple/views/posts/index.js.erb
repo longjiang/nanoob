@@ -1,6 +1,0 @@
-$('.card-columns').append("<%= j render partial: 'posts/post', collection: @posts %>");
-<% if @posts.next_page %>
-  $('.pagination').replaceWith('<%= j will_paginate @posts %>');
-<% else %>
-  $('.pagination').remove();
-<% end %>
