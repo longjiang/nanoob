@@ -493,7 +493,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6{
     position: relative;
 }
 
-.list li:before {
+.list li::before {
     display: inline-block;
     font: normal normal normal 14px/1 FontAwesome;
     font-size: inherit;

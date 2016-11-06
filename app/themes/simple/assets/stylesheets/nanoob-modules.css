@@ -132,3 +132,48 @@ posts-archive__post {
     text-transform: uppercase;
     font-size: 1.5rem;
 }
+
+.search-form {
+    position: relative;
+}
+
+.search-form::before {
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\f002";
+    position: absolute;
+    right: 1.5rem;
+    top: 1.2rem;
+    display: block;
+    pointer-events: none;
+}
+
+
+select.form-control{
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    height: 4.5rem !important;
+}
+
+.select::before{
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\f107";
+    position: absolute;
+    right: 1.5rem;
+    top: 1.2rem;
+    display: block;
+    pointer-events: none;
+}
+
+
+.select {
+    position: relative;
+}
