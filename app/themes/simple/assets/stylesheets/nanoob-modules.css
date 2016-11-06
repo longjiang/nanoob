@@ -1,25 +1,6 @@
-.card-post-date {
-  font-size: 17px;
-  line-height: 14px;
-  position: absolute;
-  top: 9px;
-  right: 12px;
-  width: 55px;
-  height: 55px;
-  background: #fff;
-  padding-top: 11px;
-  border: #4C4C4B solid 2px;
-  color: #4C4C4B;
-  text-align: center;
-  text-transform: uppercase;
+.card {
+  border: none;
 }
-.card-post-date .post-date-day, .card-post-date .post-date-month {
-  display: block;
-}
-.card-post-date .post-date-month {
-  font-size: 80%;
-}
-
 
 .site-title__title {
     text-transform: uppercase;
@@ -80,3 +61,49 @@ posts-archive__post {
     font-size: 1.5rem;
     line-height: 1.2;
 }
+
+
+.card-columns {
+    -webkit-column-gap: 3rem;
+       -moz-column-gap: 3rem;
+            column-gap: 3rem;
+}
+
+
+.card--post {
+    margin-bottom: 3rem;
+}
+
+.card--post__block {
+    padding: 3rem;
+}
+
+
+.card--post__category {
+    margin: 0 0 1rem 0;
+}
+
+.card--post__category a {
+    color: #00adef;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+}
+
+.card--post__title {
+    font-size: 2.2rem;
+    margin: 0 0 2rem 0;
+}
+
+.card--post__date {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    margin: 0 0 1rem 0;
+    color: #888;
+}
+
+.card--post__text {
+    margin-top: 2rem;
+    font-family: 'Vollkorn', serif;
+}
+

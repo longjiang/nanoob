@@ -27,16 +27,16 @@
       %meta{itemprop: 'height', content: 100}
     %meta{itemprop: 'name', content: @website.business.name}
 
-  .card.card-inverse{class: "card-#{color}"}
+  .card.card--post
 
-    .card-img-top.text-xs-center{itemprop: 'image', itemscope: true, itemtype:'https://schema.org/ImageObject'}
+    .card-img-top.card--post__img.text-xs-center{itemprop: 'image', itemscope: true, itemtype:'https://schema.org/ImageObject'}
       = image_tag image_src, class: 'img-fluid m-x-auto d-block' unless image_src.blank?
       %meta{itemprop: 'url', content: asset_url(image_src)}
       %meta{itemprop: 'width', content: width}
       %meta{itemprop: 'height', content: height}
 
-    .card-block
-      .post-category= link_to 'Poignée', '#'
-      .card-title.h2{itemprop: 'headline'}= link_to post.title, post_link
-      .post-date= l post.published_at.to_date, format: :long
-      .card-text.h3{itemprop: 'description'}= post.decorate.excerpt(350)
+    .card-block.card--post__block
+      %p.post-category.card--post__category= link_to 'Poignée', '#'
+      %h3.card-title.card--post__title{itemprop: 'headline'}= link_to post.title, post_link
+      %p.post-date.card--post__date= l post.published_at.to_date, format: :long
+      %p.card-text.card--post__text{itemprop: 'description'}= post.decorate.excerpt(350)
