@@ -362,3 +362,11 @@ select.form-control{
 .post-page-share {
     margin-bottom: 0;
 }
+
+
+.post-list-title {
+    font-size: 2.8rem;
+    padding: 4.7rem 0 3rem 0;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 3rem;
+}
