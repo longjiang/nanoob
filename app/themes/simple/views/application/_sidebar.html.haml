@@ -1,7 +1,8 @@
-%h2= yield(:heading).blank? ? @website.decorate.title : yield(:heading)
-%hr.small
-%span.subheading= yield(:subheading).blank? ? @website.decorate.baseline : yield(:subheading)
-= render 'widgets/search'
-= render 'widgets/filter'
-= render 'widgets/archives'
-= render 'widgets/categories'
+.site-title
+  %h2.site-title__title= yield(:heading).blank? ? @website.decorate.title : yield(:heading)
+  %p.site-title__slogan= yield(:subheading).blank? ? @website.decorate.baseline : yield(:subheading)
+.widgets
+  = render 'widgets/search'
+  = render 'widgets/filter'
+  = render 'widgets/archives'
+  = render 'widgets/categories'

@@ -1,0 +1,82 @@
+.card-post-date {
+  font-size: 17px;
+  line-height: 14px;
+  position: absolute;
+  top: 9px;
+  right: 12px;
+  width: 55px;
+  height: 55px;
+  background: #fff;
+  padding-top: 11px;
+  border: #4C4C4B solid 2px;
+  color: #4C4C4B;
+  text-align: center;
+  text-transform: uppercase;
+}
+.card-post-date .post-date-day, .card-post-date .post-date-month {
+  display: block;
+}
+.card-post-date .post-date-month {
+  font-size: 80%;
+}
+
+
+.site-title__title {
+    text-transform: uppercase;
+    font-size: 3.6rem;
+    margin-bottom: 2.5rem;
+}
+
+.site-title__slogan {
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    color: #888;
+    margin: 0;
+    padding: 2.5rem 0 0 0;
+    border-top: 1px solid #00adef;
+}
+
+
+.widgets {
+    margin-top: 40px;
+}
+
+.widget__title {
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+}
+
+.widget {
+    margin-bottom: 3rem;
+}
+
+
+.widget__content {
+    background: white;
+    padding: 3rem;
+}
+
+
+.posts-archive__year {
+    font-weight: bold;
+    font-size: 1.5rem;
+    line-height: 1.7;
+}
+
+.panel:not(:first-child) .posts-archive__year{
+  margin-top: 1.5rem;
+  border-top: 1px solid #ccc;
+  padding-top: 1.5rem;
+}
+
+.panel-title.posts-archive__month {
+    font-size: 1.5rem;
+    line-height: 1.66;
+    font-weight: normal;
+}
+
+posts-archive__post {
+    font-size: 1.5rem;
+    line-height: 1.2;
+}

@@ -4,9 +4,8 @@
 
 .panel.panel-default
   .panel-heading{role: 'tab', id: "heading#{year}#{month}"}
-    .panel-title.h4
-      =link_to archives_path(website_id: @website.id, year: year, month: month), id: "linkto#{year}#{month}", remote: true, data: {toggle: "collapse", parent: "#posts-archive-#{year}"}, aria: {expanded: false, controls: "collapse#{year}#{month}"}, class: "collapsed" do
+    .panel-title.posts-archive__month
+      =link_to archives_path(website_id: @website.id, year: year, month: month), id: "linkto#{year}#{month}", remote: true, data: {toggle: "collapse", parent: ".posts-archive-#{year}"}, aria: {expanded: false, controls: "collapse#{year}#{month}"}, class: "collapsed" do
         = t("date.month_names")[month].humanize
         = "(#{count})"
-  .panel-collapse.collapse{id: "collapse#{year}#{month}", role: 'tabpanel', aria: {labelledby: "heading#{year}#{month}"}}
-    %ul.list-unstyled
+  %ul.panel-collapse.collapse.list.posts-archive__posts{id: "collapse#{year}#{month}", role: 'tabpanel', aria: {labelledby: "heading#{year}#{month}"}}
