@@ -12,6 +12,7 @@
 
 
 
+
 html{
   font-size: 62.5%; /* Sets 1rem to 10px https://snook.ca/archives/html_and_css/font-size-with-rem */
 }
@@ -317,10 +318,6 @@ hr.small {
   display: block;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
-}
-
-footer {
-  padding: 50px 0 65px;
 }
 
 footer .list-inline {

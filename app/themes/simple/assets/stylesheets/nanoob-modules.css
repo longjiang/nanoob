@@ -118,3 +118,17 @@ posts-archive__post {
 .card-columns--post {
     margin-top: -1.5rem;
 }
+
+
+.footer__title {
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1.8r;
+}
+
+
+.footer__copyright.text-muted {
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}
