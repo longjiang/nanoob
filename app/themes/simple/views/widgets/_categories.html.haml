@@ -1,9 +1,10 @@
+- categories = []
+- @website.categories.each do |c|
+  - categories << link_to(c.name, category_path(slug: c.slug), { :class => "a" })
+
 .widget
   %h4.widget__title Categories
   .widget__content
     %ul.list
-      %li= link_to "Improving Life (4)", "#", { :class => "a" }
-      %li= link_to " Nature (2)", "#", { :class => "a" }
-      %li= link_to " Photos (2)", "#", { :class => "a" }
-      %li= link_to " Self Development (2)", "#", { :class => "a" }
-      %li= link_to " Technology (2)", "#", { :class => "a" }
+      - categories.each do |c|
+        %li= c
