@@ -1,15 +1,18 @@
-
-
-- content_for :heading do
-  = @author.name
-
-.container
-  .row
-    .col-sm-8
-      - if @author.profile_image_id?
-        .pull-left.pt-3.pr-3
-          = attachment_image_tag @author, :profile_image, :fill, 300, 300, format: "jpg", class: 'img-fluid img-thumbnail', alt: "profile picture", title: @author.name 
-        
-      %p.body= @author.biography.try(:html_safe)
-    .col-sm-4
-      = render 'sidebar'
+.author-info
+  .container
+    .row
+      .col-md-3
+        .author-info-img
+          - if @author.profile_image_id?
+            = attachment_image_tag @author, :profile_image, :fill, 300, 300, format: "jpg", class: '', alt: "profile picture", title: @author.name
+      .col-md-3
+        .author-info-name= @author.name
+        -# .author-info-position Author, La Poignée de Main
+        .author-info-social
+          %i.fa.fa-linkedin
+          %i.fa.fa-twitter
+          %i.fa.fa-pinterest
+      .col-md-6
+        .author-info-blurb
+          = @author.biography.try(:html_safe)
+= render 'posts/posts'

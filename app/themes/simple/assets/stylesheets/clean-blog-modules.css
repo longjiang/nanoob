@@ -268,7 +268,7 @@ select.form-control{
 }
 
 .post-page-appendix:last-child{
-    border-bottom: 1px solid #ccc;
+    padding-bottom: 0;
 }
 
 
@@ -282,4 +282,83 @@ select.form-control{
     padding: 1rem 2rem;
     border-radius: 3rem;
     line-height: 1;
+}
+
+
+.author-info {
+    background: white;
+    padding: 3rem;
+    margin-bottom: 3rem;
+}
+
+.author-info .row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.author-info-img {
+  position: relative;
+  padding-top: calc(100%);
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+.author-info-img > * {
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+
+.author-info-blurb {
+    font-family: 'Vollkorn', serif;
+    font-size: 1.6rem;
+    line-height: 1.5;
+}
+
+.author-info-name {
+    font-weight: bold;
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+}
+
+
+.author-info-position {
+    font-size: 1.7rem;
+    margin: 1rem 0;
+}
+
+.author-info-social {
+    font-size: 3rem;
+    color: #888;
+}
+
+
+.post-page-author-blurb {
+  font-family: 'Vollkorn', serif;font-size: 1.6rem;line-height: 1.5;
+}
+
+.post-page-author-name {
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.post-page-author-social {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #888;
+}
+
+.post-page-share {
+    margin-bottom: 0;
 }

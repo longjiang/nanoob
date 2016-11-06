@@ -6,6 +6,8 @@
 - @post.tags.each do |t|
   - tags << link_to(t.name, tag_path(slug: t.slug))
 
+- @author = @post.author.decorate
+
 .post-page
   .post-page-image
     = image_tag attachment_url(@post, :featured_image) unless attachment_url(@post, :featured_image).blank?
@@ -40,3 +42,19 @@
             %span.fa-stack.fa-lg
               %i.fa.fa-circle.fa-stack-2x
               %i.fa.fa-github.fa-stack-1x.fa-inverse
+    .post-page-appendix
+      .container
+        .row
+          .col-md-8
+            .post-page-author-name= @author.name
+            -# .author-info-position Author, La Poignée de Main
+            .post-page-author-social
+              %i.fa.fa-linkedin
+              %i.fa.fa-twitter
+              %i.fa.fa-pinterest
+            .post-page-author-blurb
+              = @author.biography.try(:html_safe)
+          .col-md-4
+            .author-info-img
+              - if @author.profile_image_id?
+                = attachment_image_tag @author, :profile_image, :fill, 300, 300, format: "jpg", class: '', alt: "profile picture", title: @author.name
