@@ -12,17 +12,12 @@
     font-size: 1.8rem;
     text-transform: uppercase;
     color: #888;
-    margin: 0;
     padding: 2.5rem 0 0 0;
     border-top: 0.1rem solid #00adef;
 }
 
 .widgets {
     margin-top: 4rem;
-}
-
-.widget {
-    margin-bottom: 3rem;
 }
 
 .widget h3 {
@@ -59,7 +54,6 @@
 }
 
 .card-post {
-    margin: 0;
     -webkit-column-break-inside: avoid;
     page-break-inside: avoid;
     break-inside: avoid;
@@ -70,10 +64,6 @@
 .card-post .card-block {
     padding: 3rem;
     background: white;
-}
-
-.card-post .post-category {
-    margin: 0 0 1rem 0;
 }
 
 .card-post .post-category a {
@@ -89,18 +79,15 @@
 
 .card-post .card-title {
     font-size: 2.2rem;
-    margin: 0 0 2rem 0;
 }
 
 .card-post .post-date {
     font-size: 1.2rem;
     text-transform: uppercase;
-    margin: 0 0 1rem 0;
     color: #888;
 }
 
 .card-post .card-text {
-    margin-top: 2rem;
     font-family: 'Vollkorn', serif;
 }
 
@@ -196,7 +183,6 @@ select.form-control {
 .post-page-meta {
     font-size: 1.4rem;
     text-transform: uppercase;
-    margin-bottom: 3rem;
     text-align: center;
     color: #888;
 }
@@ -240,11 +226,6 @@ select.form-control {
 .post-page-appendix {
     padding: 3rem 0;
     border-top: 0.1rem solid #ccc;
-    margin-top: 3rem;
-}
-
-.post-page-appendix+.post-page-appendix {
-    margin-top: 0
 }
 
 .post-page-appendix:last-child {
@@ -266,7 +247,6 @@ select.form-control {
 .author-info {
     background: white;
     padding: 3rem;
-    margin-bottom: 3rem;
 }
 
 .author-info .row {
@@ -310,7 +290,6 @@ select.form-control {
 
 .author-info-position {
     font-size: 1.7rem;
-    margin: 1rem 0;
 }
 
 .author-info-social {
@@ -336,13 +315,8 @@ select.form-control {
     color: #888;
 }
 
-.post-page-share {
-    margin-bottom: 0;
-}
-
 .post-list-title {
     font-size: 2.8rem;
     padding: 4.7rem 0 3rem 0;
     border-bottom: 0.1rem solid #ccc;
-    margin-bottom: 3rem;
 }

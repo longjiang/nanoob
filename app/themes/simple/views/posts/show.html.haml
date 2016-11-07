@@ -15,18 +15,18 @@
     .post-page-categories
       = categories.join(', ').html_safe unless categories.blank?
     %h1.post-page-title= @post.title
-    .post-page-meta
+    .post-page-meta.m-b-3
       %span.post-page-author{itemprop: 'author', itemscope: true, itemtype: "https://schema.org/Person"}
         = t(:by)
         %span{itemprop: 'name'}= link_to @post.author.decorate.name, author_path(@post.author)
       %span.post-page-date= I18n.l @post.published_at.to_date, format: :long
     .post-page-body= @post.body.html_safe
-    .post-page-appendix
+    .post-page-appendix.m-t-3
       %h3 Tags
       .post-page-tags= tags.join(' ').html_safe unless tags.blank?
     .post-page-appendix
       %h3 Share
-      %ul.post-page-share.list-inline
+      %ul.post-page-share.m-b-0.list-inline
         %li.list-inline-item
           %a{:href => "#"}
             %span.fa-stack.fa-lg

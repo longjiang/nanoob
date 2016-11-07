@@ -31,7 +31,7 @@
       %meta{itemprop: 'height', content: 100}
     %meta{itemprop: 'name', content: @website.business.name}
 
-  .card.card-post
+  .card.card-post.m-a-0
 
     .card-img-top.text-xs-center{itemprop: 'image', itemscope: true, itemtype:'https://schema.org/ImageObject'}
       = image_tag image_src, class: 'img-fluid m-x-auto d-block' unless image_src.blank?
@@ -40,7 +40,7 @@
       %meta{itemprop: 'height', content: height}
 
     .card-block
-      %p.post-category= categories.join(', ').html_safe unless categories.blank?
-      %h3.card-title{itemprop: 'headline'}= link_to post.title, post_link
-      %p.post-date= l post.published_at.to_date, format: :long
-      %p.card-text{itemprop: 'description'}= post.decorate.excerpt(350)
+      .post-category.m-b-1= categories.join(', ').html_safe unless categories.blank?
+      %h3.card-title.m-t-0.m-b-2{itemprop: 'headline'}= link_to post.title, post_link
+      .post-date= l post.published_at.to_date, format: :long
+      .card-text.m-t-2{itemprop: 'description'}= post.decorate.excerpt(350)

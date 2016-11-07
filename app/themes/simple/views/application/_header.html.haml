@@ -5,4 +5,4 @@
         .site-heading
           %h2= yield(:heading).blank? ? @website.decorate.title : yield(:heading)
           %hr.small/
-          %span.subheading= yield(:subheading).blank? ? @website.decorate.baseline : yield(:subheading)
+          %span.subheading.m-a-0= yield(:subheading).blank? ? @website.decorate.baseline : yield(:subheading)
