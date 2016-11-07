@@ -1,27 +1,24 @@
 body {
-  height:100%;
-  padding: 7rem 7rem 0 7rem;
-  background-color: #f2f2f2;
-  line-height: 1.2;
-}
-.container,
-.container-fluid {
-  padding: 0;
+    height: 100%;
+    padding: 7rem 7rem 0 7rem;
+    background-color: #f2f2f2;
+    line-height: 1.2;
 }
 
+.container, .container-fluid {
+    padding: 0;
+}
 
 .sidebar {
-    padding-right: 30px;
+    padding-right: 30rem;
 }
 
-
 .footer {
-    background-color: rgb(61,61,61);
+    background-color: rgb(61, 61, 61);
     margin-left: -7rem;
     margin-right: -7rem;
     padding: 1.5rem 0;
 }
-
 
 .footer .left {
     height: 5rem;

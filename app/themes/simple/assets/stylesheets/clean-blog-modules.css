@@ -1,5 +1,5 @@
 .card {
-  border: none;
+    border: none;
 }
 
 .site-title .title {
@@ -14,12 +14,11 @@
     color: #888;
     margin: 0;
     padding: 2.5rem 0 0 0;
-    border-top: 1px solid #00adef;
+    border-top: 0.1rem solid #00adef;
 }
 
-
 .widgets {
-    margin-top: 40px;
+    margin-top: 4rem;
 }
 
 .widget {
@@ -29,7 +28,6 @@
 .widget h3 {
     font-size: 1.8rem;
 }
-
 
 .widget .content:not(.content-plain) {
     background: white;
@@ -42,10 +40,10 @@
     line-height: 1.7;
 }
 
-.panel:not(:first-child) .posts-archive .year{
-  margin-top: 1.5rem;
-  border-top: 1px solid #ccc;
-  padding-top: 1.5rem;
+.panel:not(:first-child) .posts-archive .year {
+    margin-top: 1.5rem;
+    border-top: 0.1rem solid #ccc;
+    padding-top: 1.5rem;
 }
 
 .panel-title.posts-archive .month {
@@ -56,15 +54,15 @@
 
 .card-columns {
     -webkit-column-gap: 3rem;
-       -moz-column-gap: 3rem;
-            column-gap: 3rem;
+    -moz-column-gap: 3rem;
+    column-gap: 3rem;
 }
 
 .card-post {
     margin: 0;
     -webkit-column-break-inside: avoid;
-       page-break-inside: avoid;
-            break-inside: avoid;
+    page-break-inside: avoid;
+    break-inside: avoid;
     padding: 1.5rem 0;
     background: none;
 }
@@ -73,7 +71,6 @@
     padding: 3rem;
     background: white;
 }
-
 
 .card-post .post-category {
     margin: 0 0 1rem 0;
@@ -85,6 +82,7 @@
     text-transform: uppercase;
     font-size: 1.2rem;
 }
+
 .card-post .post-category a:hover {
     text-decoration: underline;
 }
@@ -106,20 +104,16 @@
     font-family: 'Vollkorn', serif;
 }
 
-
-
 .card-post-columns {
     margin-top: -1.5rem;
 }
-
 
 .footer .title {
     color: white;
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 1.8r;
+    font-size: 1.8rem;
 }
-
 
 .footer .copyright {
     text-transform: uppercase;
@@ -131,7 +125,7 @@
 }
 
 .search-form::before {
-    font: normal normal normal 14px/1 FontAwesome;
+    font: normal normal normal 1.4rem/1 FontAwesome;
     font-size: inherit;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
@@ -144,16 +138,15 @@
     pointer-events: none;
 }
 
-
-select.form-control{
-    -webkit-appearance:none;
-    -moz-appearance:none;
-    appearance:none;
+select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     height: 4.5rem !important;
 }
 
-.select::before{
-    font: normal normal normal 14px/1 FontAwesome;
+.select::before {
+    font: normal normal normal 1.4rem/1 FontAwesome;
     font-size: inherit;
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
@@ -165,7 +158,6 @@ select.form-control{
     display: block;
     pointer-events: none;
 }
-
 
 .select {
     position: relative;
@@ -186,7 +178,7 @@ select.form-control{
     width: 100%;
     height: 100%;
     -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
 }
 
 .post-page-content {
@@ -195,13 +187,11 @@ select.form-control{
     margin: 0 auto;
 }
 
-
 .post-page-title {
     font-size: 4rem;
     margin-bottom: 1.5rem;
     text-align: center;
 }
-
 
 .post-page-meta {
     font-size: 1.4rem;
@@ -218,7 +208,6 @@ select.form-control{
 .post-page {
     background-color: white;
 }
-
 
 .post-page-body {
     font-family: 'Vollkorn', serif;
@@ -241,7 +230,6 @@ select.form-control{
     font-size: 1.2rem;
 }
 
-
 .post-page-appendix h3 {
     font-weight: normal;
     text-transform: uppercase;
@@ -249,21 +237,19 @@ select.form-control{
     margin-bottom: 1.5rem;
 }
 
-
 .post-page-appendix {
     padding: 3rem 0;
-    border-top: 1px solid #ccc;
+    border-top: 0.1rem solid #ccc;
     margin-top: 3rem;
 }
 
-.post-page-appendix + .post-page-appendix{
+.post-page-appendix+.post-page-appendix {
     margin-top: 0
 }
 
-.post-page-appendix:last-child{
+.post-page-appendix:last-child {
     padding-bottom: 0;
 }
-
 
 .post-page-tags a {
     display: inline-block;
@@ -277,7 +263,6 @@ select.form-control{
     line-height: 1;
 }
 
-
 .author-info {
     background: white;
     padding: 3rem;
@@ -285,32 +270,31 @@ select.form-control{
 }
 
 .author-info .row {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
 }
 
 .author-info-img {
-  position: relative;
-  padding-top: calc(100%);
-  border-radius: 100%;
-  overflow: hidden;
+    position: relative;
+    padding-top: calc(100%);
+    border-radius: 100%;
+    overflow: hidden;
 }
 
-.author-info-img > * {
-  position: absolute;
-  left: 0;
-  top: 0;
-  overflow: hidden;
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+.author-info-img>* {
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
 }
-
 
 .author-info-blurb {
     font-family: 'Vollkorn', serif;
@@ -324,7 +308,6 @@ select.form-control{
     margin-bottom: 1.5rem;
 }
 
-
 .author-info-position {
     font-size: 1.7rem;
     margin: 1rem 0;
@@ -335,9 +318,10 @@ select.form-control{
     color: #888;
 }
 
-
 .post-page-author-blurb {
-  font-family: 'Vollkorn', serif;font-size: 1.6rem;line-height: 1.5;
+    font-family: 'Vollkorn', serif;
+    font-size: 1.6rem;
+    line-height: 1.5;
 }
 
 .post-page-author-name {
@@ -356,10 +340,9 @@ select.form-control{
     margin-bottom: 0;
 }
 
-
 .post-list-title {
     font-size: 2.8rem;
     padding: 4.7rem 0 3rem 0;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 0.1rem solid #ccc;
     margin-bottom: 3rem;
 }
