@@ -358,11 +358,6 @@ img::selection {
     background: transparent;
 }
 
-img::-moz-selection {
-    color: white;
-    background: transparent;
-}
-
 body {
     -webkit-tap-highlight-color: #0085A1;
 }
