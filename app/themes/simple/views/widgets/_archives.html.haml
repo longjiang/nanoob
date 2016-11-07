@@ -1,5 +1,5 @@
 .widget
-  %h4.widget__title Archives
-  .widget__content
+  %h3.text-uppercase.m-b-3  Archives
+  .content
     .posts-archive{role:'tablist', aria:{multiselectable: true}}
       = render partial: 'widgets/archives/year', collection: @archives, as: :archive

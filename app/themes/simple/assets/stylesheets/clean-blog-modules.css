@@ -2,13 +2,13 @@
   border: none;
 }
 
-.site-title__title {
+.site-title .title {
     text-transform: uppercase;
     font-size: 3.6rem;
     margin-bottom: 2.5rem;
 }
 
-.site-title__slogan {
+.site-title .subheading {
     font-size: 1.8rem;
     text-transform: uppercase;
     color: #888;
@@ -22,46 +22,37 @@
     margin-top: 40px;
 }
 
-.widget__title {
-    font-size: 1.8rem;
-    text-transform: uppercase;
-    margin-bottom: 3rem;
-}
-
 .widget {
     margin-bottom: 3rem;
 }
 
+.widget h3 {
+    font-size: 1.8rem;
+}
 
-.widget__content {
+
+.widget .content:not(.content-plain) {
     background: white;
     padding: 3rem;
 }
 
-
-.posts-archive__year {
+.posts-archive .year {
     font-weight: bold;
     font-size: 1.5rem;
     line-height: 1.7;
 }
 
-.panel:not(:first-child) .posts-archive__year{
+.panel:not(:first-child) .posts-archive .year{
   margin-top: 1.5rem;
   border-top: 1px solid #ccc;
   padding-top: 1.5rem;
 }
 
-.panel-title.posts-archive__month {
+.panel-title.posts-archive .month {
     font-size: 1.5rem;
     line-height: 1.66;
     font-weight: normal;
 }
-
-posts-archive__post {
-    font-size: 1.5rem;
-    line-height: 1.2;
-}
-
 
 .card-columns {
     -webkit-column-gap: 3rem;
@@ -69,8 +60,7 @@ posts-archive__post {
             column-gap: 3rem;
 }
 
-
-.card--post {
+.card-post {
     margin: 0;
     -webkit-column-break-inside: avoid;
        page-break-inside: avoid;
@@ -79,51 +69,51 @@ posts-archive__post {
     background: none;
 }
 
-.card--post__block {
+.card-post .card-block {
     padding: 3rem;
     background: white;
 }
 
 
-.card--post__category {
+.card-post .post-category {
     margin: 0 0 1rem 0;
 }
 
-.card--post__category a {
+.card-post .post-category a {
     color: #00adef;
     text-decoration: none;
     text-transform: uppercase;
     font-size: 1.2rem;
 }
-.card--post__category a:hover {
+.card-post .post-category a:hover {
     text-decoration: underline;
 }
 
-.card--post__title {
+.card-post .card-title {
     font-size: 2.2rem;
     margin: 0 0 2rem 0;
 }
 
-.card--post__date {
+.card-post .post-date {
     font-size: 1.2rem;
     text-transform: uppercase;
     margin: 0 0 1rem 0;
     color: #888;
 }
 
-.card--post__text {
+.card-post .card-text {
     margin-top: 2rem;
     font-family: 'Vollkorn', serif;
 }
 
 
 
-.card-columns--post {
+.card-post-columns {
     margin-top: -1.5rem;
 }
 
 
-.footer__title {
+.footer .title {
     color: white;
     font-weight: bold;
     text-transform: uppercase;
@@ -131,7 +121,7 @@ posts-archive__post {
 }
 
 
-.footer__copyright.text-muted {
+.footer .copyright {
     text-transform: uppercase;
     font-size: 1.5rem;
 }

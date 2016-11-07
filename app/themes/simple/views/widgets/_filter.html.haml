@@ -1,8 +1,8 @@
 - categories = @website.categories
 
 .widget
-  %h4.widget__title Filter
-  .widget__content--plain
+  %h3.text-uppercase.m-b-3  Filter
+  .content.content-plain
     .select
       %select.form-control{ :onchange => "location = this.options[this.selectedIndex].value;"}
         %option Filter by category

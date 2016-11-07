@@ -1,7 +1,7 @@
 .sidebar
   .site-title
-    %h2.site-title__title= yield(:heading).blank? ? @website.decorate.title : yield(:heading)
-    %p.site-title__slogan= yield(:subheading).blank? ? @website.decorate.baseline : yield(:subheading)
+    %h2.title= yield(:heading).blank? ? @website.decorate.title : yield(:heading)
+    .subheading= @website.decorate.baseline
   .widgets
     = render 'widgets/search'
     = render 'widgets/filter'

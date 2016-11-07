@@ -3,8 +3,8 @@
   - categories << link_to(c.name, category_path(slug: c.slug), { :class => "a" })
 
 .widget
-  %h4.widget__title Categories
-  .widget__content
+  %h3.text-uppercase.m-b-3  Categories
+  .content
     %ul.list
       - categories.each do |c|
         %li= c

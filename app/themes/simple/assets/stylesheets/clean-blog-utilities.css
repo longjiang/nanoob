@@ -21,14 +21,14 @@
   object-fit: cover;
 }
 
-.aspect--16-9 {
+.aspect-16-9 {
   padding-top: calc(100% * 9 / 16);
 }
 
-.aspect--4-3 {
+.aspect-4-3 {
   padding-top: calc(100% * 3 / 4);
 }
 
-.aspect--1-1, .aspect--square {
+.aspect-1-1, .aspect-square {
   padding-top: calc(100%);
 }

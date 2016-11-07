@@ -23,7 +23,7 @@ body {
 }
 
 
-.footer__left {
+.footer .left {
     height: 5rem;
     display: flex;
     align-items: center;

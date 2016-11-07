@@ -2,16 +2,16 @@
   .container
     .row
       .col-md-6
-        .footer__left
-          %span.footer__title
+        .left
+          %span.title
             = @website.business.name
           &nbsp;&nbsp;
-          %span.footer__copyright.text-muted
+          %span.copyright.text-muted
             ©
             = Time.now.strftime("%Y")
             All rights reserved.
       .col-md-6
-        .footer__right
+        .right
           %ul.list-inline.text-xs-right
             %li.list-inline-item
               %a{:href => "#"}

@@ -70,7 +70,7 @@ posts-archive__post {
 }
 
 
-.card--post {
+.card-post {
     margin: 0;
     -webkit-column-break-inside: avoid;
        page-break-inside: avoid;
@@ -79,36 +79,36 @@ posts-archive__post {
     background: none;
 }
 
-.card--post__block {
+.card-post__block {
     padding: 3rem;
     background: white;
 }
 
 
-.card--post__category {
+.card-post__category {
     margin: 0 0 1rem 0;
 }
 
-.card--post__category a {
+.card-post__category a {
     color: #00adef;
     text-decoration: none;
     text-transform: uppercase;
     font-size: 1.2rem;
 }
 
-.card--post__title {
+.card-post__title {
     font-size: 2.2rem;
     margin: 0 0 2rem 0;
 }
 
-.card--post__date {
+.card-post__date {
     font-size: 1.2rem;
     text-transform: uppercase;
     margin: 0 0 1rem 0;
     color: #888;
 }
 
-.card--post__text {
+.card-post__text {
     margin-top: 2rem;
     font-family: 'Vollkorn', serif;
 }
