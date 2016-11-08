@@ -35,6 +35,10 @@
     line-height: 1.7;
 }
 
+.posts-archive .year a {
+    color: black;
+}
+
 .panel:not(:first-child) .posts-archive .year {
     margin-top: 1.5rem;
     border-top: 0.1rem solid #ccc;
@@ -79,6 +83,10 @@
 
 .card-post .card-title {
     font-size: 2.2rem;
+}
+
+.card-post .card-title a {
+    color: black;
 }
 
 .card-post .post-date {
