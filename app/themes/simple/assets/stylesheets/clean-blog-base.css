@@ -362,10 +362,6 @@ body {
     -webkit-tap-highlight-color: #0085A1;
 }
 
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    line-height: inherit;
-}
-
 .form-control {
     font-size: 1.5rem;
     padding: 1.2rem 1.5rem;
