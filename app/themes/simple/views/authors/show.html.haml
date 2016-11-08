@@ -12,10 +12,9 @@
               .author-info-name= @author.name
               -# .author-info-position.m-t-1.m-b-1 Author, La Poignée de Main
               .author-info-social
-                %i.fa.fa-linkedin
-                %i.fa.fa-twitter
-                %i.fa.fa-pinterest
+                = i 'linkedin'
+                = i 'twitter'
+                = i 'pinterest'
             .col-md-6
               .author-info-blurb
                 = @author.biography.try(:html_safe)
-= render 'posts/posts'
