@@ -4,7 +4,4 @@
   %h3.text-uppercase.m-b-3  Filter
   .content.content-plain
     .select
-      %select.form-control{ :onchange => "location = this.options[this.selectedIndex].value;"}
-        %option Filter by category
-        - categories.each do |c|
-          %option{:value => category_path(slug: c.slug)}= c.name
+      = select_tag "category", options_from_collection_for_select(@website.categories, "slug", "name"), include_blank: "Filter by category", class: 'form-control'
