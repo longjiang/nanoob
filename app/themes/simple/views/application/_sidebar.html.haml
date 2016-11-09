@@ -1,8 +1,10 @@
 .sidebar
-  .site-title
-    %h2.title= yield(:heading).blank? ? @website.decorate.title : yield(:heading)
-    .subheading= @website.decorate.baseline
-  .widgets
+  .site-header
+    .site-title
+      %h2.title= yield(:heading).blank? ? @website.decorate.title : yield(:heading)
+      .subheading= @website.decorate.baseline
+    %button.hidden-md-up.navbar-toggler{"aria-controls" => "widgets", "aria-expanded" => "false", "aria-label" => "Toggle widgets", "data-target" => ".widgets", "data-toggle" => "collapse", :type => "button"}= i 'bars'
+  .widgets.collapse
     = render 'widgets/search'
     = render 'widgets/filter'
     = render 'widgets/archives'

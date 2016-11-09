@@ -14,6 +14,12 @@ body {
     line-height: 1.2;
 }
 
+@media (max-width: 767px) {
+    body {
+        padding: 3rem 1.5rem 0 1.5rem;
+    }
+}
+
 .container, .container-fluid {
     padding: 0;
 }
@@ -62,3 +68,4 @@ body {
     display: flex;
     align-items: center;
 }
+
