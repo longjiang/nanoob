@@ -25,14 +25,15 @@
 }
 
 .site-title .title {
-    text-transform: uppercase;
+    @extend .text-uppercase;
     font-size: 3.6rem;
     margin-bottom: 2.5rem;
 }
 
 .site-title .subheading {
-    font-size: 1.8rem;
-    text-transform: uppercase;
+    @extend .text-uppercase;
+    @extend h2;
+    @extend .font-weight-normal;
     color: #888;
     padding: 2.5rem 0 0 0;
     border-top: 0.1rem solid #00adef;
@@ -43,6 +44,7 @@
     .site-header {
         margin-bottom: 3rem;
     }
+
     .site-title .title {
         font-size: 1.8rem;
         margin-bottom: 1rem;
@@ -64,13 +66,14 @@
         margin: 0 -1.5rem 3rem -1.5rem;
         padding: 3rem 1.5rem;
     }
+
     .widget h3 {
         color: white;
     }
 }
 
 .widget h3 {
-    font-size: 1.8rem;
+    @extend h2;
 }
 
 .widget .content:not(.content-plain) {
@@ -80,7 +83,7 @@
 
 .posts-archive .year {
     font-weight: bold;
-    font-size: 1.5rem;
+    @extend h4;
     line-height: 1.7;
 }
 
@@ -95,7 +98,7 @@
 }
 
 .panel-title.posts-archive .month {
-    font-size: 1.5rem;
+    @extend h4;
     line-height: 1.66;
     font-weight: normal;
 }
@@ -124,10 +127,11 @@
 }
 
 .card-post .post-category a {
+    @extend h5;
+    @extend .text-uppercase;
+    @extend .font-weight-normal;
     color: #00adef;
     text-decoration: none;
-    text-transform: uppercase;
-    font-size: 1.2rem;
 }
 
 .card-post .post-category a:hover {
@@ -135,7 +139,7 @@
 }
 
 .card-post .card-title {
-    font-size: 2.2rem;
+    @extend h2;
 }
 
 .card-post .card-title a {
@@ -143,8 +147,8 @@
 }
 
 .card-post .post-date {
-    font-size: 1.2rem;
-    text-transform: uppercase;
+    @extend .text-uppercase;
+    @extend h5;
     color: #888;
 }
 
@@ -158,15 +162,15 @@
 }
 
 .footer .title {
+    @extend .text-uppercase;
+    @extend h2;
     color: white;
     font-weight: bold;
-    text-transform: uppercase;
-    font-size: 1.8rem;
 }
 
 .footer .copyright {
-    text-transform: uppercase;
-    font-size: 1.5rem;
+    @extend .text-uppercase;
+    @extend h4;
 }
 
 .search-form {
@@ -243,8 +247,8 @@ select.form-control {
 }
 
 .post-page-meta {
-    font-size: 1.4rem;
-    text-transform: uppercase;
+    @extend .text-uppercase;
+    @extend h4;
     text-align: center;
     color: #888;
 }
@@ -272,17 +276,17 @@ select.form-control {
 }
 
 .post-page-categories a {
+    @extend .text-uppercase;
+    @extend h5;
     color: #00adef;
     text-decoration: none;
-    text-transform: uppercase;
-    font-size: 1.2rem;
 }
 
 .post-page-appendix h3 {
+    @extend .text-uppercase;
+    @extend h4;
     font-weight: normal;
-    text-transform: uppercase;
     color: #888;
-    margin-bottom: 1.5rem;
 }
 
 .post-page-appendix {
@@ -339,19 +343,19 @@ select.form-control {
 }
 
 .author-info-blurb {
+    @extend h4;
     font-family: 'Vollkorn', serif;
-    font-size: 1.6rem;
     line-height: 1.5;
 }
 
 .author-info-name {
+    @extend h1;
     font-weight: bold;
-    font-size: 2.8rem;
     margin-bottom: 1.5rem;
 }
 
 .author-info-position {
-    font-size: 1.7rem;
+    @extend h3;
 }
 
 .author-info-social {
@@ -360,25 +364,25 @@ select.form-control {
 }
 
 .post-page-author-blurb {
+    @extend h4;
     font-family: 'Vollkorn', serif;
-    font-size: 1.6rem;
     line-height: 1.5;
 }
 
 .post-page-author-name {
-    font-size: 1.8rem;
-    text-transform: uppercase;
+    @extend .text-uppercase;
+    @extend h2;
     margin-bottom: 1.5rem;
 }
 
 .post-page-author-social {
-    font-size: 2rem;
+    @extend h2;
     margin-bottom: 1.5rem;
     color: #888;
 }
 
 .post-list-title {
-    font-size: 2.8rem;
+    @extend h1;
     padding: 4.7rem 0 3rem 0;
     border-bottom: 0.1rem solid #ccc;
 }
