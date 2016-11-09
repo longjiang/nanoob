@@ -1,3 +1,12 @@
+/*
+ * Breakpoints:
+ * xs < 543px
+ * sm > 544px
+ * md > 768px
+ * lg > 992px
+ * xl > 1200px
+ */
+
 body {
     height: 100%;
     padding: 7rem 7rem 0 7rem;
@@ -9,8 +18,36 @@ body {
     padding: 0;
 }
 
-.sidebar {
-    padding-right: 3rem;
+
+@media (min-width: 768px) {
+    .sidebar {
+        padding-right: 3rem;
+    }
+}
+
+@media (min-width: 544px) {
+    .card-columns {
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
+    }
+}
+
+@media (min-width: 992px) {
+    .card-columns {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+    }
+}
+
+
+@media (min-width: 1200px) {
+    .card-columns {
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        column-count: 3;
+    }
 }
 
 .footer {
