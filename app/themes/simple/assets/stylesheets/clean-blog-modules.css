@@ -39,7 +39,7 @@
     color: black;
 }
 
-.panel:not(:first-child) .posts-archive .year {
+.posts-archive .panel:not(:first-child) .year {
     margin-top: 1.5rem;
     border-top: 0.1rem solid #ccc;
     padding-top: 1.5rem;
